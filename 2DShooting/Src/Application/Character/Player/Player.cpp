@@ -4,7 +4,7 @@ void Player::Init()
 {
 	m_pos = { 0,0 };
 	m_rec = { 0,0,64,64 };
-	m_speed = { 1.0,1.0 };
+	m_speed = { 5.0,5.0 };
 
 
 	//ƒvƒŒƒCƒ„[Keyİ’è

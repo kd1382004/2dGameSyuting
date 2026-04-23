@@ -3,6 +3,7 @@
 
 
 class Player;
+class EnemyBase;
 
 class Game :public SceneBase
 {
@@ -30,5 +31,8 @@ private:
 	KdTexture m_playerTex;
 	Player* m_player;
 
+
+	KdTexture m_enemyBaseTex;
+	EnemyBase* m_enemyBase;
 
 };

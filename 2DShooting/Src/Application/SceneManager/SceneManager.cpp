@@ -11,7 +11,6 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-
 	if (m_title)
 	{
 		delete m_title;

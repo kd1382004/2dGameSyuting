@@ -18,14 +18,10 @@ public:
 	//キャラの画像をアドレスでセット
 	void SetTex(KdTexture* tex) { m_charaTex = tex; }
 
-
-	//キャラの切り取り範囲設定
-	//float x...X方向の長さ
-	//float y...Y方向の高さ 
-	void SetRec(float x, float y) { m_rec = { 0,0,x,y }; }
-
-
 protected:
+
+	// 解放
+	virtual void Release() = 0;
 
 	//画像アドレス
 	KdTexture* m_charaTex = nullptr;
@@ -37,8 +33,10 @@ protected:
 	Math::Rectangle m_rec;
 
 	//キャラのスピード
+	Math::Vector2 m_speed;
 
-
+	//キャラの移動量
+	Math::Vector2 m_move;
 	//合成行列
 	Math::Matrix m_mat;
 

@@ -1,9 +1,14 @@
 #pragma once
 #include"Application/SceneManager/SceneBase.h"
 
+
+class Player;
+
 class Game :public SceneBase
 {
 public:
+
+	~Game() { Release(); };
 
 	// ‰Šúİ’è
 	void Init()override;
@@ -15,5 +20,15 @@ public:
 	void Draw2D()override;
 
 private:
+
+	// ‰ğ•ú
+	void Release()override;
+
+	//////////////
+	//ƒvƒŒƒCƒ„[//
+	//////////////
+	KdTexture m_playerTex;
+	Player* m_player;
+
 
 };

@@ -16,4 +16,6 @@ public:
 
 private:
 
+	// ‰ð•ú
+	void Release()override;
 };

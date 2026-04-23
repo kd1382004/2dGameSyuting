@@ -21,8 +21,10 @@ public:
 
 protected:
 
+	virtual void Release() = 0;
+
 	//シーンマネージャーのアドレス
-	SceneManager* m_owner=nullptr;
+	SceneManager* m_owner = nullptr;
 
 private:
 

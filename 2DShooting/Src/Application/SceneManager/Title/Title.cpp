@@ -20,3 +20,7 @@ void Title::Draw2D()
 	// 文字列表示
 	SHADER.m_spriteShader.DrawString(0, 0, "タイトル Gで変更", Math::Vector4(1, 1, 0, 1));
 }
+
+void Title::Release()
+{
+}

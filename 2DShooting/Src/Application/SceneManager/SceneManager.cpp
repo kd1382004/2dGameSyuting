@@ -11,9 +11,22 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	delete m_title;
-	delete m_game;
-	delete m_result;
+
+	if (m_title)
+	{
+		delete m_title;
+	}
+
+	if (m_game)
+	{
+		delete m_game;
+	}
+
+	if (m_result)
+	{
+		delete m_result;
+	}
+
 }
 
 void SceneManager::Init()
@@ -36,7 +49,11 @@ void SceneManager::Draw2D()
 	//////////////////
 	//各シーンの描画//
 	//////////////////
-	m_nowScene->Draw2D();
+	if (m_nowScene)
+	{
+		m_nowScene->Draw2D();
+	}
+
 }
 
 void SceneManager::Update()
@@ -44,7 +61,10 @@ void SceneManager::Update()
 	//////////////////
 	//各シーンの更新//
 	//////////////////
-	m_nowScene->Update();
+	if (m_nowScene)
+	{
+		m_nowScene->Update();
+	}
 }
 
 void SceneManager::ChangeScene(SceneType type)
@@ -57,6 +77,7 @@ void SceneManager::ChangeScene(SceneType type)
 		break;
 	case GAME:
 		m_nowScene = m_game;
+		m_nowScene->Init();
 		break;
 	case RESULT:
 		m_nowScene = m_result;

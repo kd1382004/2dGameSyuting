@@ -18,6 +18,8 @@ public:
 	//キャラの画像をアドレスでセット
 	void SetTex(KdTexture* tex) { m_charaTex = tex; }
 
+	Math::Vector2 GetPos() { return m_pos; }
+
 protected:
 
 	// 解放
@@ -49,7 +51,8 @@ protected:
 	//回転行列
 	Math::Matrix m_rotationMat;
 
-
+	//生存フラグ
+	bool m_aliveFlg;
 
 
 private:

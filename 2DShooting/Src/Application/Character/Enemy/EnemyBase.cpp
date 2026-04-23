@@ -2,11 +2,12 @@
 
 void EnemyBase::Init()
 {
+	
 }
 
 void EnemyBase::Update()
 {
-	Move();
+	PlayerTrackingMove();
 }
 
 void EnemyBase::Draw2D()
@@ -22,12 +23,22 @@ void EnemyBase::Release()
 {
 }
 
-void EnemyBase::Move()
+void EnemyBase::PlayerTrackingMove()
 {
 
+	float moveX = m_plaeyrPos.x - m_pos.x;
+	float moveY = m_plaeyrPos.y - m_pos.y;
+	float rad = atan2(moveY, moveX);
+	float deg = DirectX::XMConvertToDegrees(rad);
 
+	if (deg < 0)
+	{
+		deg += 360;
+	}
 
+	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed.x;
+	m_move.y = sin(DirectX::XMConvertToRadians(deg)) * m_speed.y;
 
-	m_pos += {1, 1};
+	m_pos += m_move;
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }

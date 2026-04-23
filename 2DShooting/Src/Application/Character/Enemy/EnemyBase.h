@@ -4,7 +4,7 @@
 class EnemyBase :public CharacterBase
 {
 public:
-	EnemyBase() {}
+	EnemyBase() { m_speed = { 1, 1 }; }
 	~EnemyBase() { Release(); }
 
 	// 初期設定
@@ -25,7 +25,8 @@ protected:
 	// 解放
 	void Release()override;
 
-	void Move();
+	//プレイヤーを追跡する
+	void PlayerTrackingMove();
 
 	//追跡用等のプレイヤー座標
 	Math::Vector2 m_plaeyrPos = { 0,0 };

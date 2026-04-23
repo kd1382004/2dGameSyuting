@@ -21,11 +21,22 @@ void Game::Init()
 void Game::Update()
 {
 	
+	if (m_player)
+	{
+		m_player->Update();
+	}
 	
-	m_player->Update();
-	
-	m_enemyBase->Update();
-	
+	if (m_enemyBase)
+	{
+		if (m_player)
+		{
+			m_enemyBase->SetPlayerPos(m_player->GetPos());
+		}
+
+
+
+		m_enemyBase->Update();
+	}
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	if (GetAsyncKeyState('R') & 0x8000)
 	{

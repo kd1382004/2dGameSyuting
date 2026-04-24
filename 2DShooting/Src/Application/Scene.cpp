@@ -14,7 +14,7 @@ void Scene::Update()
 
 void Scene::Init()
 {
-	SManager.Init();
+
 }
 
 void Scene::Release()

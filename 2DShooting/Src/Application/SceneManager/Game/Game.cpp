@@ -74,10 +74,7 @@ void Game::Update()
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	if (GetAsyncKeyState('R') & 0x8000)
 	{
-
-		PtrRelease();
-
-		m_owner->ChangeScene(RESULT);
+		m_owner->SetNextSceneType(RESULT);
 	}
 }
 

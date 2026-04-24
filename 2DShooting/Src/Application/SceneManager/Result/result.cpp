@@ -13,7 +13,7 @@ void Result::Update()
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	if (GetAsyncKeyState('T') & 0x8000)
 	{
-		m_owner->ChangeScene(TITLE);
+		m_owner->SetNextSceneType(TITLE);
 	}
 }
 

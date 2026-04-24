@@ -3,10 +3,6 @@
 #include"Game/Game.h"
 #include"Result/result.h"
 
-SceneManager::SceneManager()
-{
-}
-
 SceneManager::~SceneManager()
 {
 	if (m_nowScene != nullptr)
@@ -36,6 +32,16 @@ void SceneManager::Draw2D()
 void SceneManager::Update()
 {
 	//////////////////
+	//シーン切り替え//
+	//////////////////
+	if (m_nowSceneType != m_nextSceneType)
+	{
+		ChangeScene(m_nextSceneType);
+	}
+
+
+
+	//////////////////
 	//各シーンの更新//
 	//////////////////
 	if (m_nowScene)
@@ -52,7 +58,6 @@ void SceneManager::ChangeScene(SceneType type)
 		delete m_nowScene;
 		m_nowScene = nullptr;
 	}
-
 
 	if (m_nowScene == nullptr)
 	{
@@ -72,5 +77,7 @@ void SceneManager::ChangeScene(SceneType type)
 
 		m_nowScene->SetOwner(this);
 		m_nowScene->Init();
+
+		m_nowSceneType = type;
 	}
 }

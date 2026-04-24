@@ -11,7 +11,7 @@ void Title::Update()
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	if (GetAsyncKeyState('G') & 0x8000)
 	{
-		m_owner->ChangeScene(GAME);
+		m_owner->SetNextSceneType(GAME);
 	}
 }
 

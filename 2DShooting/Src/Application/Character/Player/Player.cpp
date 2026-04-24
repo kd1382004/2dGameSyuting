@@ -18,6 +18,9 @@ void Player::Init()
 
 void Player::Update()
 {
+	////////////
+	//ˆÚ“®ˆ—//
+	////////////
 	Move();
 
 

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "Scene.h"
-#include "Application/SceneManager/SceneManager.h"
+#include "SceneManager/SceneManager.h"
 
 void Scene::Draw2D()
 {

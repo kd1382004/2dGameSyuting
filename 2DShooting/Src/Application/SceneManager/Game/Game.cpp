@@ -1,8 +1,8 @@
 #include "Game.h"
-#include "Application/SceneManager/SceneManager.h"
-#include"Application/Character/Player/Player.h"
-#include"Application/Character/Enemy/EnemyBase.h"
-#include"Application/Hit/CharaHit.h"
+#include "../SceneManager.h"
+#include"../../Character/Player/Player.h"
+#include"../../Character/Enemy/EnemyBase.h"
+#include"../../Hit/CharaHit.h"
 
 
 void Game::Init()
@@ -14,7 +14,7 @@ void Game::Init()
 	m_player->Init();
 
 
-	//“G‰Šú‰»
+	//“G(ƒx[ƒX)‰Šú‰»
 	m_enemyBaseTex.Load("Tex/Character/Enemy/enemy.png");
 	m_enemyBase = new EnemyBase();
 	m_enemyBase->SetTex(&m_enemyBaseTex);
@@ -58,6 +58,9 @@ void Game::Update()
 	//////////////
 	if (m_charaHit)
 	{
+		//////////////////
+		//“G‚ÆƒvƒŒƒCƒ„[//
+		//////////////////
 		if (m_charaHit->Hit(m_enemyBase, m_player))
 		{
 
@@ -72,22 +75,7 @@ void Game::Update()
 	if (GetAsyncKeyState('R') & 0x8000)
 	{
 
-		if (m_enemyBase)
-		{
-			delete m_enemyBase;
-			m_enemyBaseTex.Release();
-		}
-
-		if (m_player)
-		{
-			delete m_player;
-			m_playerTex.Release();
-		}
-
-		if (m_charaHit)
-		{
-			delete m_charaHit;
-		}
+		PtrRelease();
 
 		m_owner->ChangeScene(RESULT);
 	}
@@ -105,6 +93,11 @@ void Game::Draw2D()
 }
 
 void Game::Release()
+{
+	PtrRelease();
+}
+
+void Game::PtrRelease()
 {
 	if (m_enemyBase)
 	{

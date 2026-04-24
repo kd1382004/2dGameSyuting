@@ -1,5 +1,5 @@
 #include "CharaHit.h"
-#include"Application/Character/CharacterBase.h"
+#include"../Character/CharacterBase.h"
 
 
 bool CharaHit::Hit(CharacterBase* chara1, CharacterBase* chara2)

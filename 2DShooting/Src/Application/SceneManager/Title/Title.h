@@ -1,5 +1,5 @@
 #pragma once
-#include"Application/SceneManager/SceneBase.h"
+#include"../SceneBase.h"
 
 class Title :public SceneBase
 {

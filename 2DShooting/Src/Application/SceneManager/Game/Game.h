@@ -1,5 +1,5 @@
 #pragma once
-#include"Application/SceneManager/SceneBase.h"
+#include"../SceneBase.h"
 
 
 class Player;
@@ -25,6 +25,10 @@ private:
 
 	// 解放
 	void Release()override;
+
+
+	//このクラス内で作ったポインタ消去関数
+	void PtrRelease();
 
 	//////////////
 	//プレイヤー//

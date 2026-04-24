@@ -1,11 +1,6 @@
 #pragma once
-#include"Application/SceneManager/SceneBase.h"
 
-class SceneBasel;
-class Title;
-class Game;
-class Result;
-
+class SceneBase;
 
 //シーンの種類
 enum SceneType
@@ -37,13 +32,6 @@ private:
 
 	//現在のシーン
 	SceneBase* m_nowScene = nullptr;
-
-	Title* m_title = nullptr;
-
-	Game* m_game = nullptr;
-
-	Result* m_result = nullptr;
-
 
 private:
 

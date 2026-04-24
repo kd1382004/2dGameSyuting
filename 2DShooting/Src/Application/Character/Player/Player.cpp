@@ -5,7 +5,8 @@ void Player::Init()
 	m_pos = { 0,0 };
 	m_rec = { 0,0,64,64 };
 	m_speed = { 5.0,5.0 };
-
+	m_aliveFlg = true;
+	HitDetection = 64;
 
 	//ÉvÉåÉCÉÑÅ[Keyê›íË
 	m_moveUp = 'W';
@@ -26,9 +27,11 @@ void Player::Update()
 
 void Player::Draw2D()
 {
-	SHADER.m_spriteShader.SetMatrix(m_mat);
-	SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
-
+	if (m_aliveFlg)
+	{
+		SHADER.m_spriteShader.SetMatrix(m_mat);
+		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
+	}
 }
 
 void Player::Release()

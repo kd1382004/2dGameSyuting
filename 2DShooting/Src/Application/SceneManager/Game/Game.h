@@ -4,6 +4,7 @@
 
 class Player;
 class EnemyBase;
+class CharaHit;
 
 class Game :public SceneBase
 {
@@ -31,8 +32,14 @@ private:
 	KdTexture m_playerTex;
 	Player* m_player;
 
-
+	//////
+	//“G//
+	//////
 	KdTexture m_enemyBaseTex;
 	EnemyBase* m_enemyBase;
 
+	//////////////
+	//“–‚½‚è”»’è//
+	//////////////
+	CharaHit* m_charaHit;
 };

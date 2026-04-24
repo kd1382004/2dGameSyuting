@@ -2,7 +2,8 @@
 
 void EnemyBase::Init()
 {
-	
+	m_aliveFlg = true;
+	HitDetection = 64;
 }
 
 void EnemyBase::Update()
@@ -13,10 +14,14 @@ void EnemyBase::Update()
 void EnemyBase::Draw2D()
 {
 
-	m_rec = { 64,64 };
+	if (m_aliveFlg)
+	{
+		m_rec = { 64,64 };
+		SHADER.m_spriteShader.SetMatrix(m_mat);
+		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
+	}
 
-	SHADER.m_spriteShader.SetMatrix(m_mat);
-	SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
+
 }
 
 void EnemyBase::Release()

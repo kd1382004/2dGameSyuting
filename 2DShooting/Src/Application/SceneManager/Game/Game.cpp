@@ -2,6 +2,8 @@
 #include "Application/SceneManager/SceneManager.h"
 #include"Application/Character/Player/Player.h"
 #include"Application/Character/Enemy/EnemyBase.h"
+#include"Application/Hit/CharaHit.h"
+
 
 void Game::Init()
 {
@@ -16,6 +18,11 @@ void Game::Init()
 	m_enemyBaseTex.Load("Tex/Character/Enemy/enemy.png");
 	m_enemyBase = new EnemyBase();
 	m_enemyBase->SetTex(&m_enemyBaseTex);
+	m_enemyBase->Init();
+
+
+	//当たり判定
+	m_charaHit = new CharaHit();
 }
 
 void Game::Update()
@@ -23,6 +30,9 @@ void Game::Update()
 	
 	if (m_player)
 	{
+		/////////////////////
+		//プレイヤー　更新//
+		////////////////////
 		m_player->Update();
 	}
 	
@@ -30,13 +40,34 @@ void Game::Update()
 	{
 		if (m_player)
 		{
+			////////////////////////////
+			//敵にプレイヤー座標セット//
+			////////////////////////////
 			m_enemyBase->SetPlayerPos(m_player->GetPos());
 		}
 
 
-
+		////////////
+		//敵　更新//
+		////////////
 		m_enemyBase->Update();
 	}
+
+	//////////////
+	//当たり判定//
+	//////////////
+	if (m_charaHit)
+	{
+		if (m_charaHit->Hit(m_enemyBase, m_player))
+		{
+
+		}
+	}
+
+	
+
+
+
 	//シーン切り替え
 	if (GetAsyncKeyState('R') & 0x8000)
 	{
@@ -52,6 +83,12 @@ void Game::Update()
 			delete m_player;
 			m_playerTex.Release();
 		}
+
+		if (m_charaHit)
+		{
+			delete m_charaHit;
+		}
+
 		m_owner->ChangeScene(RESULT);
 	}
 }
@@ -79,5 +116,10 @@ void Game::Release()
 	{
 		delete m_player;
 		m_playerTex.Release();
+	}
+
+	if (m_charaHit)
+	{
+		delete m_charaHit;
 	}
 }

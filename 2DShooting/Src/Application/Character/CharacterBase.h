@@ -20,6 +20,12 @@ public:
 
 	Math::Vector2 GetPos() { return m_pos; }
 
+	//当たり判定用変数(直径)を返す
+	float GetHitDetection() { return HitDetection; }
+
+	//生存フラグを返す
+	bool GetAliveFlg() { return m_aliveFlg; }
+
 protected:
 
 	// 解放
@@ -53,6 +59,9 @@ protected:
 
 	//生存フラグ
 	bool m_aliveFlg;
+
+	//円当たり判定用変数(直径を入れる)
+	float HitDetection;
 
 
 private:

@@ -3,6 +3,7 @@
 #include"../../Character/Player/Player.h"
 #include"../../Character/Enemy/EnemyBase.h"
 #include"../../Hit/CharaHit.h"
+#include"../../Hit/Bullet/BulletHit.h"
 
 
 void Game::Init()
@@ -16,13 +17,21 @@ void Game::Init()
 
 	//敵(ベース)初期化
 	m_enemyBaseTex.Load("Tex/Character/Enemy/enemy.png");
-	m_enemyBase = new EnemyBase();
-	m_enemyBase->SetTex(&m_enemyBaseTex);
-	m_enemyBase->Init();
+
+	for (int i = 0; i < 1; i++)
+	{
+		m_enemy.push_back(new EnemyBase());
+		m_enemy.back()->SetTex(&m_enemyBaseTex);
+		m_enemy.back()->Init();
+	}
+
+
 
 
 	//当たり判定
 	m_charaHit = new CharaHit();
+
+	m_bulletHit = new BulletHit();
 }
 
 void Game::Update()
@@ -36,22 +45,26 @@ void Game::Update()
 		m_player->Update();
 	}
 	
-	if (m_enemyBase)
+	for (int i = 0; i < m_enemy.size(); i++)
 	{
-		if (m_player)
+		if (m_enemy[i])
 		{
-			////////////////////////////
-			//敵にプレイヤー座標セット//
-			////////////////////////////
-			m_enemyBase->SetPlayerPos(m_player->GetPos());
+			if (m_player)
+			{
+				////////////////////////////
+				//敵にプレイヤー座標セット//
+				////////////////////////////
+				m_enemy[i]->SetPlayerPos(m_player->GetPos());
+			}
+
+
+			////////////
+			//敵　更新//
+			////////////
+			m_enemy[i]->Update();
 		}
-
-
-		////////////
-		//敵　更新//
-		////////////
-		m_enemyBase->Update();
 	}
+	
 
 	//////////////
 	//当たり判定//
@@ -61,9 +74,53 @@ void Game::Update()
 		//////////////////
 		//敵とプレイヤー//
 		//////////////////
-		if (m_charaHit->Hit(m_enemyBase, m_player))
+		for (int i = 0; i < m_enemy.size(); i++)
 		{
+			if (m_charaHit->Hit(m_enemy[i], m_player))
+			{
+				//当たったときの処理
 
+				//プレイヤー
+
+
+				//敵
+
+			}
+
+			//敵同士
+			for (int j = i + 1; j < m_enemy.size(); j++)
+			{
+				if (m_charaHit->Hit(m_enemy[i], m_enemy[j]))
+				{
+					//重ならないように座標補正
+
+
+
+				}
+			}
+		}
+
+	}
+
+	if (m_bulletHit)
+	{
+		//////////
+		//敵と弾//
+		//////////
+		for (int i = 0; i < m_enemy.size(); i++)
+		{
+			for (int j = 0; j < m_player->GetBulletNum(); j++)
+			{
+				if (m_bulletHit->Hit(m_player->GetBullet(j), m_enemy[i]))
+				{
+					//当たったときの処理
+
+					//弾
+
+					//敵
+
+				}
+			}
 		}
 	}
 
@@ -81,12 +138,35 @@ void Game::Update()
 void Game::Draw2D()
 {
 
-	m_enemyBase->Draw2D();
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		if (m_enemy[i])
+		{
+			m_enemy[i]->Draw2D();
+		}
+	}
 
-	m_player->Draw2D();
+
+	if (m_player)
+	{
+		m_player->Draw2D();
+	}
+
 
 	// 文字列表示
 	SHADER.m_spriteShader.DrawString(0, 100, "ゲーム Rで変更", Math::Vector4(1, 1, 0, 1));
+}
+
+
+
+EnemyBase* Game::GetEnemy(int num)
+{
+	if (num >= 0 && num < m_enemy.size())
+	{
+		return m_enemy[num];
+	}
+
+	return nullptr;
 }
 
 void Game::Release()
@@ -96,11 +176,18 @@ void Game::Release()
 
 void Game::PtrRelease()
 {
-	if (m_enemyBase)
+
+	for (int i = 0; i < m_enemy.size(); i++)
 	{
-		delete m_enemyBase;
-		m_enemyBaseTex.Release();
+		if (m_enemy[i])
+		{
+			delete m_enemy[i];
+			m_enemy.erase(m_enemy.begin() + i);
+			i--;
+		}
 	}
+	m_enemyBaseTex.Release();
+
 
 	if (m_player)
 	{

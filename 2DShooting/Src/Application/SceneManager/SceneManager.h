@@ -22,6 +22,8 @@ public:
 	// 描画処理
 	void Draw2D();
 
+	//次のシーンを設定
+	//引数...TITLE GAME RESULT
 	void SetNextSceneType(SceneType _nextTepy) { m_nextSceneType = _nextTepy; }
 private:
 
@@ -32,7 +34,7 @@ private:
 	// 初期設定
 	void Init();
 
-	SceneType m_nowSceneType = TITLE;
+	SceneType m_nowSceneType = GAME;
 	SceneType m_nextSceneType = m_nowSceneType;
 
 	//現在のシーン

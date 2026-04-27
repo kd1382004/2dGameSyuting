@@ -1,5 +1,4 @@
 #include "main.h"
-
 #include "Scene.h"
 
 //===================================================================
@@ -246,6 +245,10 @@ void Application::Execute()
 			baseTime = st;
 			count = 0;
 		}
+
+		//ÉQÅ[ÉÄñºÇÃïœçXÇÕÇ±Ç±
+		std::string titleBar = "'ÉQÅ[ÉÄñº' FPS:" + std::to_string(m_fps);
+		SetWindowTextA(m_window.GetWndHandle(), titleBar.c_str());
 
 	}
 

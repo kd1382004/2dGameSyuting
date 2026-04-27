@@ -5,6 +5,7 @@
 class Player;
 class EnemyBase;
 class CharaHit;
+class BulletHit;
 
 class Game :public SceneBase
 {
@@ -20,6 +21,12 @@ public:
 
 	// •`‰æˆ—
 	void Draw2D()override;
+
+
+	//“G‚Ì”‚ğ•Ô‚·
+	int EnemyNum() { return m_enemy.size(); }
+
+	EnemyBase* GetEnemy(int num);
 
 private:
 
@@ -40,10 +47,13 @@ private:
 	//“G//
 	//////
 	KdTexture m_enemyBaseTex;
-	EnemyBase* m_enemyBase;
+	std::vector<EnemyBase*> m_enemy;
+
 
 	//////////////
 	//“–‚½‚è”»’è//
 	//////////////
 	CharaHit* m_charaHit;
+
+	BulletHit* m_bulletHit;
 };

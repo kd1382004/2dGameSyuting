@@ -4,6 +4,7 @@ void EnemyBase::Init()
 {
 	m_aliveFlg = true;
 	HitDetection = 64;
+	m_pos = { (float)(rand() % 1280 - 640),(float)(rand() % 720 - 360) };
 }
 
 void EnemyBase::Update()
@@ -23,6 +24,7 @@ void EnemyBase::Draw2D()
 
 
 }
+
 
 void EnemyBase::Release()
 {

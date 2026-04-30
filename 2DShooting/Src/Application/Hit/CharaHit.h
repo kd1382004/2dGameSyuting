@@ -13,6 +13,7 @@ public:
 	//false...“–‚½‚Á‚Ä‚È‚¢
 	bool Hit(CharacterBase *chara1, CharacterBase *chara2);
 
+
 private:
 
 };

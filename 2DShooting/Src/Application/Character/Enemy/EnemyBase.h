@@ -18,7 +18,12 @@ public:
 
 
 	//追跡用等にプレイヤー座標セット
-	void SetPlayerPos(Math::Vector2 playerPos) {m_plaeyrPos = playerPos;};
+	void SetPlayerPos(Math::Vector2 playerPos) {m_plaeyrPos = playerPos;};;
+
+	Math::Vector2 Getmove() { return m_move; }
+
+	void SetPos(Math::Vector2 pos) { m_pos = pos; }
+
 
 protected:
 

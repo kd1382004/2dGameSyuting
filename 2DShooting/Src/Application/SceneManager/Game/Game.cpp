@@ -18,15 +18,12 @@ void Game::Init()
 	//敵(ベース)初期化
 	m_enemyBaseTex.Load("Tex/Character/Enemy/enemy.png");
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		m_enemy.push_back(new EnemyBase());
 		m_enemy.back()->SetTex(&m_enemyBaseTex);
 		m_enemy.back()->Init();
 	}
-
-
-
 
 	//当たり判定
 	m_charaHit = new CharaHit();
@@ -36,7 +33,14 @@ void Game::Init()
 
 void Game::Update()
 {
-	
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+
+
+	//////////////
+	//プレイヤー//
+	//////////////
 	if (m_player)
 	{
 		/////////////////////
@@ -44,7 +48,15 @@ void Game::Update()
 		////////////////////
 		m_player->Update();
 	}
-	
+
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+
+
+	//////
+	//敵//
+	//////
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
 		if (m_enemy[i])
@@ -64,18 +76,22 @@ void Game::Update()
 			m_enemy[i]->Update();
 		}
 	}
-	
+
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+
 
 	//////////////
 	//当たり判定//
 	//////////////
 	if (m_charaHit)
 	{
-		//////////////////
-		//敵とプレイヤー//
-		//////////////////
 		for (int i = 0; i < m_enemy.size(); i++)
 		{
+			//////////////////
+			//敵とプレイヤー//
+			//////////////////
 			if (m_charaHit->Hit(m_enemy[i], m_player))
 			{
 				//当たったときの処理
@@ -87,13 +103,63 @@ void Game::Update()
 
 			}
 
-			//敵同士
-			for (int j = i + 1; j < m_enemy.size(); j++)
+			//////////
+			//敵同士//
+			/////////
+			for (int j = i; j < m_enemy.size(); j++)
 			{
+				if (j == i)
+				{
+					continue;
+				}
+
 				if (m_charaHit->Hit(m_enemy[i], m_enemy[j]))
 				{
-					//重ならないように座標補正
+					//重ならないように座標補正				
+					const float x = m_enemy[i]->GetPos().x - m_enemy[j]->GetPos().x;
+					const float y = m_enemy[i]->GetPos().y - m_enemy[j]->GetPos().y;
+					const float z = sqrt(x * x + y * y);
+					
+					//半径＋半径
+					const float sum = m_enemy[i]->GetHitDetection() / 2 + m_enemy[j]->GetHitDetection() / 2;
 
+					//重なり具合
+					float over = sum - z;
+
+					//敵2から敵1への方向
+					float nx = x / z;
+					float ny = y / z;
+
+
+					Math::Vector2 notMove = { 0,0 };
+					if (m_enemy[i]->Getmove() != notMove && m_enemy[j]->Getmove() != notMove)//両方動いてる敵
+					{
+						Math::Vector2 enemyiPos = m_enemy[i]->GetPos(); 
+						Math::Vector2 enemyjPos = m_enemy[j]->GetPos(); 
+
+						//お互いに半分ずつ押し返す
+						enemyiPos.x += nx * (over * 0.5);
+						enemyiPos.y += ny * (over * 0.5);
+						enemyjPos.x -= nx * (over * 0.5);
+						enemyjPos.y -= nx * (over * 0.5);
+
+						m_enemy[i]->SetPos(enemyiPos);
+						m_enemy[j]->SetPos(enemyjPos);
+					}
+					else if (m_enemy[i]->Getmove() != notMove)//iが動いている場合
+					{
+						Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
+						enemyiPos.x += nx * over ;
+						enemyiPos.y += ny * over ;
+						m_enemy[i]->SetPos(enemyiPos);
+					}
+					else if (m_enemy[j]->Getmove() != notMove)//jが動いている場合
+					{
+						Math::Vector2 enemyjPos = m_enemy[j]->GetPos();
+						enemyjPos.x -= nx * (over * 0.5);
+						enemyjPos.y -= nx * (over * 0.5);
+						m_enemy[i]->SetPos(enemyjPos);
+					}
 
 
 				}
@@ -124,8 +190,11 @@ void Game::Update()
 		}
 	}
 
-	
 
+
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
 
 
 	//シーン切り替え

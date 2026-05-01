@@ -5,7 +5,6 @@
 class Player;
 class EnemyBase;
 class CharaHit;
-class BulletHit;
 
 class Game :public SceneBase
 {
@@ -54,6 +53,4 @@ private:
 	//“–‚½‚è”»’è//
 	//////////////
 	CharaHit* m_charaHit;
-
-	BulletHit* m_bulletHit;
 };

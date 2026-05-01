@@ -19,6 +19,7 @@ void Player::Init()
 
 
 	m_deg = 90;
+	m_HP = 10;
 }
 
 void Player::Update()
@@ -42,7 +43,7 @@ void Player::Update()
 	//s—ñ‡¬
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
-	m_mat = m_rotationMat* m_transMat ;
+	m_mat = m_rotationMat * m_transMat;
 }
 
 void Player::Draw2D()
@@ -61,7 +62,7 @@ void Player::Draw2D()
 
 PlayerBullet* Player::GetBullet(int num)
 {
-	if(num >= 0 && num < m_bullet.size())
+	if (num >= 0 && num < m_bullet.size())
 	{
 		return m_bullet[num];
 	}
@@ -69,9 +70,32 @@ PlayerBullet* Player::GetBullet(int num)
 	return nullptr;
 }
 
+void Player::ReleseBuleet(int num)
+{
+	if (m_bullet.size() > num && num > 0)
+	{
+		delete m_bullet[num];
+		m_bullet.erase(m_bullet.begin() + num);
+	}
+}
+
+void Player::PlayerBulletHit(int num)
+{
+	//ŠÑ’Ê‰ñ”‚ðŒ¸‚ç‚·
+	if (m_bullet.size() > num && num > 0)
+	{
+		m_bullet[num]->DownBulletPene();
+
+		if (m_bullet[num]->GetBulletPene() < 0)
+		{
+			ReleseBuleet(num);
+		}
+	}
+
+}
+
 void Player::Release()
 {
-
 	m_bulletTex.Release();
 	if (m_bullet.size() != 0)
 	{
@@ -109,7 +133,6 @@ void Player::Move()
 	{
 		m_move.x -= m_speed.x;
 	}
-
 
 	if (m_move.x != 0 || m_move.y != 0)
 	{

@@ -76,9 +76,6 @@
     <Filter Include="Src\Application\Character\Player\Bullet">
       <UniqueIdentifier>{d8dd4e49-4d9c-4c27-b23d-96949a098085}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Hit\Bullet">
-      <UniqueIdentifier>{dca3a955-7188-41a0-9c7e-ac2bff98f933}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -210,9 +207,6 @@
     <ClInclude Include="Src\Application\Character\Player\Bullet\PlayerBullet.h">
       <Filter>Src\Application\Character\Player\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Hit\Bullet\BulletHit.h">
-      <Filter>Src\Application\Hit\Bullet</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -313,9 +307,6 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Character\Player\Bullet\PlayerBullet.cpp">
       <Filter>Src\Application\Character\Player\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Hit\Bullet\BulletHit.cpp">
-      <Filter>Src\Application\Hit\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

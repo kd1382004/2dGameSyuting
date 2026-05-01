@@ -10,7 +10,7 @@ public:
 	// 初期設定
 	//pos...プレイヤーの座標を入れる
 	//deg...プレイヤーの角度を入れる
-	void Init(Math::Vector2 pos,float rad);
+	void Init(Math::Vector2 pos, float rad);
 
 	// 更新処理
 	void Update();
@@ -31,6 +31,18 @@ public:
 
 	//生存フラグを返す
 	bool GetAliveFlg() { return m_aliveFlg; }
+
+	//弾の貫通回数を返す
+	int GetBulletPene() { return m_buletPene; }
+
+	//弾の貫通回数を1減らす
+	void DownBulletPene() {  m_buletPene--; }
+
+	//どの番号の敵と当たったか
+	void SetEnemyNum(int Num) { m_enemuNum = Num; }
+
+	//どの番号の敵と最後に当たったか
+	int GetEnemyNum() { return m_enemuNum ; }
 private:
 
 	KdTexture* m_bulletTex = nullptr;
@@ -45,7 +57,13 @@ private:
 
 	Math::Rectangle m_rec = { 0,0,16,16 };
 
-	float HitDetection = 0.0f;
-	bool m_aliveFlg = false;	
+	float HitDetection = 16.0f;
+	bool m_aliveFlg = false;
 	float m_rad = 0.0f;
+
+	//弾の貫通回数
+	int m_buletPene;
+
+	//何番目の敵に最後当たったか
+	int m_enemuNum;
 };

@@ -23,12 +23,15 @@ public:
 	int GetBulletNum() { return m_bullet.size(); }
 	PlayerBullet* GetBullet(int num);
 
+	//num番目の弾が当たった後の処理
+	void PlayerBulletHit(int num);
+
 private:
 
 	void Release()override;
 
-	//プレイヤー角度
-	float m_deg = 0.0f;
+	//弾の消去
+	void ReleseBuleet(int num);
 
 	//プレイヤー移動関数
 	void Move();
@@ -55,6 +58,8 @@ private:
 	 std::vector< PlayerBullet*> m_bullet;
 	 float m_shotInterval = 0;			//弾の発射間隔管理
 	 float m_shotIntervalMax = 0.5f*60;	//弾の発射間隔(インターバル秒×FPS(60))
+
+
 
 };
 

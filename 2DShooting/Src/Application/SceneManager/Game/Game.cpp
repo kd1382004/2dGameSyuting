@@ -3,7 +3,6 @@
 #include"../../Character/Player/Player.h"
 #include"../../Character/Enemy/EnemyBase.h"
 #include"../../Hit/CharaHit.h"
-#include"../../Hit/Bullet/BulletHit.h"
 
 
 void Game::Init()
@@ -28,7 +27,6 @@ void Game::Init()
 	//“–‚½‚è”»’è
 	m_charaHit = new CharaHit();
 
-	m_bulletHit = new BulletHit();
 }
 
 void Game::Update()
@@ -92,7 +90,7 @@ void Game::Update()
 			//////////////////
 			//“G‚ÆƒvƒŒƒCƒ„[//
 			//////////////////
-			if (m_charaHit->Hit(m_enemy[i], m_player))
+			if (m_charaHit->CharacterHit(m_enemy[i], m_player))
 			{
 				//“–‚½‚Á‚½‚Æ‚«‚Ìˆ—
 
@@ -100,7 +98,29 @@ void Game::Update()
 
 
 				//“G
+				//d‚È‚ç‚È‚¢‚æ‚¤‚ÉÀ•W•â³				
+				const float x = m_enemy[i]->GetPos().x - m_player->GetPos().x;
+				const float y = m_enemy[i]->GetPos().y - m_player->GetPos().y;
+				const float z = sqrt(x * x + y * y);
 
+				//”¼Œa{”¼Œa
+				const float sum = m_enemy[i]->GetHitDetection() / 2 + m_player->GetHitDetection() / 2;
+
+				//d‚È‚è‹ï‡
+				float over = sum - z;
+
+				//“G2‚©‚ç“G1‚Ö‚Ì•ûŒü
+				float nx = x / z;
+				float ny = y / z;
+
+				Math::Vector2 notMove = { 0,0 };
+				if (m_enemy[i]->Getmove() != notMove)//i‚ª“®‚¢‚Ä‚¢‚éê‡
+				{
+					Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
+					enemyiPos.x += nx * over;
+					enemyiPos.y += ny * over;
+					m_enemy[i]->SetPos(enemyiPos);
+				}
 			}
 
 			//////////
@@ -113,13 +133,13 @@ void Game::Update()
 					continue;
 				}
 
-				if (m_charaHit->Hit(m_enemy[i], m_enemy[j]))
+				if (m_charaHit->CharacterHit(m_enemy[i], m_enemy[j]))
 				{
 					//d‚È‚ç‚È‚¢‚æ‚¤‚ÉÀ•W•â³				
 					const float x = m_enemy[i]->GetPos().x - m_enemy[j]->GetPos().x;
 					const float y = m_enemy[i]->GetPos().y - m_enemy[j]->GetPos().y;
 					const float z = sqrt(x * x + y * y);
-					
+
 					//”¼Œa{”¼Œa
 					const float sum = m_enemy[i]->GetHitDetection() / 2 + m_enemy[j]->GetHitDetection() / 2;
 
@@ -134,8 +154,8 @@ void Game::Update()
 					Math::Vector2 notMove = { 0,0 };
 					if (m_enemy[i]->Getmove() != notMove && m_enemy[j]->Getmove() != notMove)//—¼•û“®‚¢‚Ä‚é“G
 					{
-						Math::Vector2 enemyiPos = m_enemy[i]->GetPos(); 
-						Math::Vector2 enemyjPos = m_enemy[j]->GetPos(); 
+						Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
+						Math::Vector2 enemyjPos = m_enemy[j]->GetPos();
 
 						//‚¨Œİ‚¢‚É”¼•ª‚¸‚Â‰Ÿ‚µ•Ô‚·
 						enemyiPos.x += nx * (over * 0.5);
@@ -149,8 +169,8 @@ void Game::Update()
 					else if (m_enemy[i]->Getmove() != notMove)//i‚ª“®‚¢‚Ä‚¢‚éê‡
 					{
 						Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
-						enemyiPos.x += nx * over ;
-						enemyiPos.y += ny * over ;
+						enemyiPos.x += nx * over;
+						enemyiPos.y += ny * over;
 						m_enemy[i]->SetPos(enemyiPos);
 					}
 					else if (m_enemy[j]->Getmove() != notMove)//j‚ª“®‚¢‚Ä‚¢‚éê‡
@@ -166,10 +186,6 @@ void Game::Update()
 			}
 		}
 
-	}
-
-	if (m_bulletHit)
-	{
 		//////////
 		//“G‚Æ’e//
 		//////////
@@ -177,11 +193,12 @@ void Game::Update()
 		{
 			for (int j = 0; j < m_player->GetBulletNum(); j++)
 			{
-				if (m_bulletHit->Hit(m_player->GetBullet(j), m_enemy[i]))
+				if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i],i))
 				{
 					//“–‚½‚Á‚½‚Æ‚«‚Ìˆ—
 
 					//’e
+					m_player->PlayerBulletHit(j);
 
 					//“G
 
@@ -189,6 +206,7 @@ void Game::Update()
 			}
 		}
 	}
+
 
 
 

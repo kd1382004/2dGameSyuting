@@ -63,6 +63,11 @@ protected:
 	//‰~“–‚½‚è”»’è—p•Ï”(’¼Œa‚ğ“ü‚ê‚é)
 	float HitDetection;
 
+	//HP
+	int m_HP;
+
+	//Šp“x
+	float m_deg = 0.0f;
 
 private:
 

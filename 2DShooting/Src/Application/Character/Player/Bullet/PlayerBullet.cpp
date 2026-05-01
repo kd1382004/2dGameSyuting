@@ -3,6 +3,9 @@
 
 void PlayerBullet::Init(Math::Vector2 pos,float deg)
 {
+	m_enemuNum = -1;
+
+	m_buletPene = 1;
 
 	m_pos = pos;
 	HitDetection = 16.0f;

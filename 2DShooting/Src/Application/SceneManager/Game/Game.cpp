@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "../SceneManager.h"
 #include"../../Character/Player/Player.h"
-#include"../../Character/Enemy/EnemyBase.h"
+#include"../../Character/Enemy/Slime/Slime.h"
 #include"../../Hit/CharaHit.h"
 
 
@@ -19,14 +19,13 @@ void Game::Init()
 
 	for (int i = 0; i < 10; i++)
 	{
-		m_enemy.push_back(new EnemyBase());
+		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_enemyBaseTex);
 		m_enemy.back()->Init();
 	}
 
 	//“–‚½‚è”»’è
 	m_charaHit = new CharaHit();
-
 }
 
 void Game::Update()

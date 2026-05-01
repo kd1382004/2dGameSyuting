@@ -8,13 +8,13 @@ public:
 	~EnemyBase() { Release(); }
 
 	// 初期設定
-	virtual void Init()override;
+	virtual void Init() {}
 
 	// 更新処理
-	virtual void Update()override;
+	virtual void Update(){}
 
 	// 描画処理
-	void Draw2D()override;
+	virtual void Draw2D(){}
 
 
 	//追跡用等にプレイヤー座標セット
@@ -28,10 +28,7 @@ public:
 protected:
 
 	// 解放
-	void Release()override;
-
-	//プレイヤーを追跡する
-	void PlayerTrackingMove();
+	virtual void Release(){}
 
 	//追跡用等のプレイヤー座標
 	Math::Vector2 m_plaeyrPos = { 0,0 };

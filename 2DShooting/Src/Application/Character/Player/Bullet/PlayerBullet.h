@@ -48,6 +48,8 @@ public:
 	int GetAtk() { return m_atk; }
 
 	void SetSliveFlg(bool flg) { m_aliveFlg = flg; }
+
+	void MatConfirmed(float scroll);
 private:
 
 	KdTexture* m_bulletTex = nullptr;

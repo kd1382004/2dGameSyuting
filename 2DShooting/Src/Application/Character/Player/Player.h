@@ -19,6 +19,8 @@ public:
 	// 描画処理
 	void Draw2D()override;
 
+	void MatConfirmed(float scroll) override;
+
 	//アニメーションモードの変更
 	void AnimeRec();
 

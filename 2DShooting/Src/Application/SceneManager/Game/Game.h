@@ -5,6 +5,7 @@
 class Player;
 class EnemyBase;
 class CharaHit;
+class Map;
 
 class Game :public SceneBase
 {
@@ -26,6 +27,8 @@ public:
 	int EnemyNum() { return m_enemy.size(); }
 
 	EnemyBase* GetEnemy(int num);
+
+	Math::Vector2 GetPlayerPos();
 
 private:
 
@@ -58,4 +61,9 @@ private:
 	//“–‚½‚è”»’è//
 	//////////////
 	CharaHit* m_charaHit;
+
+	//////////
+	//ƒ}ƒbƒv//
+	//////////
+	Map* m_map;
 };

@@ -43,12 +43,7 @@ void Player::Update()
 	//アニメーション
 	AnimeRec();
 
-	//行列合成
-	//行列作成
-	m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
-	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
-	m_mat = m_scaleMat * m_rotationMat * m_transMat;
+	
 }
 
 void Player::Draw2D()
@@ -64,6 +59,24 @@ void Player::Draw2D()
 
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
 	}
+}
+
+void Player::MatConfirmed(float scroll)
+{
+	if (m_bullet.size() > 0)
+	{
+		for (int i = 0; i < m_bullet.size(); i++)
+		{
+			m_bullet[i]->MatConfirmed(scroll);
+		}
+	}
+
+	//行列合成
+	//行列作成
+	m_transMat = Math::Matrix::CreateTranslation(m_pos.x- scroll, m_pos.y, 0);
+	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
+	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
+	m_mat = m_scaleMat * m_rotationMat * m_transMat;
 }
 
 void Player::AnimeRec()

@@ -17,6 +17,8 @@ public:
 	// •`‰æˆ—
 	void Draw2D()override;
 
+	void MatConfirmed(float scroll)override;
+
 private:
 
 	// ‰ğ•ú

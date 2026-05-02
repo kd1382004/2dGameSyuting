@@ -4,6 +4,7 @@
 #include"../../Character/Enemy/Slime/Slime.h"
 #include"../../Character/Enemy/Skeleton/Skeleton.h"
 #include"../../Hit/CharaHit.h"
+#include"../../Map/Map.h"
 
 
 void Game::Init()
@@ -35,6 +36,12 @@ void Game::Init()
 
 	//当たり判定
 	m_charaHit = new CharaHit();
+
+
+	//マップ
+	m_map = new Map();
+	m_map->Init(Map::MapType::Map1);
+	m_map->setOwner(this);
 }
 
 void Game::Update()
@@ -105,9 +112,6 @@ void Game::Update()
 				//プレイヤー
 
 
-				//敵
-				
-
 
 				//重ならないように座標補正				
 				m_charaHit->Pushback(m_enemy[i], m_player);
@@ -128,8 +132,6 @@ void Game::Update()
 				{
 					//重ならないように座標補正				
 					m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
-					
-
 				}
 			}
 		}
@@ -145,8 +147,6 @@ void Game::Update()
 				{
 					//当たったときの処理
 
-				
-
 					//弾
 					m_player->PlayerBulletHit(j);
 
@@ -156,12 +156,27 @@ void Game::Update()
 			}
 		}
 	}
+	//////////////////////////////////////////////////////////////////////////////
+	//マップ更新
+	m_map->Updata();
 
 
-
-
+	
 
 	//////////////////////////////////////////////////////////////////////////////
+	
+	if (m_player)
+	{
+		m_player->MatConfirmed(m_map->GetScroll());
+	}
+
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		m_enemy[i]->MatConfirmed(m_map->GetScroll());
+	}
+
+
+
 	//////////////////////////////////////////////////////////////////////////////
 	//削除処理
 
@@ -177,11 +192,18 @@ void Game::Update()
 	}
 
 	//球
-	for (int i= 0; i < m_player->GetBulletNum(); i++)
+	for (int i = 0; i < m_player->GetBulletNum(); i++)
 	{
 		m_player->ReleseBuleet(i);
 	}
 
+
+
+	//クリア処理
+	if (m_enemy.size() == 0)
+	{
+		int a = 0;
+	}
 
 
 
@@ -197,6 +219,8 @@ void Game::Update()
 
 void Game::Draw2D()
 {
+	//マップ描画
+	m_map->Draw2D();
 
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
@@ -229,6 +253,16 @@ EnemyBase* Game::GetEnemy(int num)
 	return nullptr;
 }
 
+Math::Vector2 Game::GetPlayerPos()
+{
+	if (m_player)
+	{
+		return m_player->GetPos();
+	}
+
+	return Math::Vector2();
+}
+
 void Game::Release()
 {
 	PtrRelease();
@@ -259,5 +293,10 @@ void Game::PtrRelease()
 	if (m_charaHit)
 	{
 		delete m_charaHit;
+	}
+
+	if (m_map)
+	{
+		delete m_map;
 	}
 }

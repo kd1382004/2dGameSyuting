@@ -21,10 +21,7 @@ void Slime::Update()
 	}
 
 
-	//çsóÒçÏê¨
-	m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
-	m_mat = m_scaleMat * m_transMat;	
+	
 }
 
 void Slime::Draw2D()
@@ -35,6 +32,14 @@ void Slime::Draw2D()
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
 	}
+}
+
+void Slime::MatConfirmed(float scroll)
+{
+	//çsóÒçÏê¨
+	m_transMat = Math::Matrix::CreateTranslation(m_pos.x- scroll, m_pos.y, 0);
+	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
+	m_mat = m_scaleMat * m_transMat;
 }
 
 void Slime::Release()

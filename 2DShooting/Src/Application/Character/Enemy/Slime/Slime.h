@@ -2,11 +2,11 @@
 
 #include"../EnemyBase.h"
 
-class Slime:public EnemyBase
+class Slime :public EnemyBase
 {
 public:
 	Slime() {}
-	~Slime(){}
+	~Slime() {}
 
 	// ‰Šúİ’è
 	void Init()override;
@@ -16,6 +16,8 @@ public:
 
 	// •`‰æˆ—
 	void Draw2D()override;
+
+	void MatConfirmed(float scroll)override;
 
 private:
 

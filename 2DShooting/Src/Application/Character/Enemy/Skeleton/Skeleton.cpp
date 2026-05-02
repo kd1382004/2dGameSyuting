@@ -25,9 +25,7 @@ void Skeleton::Update()
 
 	m_deg = deg;
 
-	m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
-	m_mat = m_rotationMat * m_transMat;
+
 }
 
 void Skeleton::Draw2D()
@@ -38,6 +36,13 @@ void Skeleton::Draw2D()
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
 	}
+}
+
+void Skeleton::MatConfirmed(float scroll)
+{
+	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
+	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
+	m_mat = m_rotationMat * m_transMat;
 }
 
 void Skeleton::Release()

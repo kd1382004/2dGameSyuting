@@ -25,11 +25,6 @@ void PlayerBullet::Update()
 
 	//座標更新
 	m_pos += m_move;
-
-
-	//////////////////
-	//行列
-	m_mat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0) * Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg)) * Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }
 
 void PlayerBullet::Draw2D()
@@ -44,4 +39,11 @@ void PlayerBullet::Draw2D()
 void PlayerBullet::Hit()
 {
 
+}
+
+void PlayerBullet::MatConfirmed(float scroll)
+{
+	//行列合成
+	//行列作成
+	m_mat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0) * Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg)) * Math::Matrix::CreateTranslation(m_pos.x- scroll, m_pos.y, 0);
 }

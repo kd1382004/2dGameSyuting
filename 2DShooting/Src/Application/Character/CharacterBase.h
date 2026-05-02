@@ -30,6 +30,8 @@ public:
 
 	Math::Vector2 Getmove() { return m_move; }
 
+	virtual void MatConfirmed(float scroll) = 0;
+
 protected:
 
 	// ‰ð•ú

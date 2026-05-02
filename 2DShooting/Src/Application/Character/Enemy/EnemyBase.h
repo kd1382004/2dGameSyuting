@@ -18,6 +18,8 @@ public:
 	// 描画処理
 	virtual void Draw2D(){}
 
+	virtual void MatConfirmed(float scroll){}
+
 
 	//追跡用等にプレイヤー座標セット
 	void SetPlayerPos(Math::Vector2 playerPos) {m_plaeyrPos = playerPos;};

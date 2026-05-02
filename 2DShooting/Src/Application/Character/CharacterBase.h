@@ -26,6 +26,10 @@ public:
 	//生存フラグを返す
 	bool GetAliveFlg() { return m_aliveFlg; }
 
+	void SetPos(Math::Vector2 pos) { m_pos = pos; }
+
+	Math::Vector2 Getmove() { return m_move; }
+
 protected:
 
 	// 解放
@@ -45,6 +49,11 @@ protected:
 
 	//キャラの移動量
 	Math::Vector2 m_move;
+
+	//キャラサイズ
+	Math::Vector2 m_siz = { 1,1 };
+
+
 	//合成行列
 	Math::Matrix m_mat;
 
@@ -69,6 +78,7 @@ protected:
 	//角度
 	float m_deg = 0.0f;
 
+	float m_anime = 0;
 private:
 
 };

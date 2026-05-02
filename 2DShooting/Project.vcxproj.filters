@@ -79,6 +79,9 @@
     <Filter Include="Src\Application\Character\Enemy\Slime">
       <UniqueIdentifier>{c8b88ea4-34b3-4e89-8e01-60782d73c18f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Character\Enemy\Skeleton">
+      <UniqueIdentifier>{9901b9ac-dd5b-4659-9a68-00026da1e27c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -213,6 +216,9 @@
     <ClInclude Include="Src\Application\Character\Enemy\Slime\Slime.h">
       <Filter>Src\Application\Character\Enemy\Slime</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Character\Enemy\Skeleton\Skeleton.h">
+      <Filter>Src\Application\Character\Enemy\Skeleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -316,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Character\Enemy\Slime\Slime.cpp">
       <Filter>Src\Application\Character\Enemy\Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Enemy\Skeleton\Skeleton.cpp">
+      <Filter>Src\Application\Character\Enemy\Skeleton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

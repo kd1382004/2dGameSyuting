@@ -19,6 +19,8 @@ public:
 	// 描画処理
 	void Draw2D()override;
 
+	//アニメーションモードの変更
+	void AnimeRec();
 
 	int GetBulletNum() { return m_bullet.size(); }
 	PlayerBullet* GetBullet(int num);
@@ -26,12 +28,18 @@ public:
 	//num番目の弾が当たった後の処理
 	void PlayerBulletHit(int num);
 
-private:
-
-	void Release()override;
-
 	//弾の消去
 	void ReleseBuleet(int num);
+private:
+
+	enum PlayerAniemMode
+	{
+		Nomar,  
+		MoveMode,//移動
+		ATKMode, //攻撃
+	};
+
+	void Release()override;
 
 	//プレイヤー移動関数
 	void Move();
@@ -52,6 +60,8 @@ private:
 	void Shot();
 	void BulletUpdata();
 	void BulletDraw();
+	//撃つかどうか
+	bool m_shotFlg;
 
 	KdTexture m_bulletTex;
 
@@ -60,6 +70,6 @@ private:
 	 float m_shotIntervalMax = 0.5f*60;	//弾の発射間隔(インターバル秒×FPS(60))
 
 
-
+	 PlayerAniemMode m_animeMode = Nomar;;
 };
 

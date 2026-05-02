@@ -14,6 +14,10 @@ public:
 	//false...“–‚½‚Á‚Ä‚È‚¢
 	bool CharacterHit(CharacterBase *chara1, CharacterBase *chara2);
 
+	//“G“¯m‚Ì”½”­ˆ—
+	void Pushback(CharacterBase* chara1, CharacterBase* chara2);
+
+
 	//’e‚ÆƒLƒƒƒ‰‚ª“–‚½‚Á‚½‚©‚Ç‚¤‚©‚ğ•Ô‚·
 	//true...“–‚½‚Á‚½
 	//false...“–‚½‚Á‚Ä‚È‚¢

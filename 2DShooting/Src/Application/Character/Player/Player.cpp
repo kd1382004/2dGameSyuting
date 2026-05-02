@@ -3,11 +3,12 @@
 
 void Player::Init()
 {
-	m_pos = { 0,0 };
-	m_rec = { 0,0,64,64 };
+	m_pos = { 0,-360 };
 	m_speed = { 5.0,5.0 };
 	m_aliveFlg = true;
 	HitDetection = 64;
+	m_siz = { 5,5 };
+	m_shotFlg = false;
 
 	//プレイヤーKey設定
 	m_moveUp = 'W';
@@ -37,13 +38,17 @@ void Player::Update()
 	//弾の更新
 	BulletUpdata();
 
-	//弾
 	//////////////////////////////////////////////
 
+	//アニメーション
+	AnimeRec();
+
 	//行列合成
+	//行列作成
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
-	m_mat = m_rotationMat * m_transMat;
+	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
+	m_mat = m_scaleMat * m_rotationMat * m_transMat;
 }
 
 void Player::Draw2D()
@@ -56,8 +61,54 @@ void Player::Draw2D()
 
 		//プレイヤーの描画
 		SHADER.m_spriteShader.SetMatrix(m_mat);
+
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
 	}
+}
+
+void Player::AnimeRec()
+{
+	//左右移動
+
+	if (m_shotFlg)
+	{
+		m_animeMode = ATKMode;
+	}
+
+	switch (m_animeMode)
+	{
+	case Player::Nomar:
+		break;
+	case Player::MoveMode:
+
+		m_anime += 0.1;
+		if (m_anime > 8)
+		{
+			m_anime = 0;
+		}
+
+		m_rec = { 100 * (int)m_anime,100 * 1,100,100 };
+		break;
+	case Player::ATKMode:
+		m_anime += 0.5;
+		if (m_anime > 8)
+		{
+			m_anime = 0;
+			m_animeMode = Nomar;
+			m_bullet.push_back(new PlayerBullet);
+			m_bullet.back()->Init(m_pos, m_deg);
+			m_bullet.back()->SetTex(&m_bulletTex);
+			m_shotInterval = m_shotIntervalMax;
+			m_shotFlg = false;
+		}
+
+		m_rec = { 100 * (int)m_anime,100 * 4,100,100 };
+		break;
+		break;
+	default:
+		break;
+	}
+
 }
 
 PlayerBullet* Player::GetBullet(int num)
@@ -74,8 +125,12 @@ void Player::ReleseBuleet(int num)
 {
 	if (m_bullet.size() > num && num > 0)
 	{
-		delete m_bullet[num];
-		m_bullet.erase(m_bullet.begin() + num);
+		if (!m_bullet[num]->GetAliveFlg())
+		{
+			delete m_bullet[num];
+			m_bullet.erase(m_bullet.begin() + num);
+
+		}
 	}
 }
 
@@ -88,7 +143,7 @@ void Player::PlayerBulletHit(int num)
 
 		if (m_bullet[num]->GetBulletPene() < 0)
 		{
-			ReleseBuleet(num);
+			m_bullet[num]->SetSliveFlg(false);
 		}
 	}
 
@@ -116,22 +171,42 @@ void Player::Move()
 
 	if (GetAsyncKeyState(m_moveUp) & 0x8000)
 	{
-		m_move.y += m_speed.y;
+		m_move.y++;
+		m_animeMode = MoveMode;
+		if (m_siz.y < 0)
+		{
+			m_siz.y *= -1;
+		}
 	}
 
 	if (GetAsyncKeyState(m_moveDown) & 0x8000)
 	{
-		m_move.y -= m_speed.y;
+		m_move.y--;
+		m_animeMode = MoveMode;
+		if (m_siz.y > 0)
+		{
+			m_siz.y *= -1;
+		}
 	}
 
 	if (GetAsyncKeyState(m_moveRight) & 0x8000)
 	{
-		m_move.x += m_speed.x;
+		m_move.x++;
+		m_animeMode = MoveMode;
+		if (m_siz.y < 0)
+		{
+			m_siz.y *= -1;
+		}
 	}
 
 	if (GetAsyncKeyState(m_moveLeft) & 0x8000)
 	{
-		m_move.x -= m_speed.x;
+		m_move.x--;
+		m_animeMode = MoveMode;
+		if (m_siz.y > 0)
+		{
+			m_siz.y *= -1;
+		}
 	}
 
 	if (m_move.x != 0 || m_move.y != 0)
@@ -148,6 +223,8 @@ void Player::Move()
 		}
 	}
 
+	m_move.Normalize();
+	m_move *= m_speed;
 
 
 	//座標確定
@@ -159,12 +236,11 @@ void Player::Shot()
 	m_shotInterval--;
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		if (m_shotInterval <= 0)
+		if (m_shotInterval <= 0 && !m_shotFlg)
 		{
-			m_bullet.push_back(new PlayerBullet);
-			m_bullet.back()->Init(m_pos, m_deg);
-			m_bullet.back()->SetTex(&m_bulletTex);
-			m_shotInterval = m_shotIntervalMax;
+			m_animeMode = ATKMode;
+			m_anime = 0;
+			m_shotFlg = true;
 		}
 	}
 }

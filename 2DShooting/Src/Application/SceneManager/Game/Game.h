@@ -45,8 +45,13 @@ private:
 	//////
 	//敵//
 	//////
-	KdTexture m_enemyBaseTex;
 	std::vector<EnemyBase*> m_enemy;
+
+	//スライム画像
+	KdTexture m_slimeTex;
+
+	//スケルトン画像
+	KdTexture m_skeletonTex;
 
 
 	//////////////

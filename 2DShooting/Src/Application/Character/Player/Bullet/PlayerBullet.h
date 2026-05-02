@@ -43,6 +43,11 @@ public:
 
 	//どの番号の敵と最後に当たったか
 	int GetEnemyNum() { return m_enemuNum ; }
+
+	//攻撃力ゲッター
+	int GetAtk() { return m_atk; }
+
+	void SetSliveFlg(bool flg) { m_aliveFlg = flg; }
 private:
 
 	KdTexture* m_bulletTex = nullptr;
@@ -53,9 +58,13 @@ private:
 
 	Math::Vector2 m_move = Math::Vector2(0, 0);
 
+	float m_deg;
+
+	Math::Vector2 m_siz;
+
 	Math::Matrix m_mat;
 
-	Math::Rectangle m_rec = { 0,0,16,16 };
+	Math::Rectangle m_rec = { 0,0,32,32 };
 
 	float HitDetection = 16.0f;
 	bool m_aliveFlg = false;
@@ -66,4 +75,7 @@ private:
 
 	//何番目の敵に最後当たったか
 	int m_enemuNum;
+
+	//攻撃力
+	int m_atk=0;
 };

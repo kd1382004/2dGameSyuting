@@ -161,6 +161,7 @@
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\Character\CharacterBase.h" />
     <ClInclude Include="Src\Application\Character\Enemy\EnemyBase.h" />
+    <ClInclude Include="Src\Application\Character\Enemy\Skeleton\Skeleton.h" />
     <ClInclude Include="Src\Application\Character\Enemy\Slime\Slime.h" />
     <ClInclude Include="Src\Application\Character\Player\Bullet\PlayerBullet.h" />
     <ClInclude Include="Src\Application\Character\Player\Player.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\Character\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Src\Application\Character\Enemy\Skeleton\Skeleton.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\Slime\Slime.cpp" />
     <ClCompile Include="Src\Application\Character\Player\Bullet\PlayerBullet.cpp" />
     <ClCompile Include="Src\Application\Character\Player\Player.cpp" />

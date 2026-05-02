@@ -2,6 +2,7 @@
 #include "../SceneManager.h"
 #include"../../Character/Player/Player.h"
 #include"../../Character/Enemy/Slime/Slime.h"
+#include"../../Character/Enemy/Skeleton/Skeleton.h"
 #include"../../Hit/CharaHit.h"
 
 
@@ -15,12 +16,20 @@ void Game::Init()
 
 
 	//“G(ƒx[ƒX)‰Šú‰»
-	m_enemyBaseTex.Load("Tex/Character/Enemy/enemy.png");
+	m_skeletonTex.Load("Tex/Character/Enemy/Skeleton/Skeleton.png");
+	m_slimeTex.Load("Tex/Character/Enemy/Slime/Slime_Green.png");
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		m_enemy.push_back(new Slime());
-		m_enemy.back()->SetTex(&m_enemyBaseTex);
+		m_enemy.back()->SetTex(&m_slimeTex);
+		m_enemy.back()->Init();
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		m_enemy.push_back(new Skeleton());
+		m_enemy.back()->SetTex(&m_skeletonTex);
 		m_enemy.back()->Init();
 	}
 
@@ -97,29 +106,12 @@ void Game::Update()
 
 
 				//“G
+				
+
+
 				//d‚È‚ç‚È‚¢‚æ‚¤‚ÉÀ•W•â³				
-				const float x = m_enemy[i]->GetPos().x - m_player->GetPos().x;
-				const float y = m_enemy[i]->GetPos().y - m_player->GetPos().y;
-				const float z = sqrt(x * x + y * y);
+				m_charaHit->Pushback(m_enemy[i], m_player);
 
-				//”¼Œa{”¼Œa
-				const float sum = m_enemy[i]->GetHitDetection() / 2 + m_player->GetHitDetection() / 2;
-
-				//d‚È‚è‹ï‡
-				float over = sum - z;
-
-				//“G2‚©‚ç“G1‚Ö‚Ì•ûŒü
-				float nx = x / z;
-				float ny = y / z;
-
-				Math::Vector2 notMove = { 0,0 };
-				if (m_enemy[i]->Getmove() != notMove)//i‚ª“®‚¢‚Ä‚¢‚éê‡
-				{
-					Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
-					enemyiPos.x += nx * over;
-					enemyiPos.y += ny * over;
-					m_enemy[i]->SetPos(enemyiPos);
-				}
 			}
 
 			//////////
@@ -135,51 +127,8 @@ void Game::Update()
 				if (m_charaHit->CharacterHit(m_enemy[i], m_enemy[j]))
 				{
 					//d‚È‚ç‚È‚¢‚æ‚¤‚ÉÀ•W•â³				
-					const float x = m_enemy[i]->GetPos().x - m_enemy[j]->GetPos().x;
-					const float y = m_enemy[i]->GetPos().y - m_enemy[j]->GetPos().y;
-					const float z = sqrt(x * x + y * y);
-
-					//”¼Œa{”¼Œa
-					const float sum = m_enemy[i]->GetHitDetection() / 2 + m_enemy[j]->GetHitDetection() / 2;
-
-					//d‚È‚è‹ï‡
-					float over = sum - z;
-
-					//“G2‚©‚ç“G1‚Ö‚Ì•ûŒü
-					float nx = x / z;
-					float ny = y / z;
-
-
-					Math::Vector2 notMove = { 0,0 };
-					if (m_enemy[i]->Getmove() != notMove && m_enemy[j]->Getmove() != notMove)//—¼•û“®‚¢‚Ä‚é“G
-					{
-						Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
-						Math::Vector2 enemyjPos = m_enemy[j]->GetPos();
-
-						//‚¨Œİ‚¢‚É”¼•ª‚¸‚Â‰Ÿ‚µ•Ô‚·
-						enemyiPos.x += nx * (over * 0.5);
-						enemyiPos.y += ny * (over * 0.5);
-						enemyjPos.x -= nx * (over * 0.5);
-						enemyjPos.y -= nx * (over * 0.5);
-
-						m_enemy[i]->SetPos(enemyiPos);
-						m_enemy[j]->SetPos(enemyjPos);
-					}
-					else if (m_enemy[i]->Getmove() != notMove)//i‚ª“®‚¢‚Ä‚¢‚éê‡
-					{
-						Math::Vector2 enemyiPos = m_enemy[i]->GetPos();
-						enemyiPos.x += nx * over;
-						enemyiPos.y += ny * over;
-						m_enemy[i]->SetPos(enemyiPos);
-					}
-					else if (m_enemy[j]->Getmove() != notMove)//j‚ª“®‚¢‚Ä‚¢‚éê‡
-					{
-						Math::Vector2 enemyjPos = m_enemy[j]->GetPos();
-						enemyjPos.x -= nx * (over * 0.5);
-						enemyjPos.y -= nx * (over * 0.5);
-						m_enemy[i]->SetPos(enemyjPos);
-					}
-
+					m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
+					
 
 				}
 			}
@@ -192,15 +141,17 @@ void Game::Update()
 		{
 			for (int j = 0; j < m_player->GetBulletNum(); j++)
 			{
-				if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i],i))
+				if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
 				{
 					//“–‚½‚Á‚½‚Æ‚«‚Ìˆ—
+
+				
 
 					//’e
 					m_player->PlayerBulletHit(j);
 
 					//“G
-
+					m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
 				}
 			}
 		}
@@ -212,7 +163,30 @@ void Game::Update()
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
+	//íœˆ—
 
+	//“G
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		if (!m_enemy[i]->GetAliveFlg())
+		{
+			delete m_enemy[i];
+			m_enemy.erase(m_enemy.begin() + i);
+			i--;
+		}
+	}
+
+	//‹…
+	for (int i= 0; i < m_player->GetBulletNum(); i++)
+	{
+		m_player->ReleseBuleet(i);
+	}
+
+
+
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
 
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	if (GetAsyncKeyState('R') & 0x8000)
@@ -272,7 +246,8 @@ void Game::PtrRelease()
 			i--;
 		}
 	}
-	m_enemyBaseTex.Release();
+	m_skeletonTex.Release();
+	m_slimeTex.Release();
 
 
 	if (m_player)

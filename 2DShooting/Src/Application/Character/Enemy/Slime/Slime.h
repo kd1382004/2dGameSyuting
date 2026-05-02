@@ -20,9 +20,8 @@ public:
 private:
 
 	// ‰ğ•ú
-	virtual void Release()override;
+	void Release()override;
 
 	//ƒvƒŒƒCƒ„[‚ğ’ÇÕ‚·‚é
 	void PlayerTrackingMove();
-
 };

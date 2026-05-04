@@ -116,7 +116,7 @@ void Game::Update()
 
 
 				//重ならないように座標補正				
-				m_charaHit->Pushback(m_enemy[i], m_player);
+				//m_charaHit->Pushback(m_enemy[i], m_player);
 
 			}
 
@@ -215,11 +215,18 @@ void Game::Update()
 	}
 
 
-
+	//////////////////////////////////////////////////////////////////////////////
 	//クリア処理(敵の数が0になる)
 	if (m_enemy.size() == 0)
 	{
-		int a = 0;
+		m_stageClearFlg = true;
+	}
+
+
+	//ステージがclearされていたら
+	if (m_stageClearFlg)
+	{
+		
 	}
 
 

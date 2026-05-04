@@ -83,6 +83,8 @@ protected:
 	//HP
 	int m_HP;
 
+	int m_MaxHP;
+
 	//Šp“x
 	float m_deg = 0.0f;
 

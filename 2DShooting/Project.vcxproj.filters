@@ -82,6 +82,9 @@
     <Filter Include="Src\Application\Character\Enemy\Skeleton">
       <UniqueIdentifier>{9901b9ac-dd5b-4659-9a68-00026da1e27c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Character\Player\HpBer">
+      <UniqueIdentifier>{e74685b7-84a5-4306-9f49-e2b77850cd70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -219,6 +222,9 @@
     <ClInclude Include="Src\Application\Character\Enemy\Skeleton\Skeleton.h">
       <Filter>Src\Application\Character\Enemy\Skeleton</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Character\Player\HpBer\HpBer.h">
+      <Filter>Src\Application\Character\Player\HpBer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -325,6 +331,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Character\Enemy\Skeleton\Skeleton.cpp">
       <Filter>Src\Application\Character\Enemy\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Player\HpBer\HpBer.cpp">
+      <Filter>Src\Application\Character\Player\HpBer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

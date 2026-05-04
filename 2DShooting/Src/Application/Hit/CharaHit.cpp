@@ -10,17 +10,7 @@ bool CharaHit::CharacterHit(CharacterBase* chara1, CharacterBase* chara2)
 		return false;
 	}
 
-
-
 	bool hitFlg = false;
-
-	//Math::Vector2 charaPos1 = chara1->GetPos();
-	//Math::Vector2 charaPos2 = chara2->GetPos();
-
-
-	//int a = charaPos1.x - charaPos2.x;
-	//int b = charaPos1.y - charaPos2.y;
-	//float c = sqrt(a * a + b * b);
 
 	Math::Vector2 c = chara1->GetPos() - chara2->GetPos();
 
@@ -35,6 +25,12 @@ bool CharaHit::CharacterHit(CharacterBase* chara1, CharacterBase* chara2)
 
 void CharaHit::Pushback(CharacterBase* chara1, CharacterBase* chara2)
 {
+
+	if (!chara1->GetAliveFlg() || !chara2->GetAliveFlg())
+	{
+		return;
+	}
+
 	const float x = chara1->GetPos().x - chara2->GetPos().x;
 	const float y = chara1->GetPos().y - chara2->GetPos().y;
 	const float z = sqrt(x * x + y * y);
@@ -83,7 +79,7 @@ void CharaHit::Pushback(CharacterBase* chara1, CharacterBase* chara2)
 
 bool CharaHit::BulletHit(PlayerBullet* bullet, CharacterBase* enemy,int enemyNum)
 {
-	if (!bullet->GetAliveFlg() && !enemy->GetAliveFlg())
+	if (!bullet->GetAliveFlg() || !enemy->GetAliveFlg())
 	{
 		return false;
 	}

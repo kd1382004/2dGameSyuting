@@ -67,4 +67,7 @@ private:
 	//マップ//
 	//////////
 	Map* m_map;
+
+	//ステージクリアフラグ
+	bool m_stageClearFlg = false;
 };

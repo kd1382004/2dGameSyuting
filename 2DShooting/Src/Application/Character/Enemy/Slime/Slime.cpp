@@ -5,7 +5,7 @@ void Slime::Init()
 	m_aliveFlg = true;
 	HitDetection = 64;
 	m_pos = { (float)(rand() % 1280 - 640),(float)(rand() % 720 - 360) };
-	m_HP = 10;
+	m_HP = 100;
 	m_siz = { 2,2 };
 }
 

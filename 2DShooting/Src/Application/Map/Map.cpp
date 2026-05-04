@@ -208,7 +208,7 @@ void Map::LodMapData1()
 	int yNum = 0;
 	for (int i = 0; i < m_mapDeta.size(); i++)
 	{
-		m_mapPos.push_back({ -640 + (xNum * (float)m_mapBlocSiz),360 - (yNum * (float)m_mapBlocSiz) });
+		m_mapPos.push_back({ -640 + (xNum * (float)m_mapBlocSiz),(360 - (float)m_mapBlocSiz) - (yNum * (float)m_mapBlocSiz) });
 		xNum++;
 		if (m_mapDeta[i] == -999)
 		{

@@ -30,7 +30,7 @@ void Skeleton::Update()
 
 void Skeleton::Draw2D()
 {
-	if (m_aliveFlg)
+	if (!m_deleteFlg)
 	{
 		m_rec = { 64,64 };
 		SHADER.m_spriteShader.SetMatrix(m_mat);
@@ -40,6 +40,11 @@ void Skeleton::Draw2D()
 
 void Skeleton::MatConfirmed(float scroll)
 {
+	if (!m_aliveFlg)
+	{
+		m_deleteFlg = true;
+	}
+
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_mat = m_rotationMat * m_transMat;

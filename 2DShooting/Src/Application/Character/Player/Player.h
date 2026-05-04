@@ -2,6 +2,7 @@
 #include "../CharacterBase.h"
 
 class PlayerBullet;
+class  PlayerHpBer;
 
 class Player: public CharacterBase
 {
@@ -76,7 +77,7 @@ private:
 
 	 std::vector< PlayerBullet*> m_bullet;
 	 float m_shotInterval = 0;			//’e‚Ì”­ËŠÔŠuŠÇ—
-	 float m_shotIntervalMax = 0.5f*60;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
+	 float m_shotIntervalMax = 0.5f*0;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
 
 
 	 PlayerAniemMode m_animeMode = Nomar;
@@ -88,5 +89,8 @@ private:
 
 	 //¶‰E2•ûŒü+ƒVƒ‡ƒbƒg
 	 bool m_3LRShotFlg = false;
+
+
+	 PlayerHpBer* m_hpBer;
 };
 

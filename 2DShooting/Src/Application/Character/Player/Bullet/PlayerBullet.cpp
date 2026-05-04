@@ -4,7 +4,7 @@
 void PlayerBullet::Init(Math::Vector2 pos, float deg)
 {
 	m_enemuNum = -1;
-	m_buletPeneNum = 1;
+	m_buletPeneNum = 5;
 	m_boundNum = 1;
 	m_deg = deg;
 	m_siz = { 3,3 };

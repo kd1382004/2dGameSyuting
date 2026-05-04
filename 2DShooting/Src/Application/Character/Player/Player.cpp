@@ -1,5 +1,6 @@
 #include "Player.h"
 #include"Bullet/PlayerBullet.h"
+#include"HpBer/HpBer.h"
 
 void Player::Init()
 {
@@ -22,7 +23,12 @@ void Player::Init()
 
 
 	m_deg = 90;
-	m_HP = 10;
+
+	m_MaxHP = 100;
+	m_HP = m_MaxHP;
+
+	m_hpBer = new PlayerHpBer();
+	m_hpBer->Init();
 }
 
 void Player::Update()
@@ -62,6 +68,7 @@ void Player::Draw2D()
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
 		
 
+		m_hpBer->Drow2D();
 	}
 }
 
@@ -73,6 +80,13 @@ void Player::MatConfirmed(float scroll)
 		{
 			m_bullet[i]->MatConfirmed(scroll);
 		}
+	}
+
+	if (m_hpBer)
+	{
+		m_hpBer->SetPlayerPos(m_pos);
+		m_hpBer->SetHPPercent((float)m_HP/ m_MaxHP);
+		m_hpBer->MatConfirmed(scroll);
 	}
 
 	//çsóÒçáê¨
@@ -124,6 +138,8 @@ void Player::AnimeRec()
 
 			m_shotInterval = m_shotIntervalMax;
 			m_shotFlg = false;
+
+			m_HP--;
 		}
 
 		m_rec = { 100 * (int)m_anime,100 * 4,100,100 };
@@ -184,6 +200,11 @@ void Player::Release()
 			m_bullet.erase(m_bullet.begin() + i);
 			i--;
 		}
+	}
+
+	if (m_hpBer)
+	{
+		delete m_hpBer;
 	}
 
 }
@@ -249,7 +270,6 @@ void Player::Move()
 
 	m_move.Normalize();
 	m_move *= m_speed;
-
 
 	//ç¿ïWämíË
 	m_pos += m_move;

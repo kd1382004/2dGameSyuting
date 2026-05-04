@@ -85,6 +85,33 @@
     <Filter Include="Src\Application\Character\Player\HpBer">
       <UniqueIdentifier>{e74685b7-84a5-4306-9f49-e2b77850cd70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Map\MapObject\WarpObject">
+      <UniqueIdentifier>{beb4aa56-76f6-4907-8ae8-0515632c8453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen">
+      <UniqueIdentifier>{84c66ce1-4d67-4198-b13e-528a7858fac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot">
+      <UniqueIdentifier>{39789b30-9bec-4562-a20f-7279ad7c0897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot">
+      <UniqueIdentifier>{31189936-2375-4ba9-98d9-e7ecc6ede50e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound">
+      <UniqueIdentifier>{40309849-fbd5-468a-8ed0-a391b8368dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot">
+      <UniqueIdentifier>{1820fa50-51a4-4b07-ab11-26d667053209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Character\Player\PowerUpInfo">
+      <UniqueIdentifier>{b8dff413-f071-40fa-a058-4fafd3b82a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Info">
+      <UniqueIdentifier>{6cf745dd-458f-4dbd-a589-0d76bb010fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Info\InfoKey">
+      <UniqueIdentifier>{e4a7d957-383d-43bb-a573-eee286366681}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -225,6 +252,33 @@
     <ClInclude Include="Src\Application\Character\Player\HpBer\HpBer.h">
       <Filter>Src\Application\Character\Player\HpBer</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Map\MapObject\WarpObject\WarpObject.h">
+      <Filter>Src\Application\Map\MapObject\WarpObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpScreen.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot\PowerUp3WShot.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBase.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot\PowerupRLShot.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound\PowerUpBound.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot\PowerupPeneShot.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Character\Player\PowerUpInfo\PowerUpInfo.h">
+      <Filter>Src\Application\Character\Player\PowerUpInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Info\InfoKey\InfoKey.h">
+      <Filter>Src\Application\Info\InfoKey</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -334,6 +388,30 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Character\Player\HpBer\HpBer.cpp">
       <Filter>Src\Application\Character\Player\HpBer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Map\MapObject\WarpObject\WarpObject.cpp">
+      <Filter>Src\Application\Map\MapObject\WarpObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpScreen.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot\PowerUp3WShot.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBase.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot\PowerupRLShot.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound\PowerUpBound.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot\PowerupPeneShot.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Info\InfoKey\InfoKey.cpp">
+      <Filter>Src\Application\Info\InfoKey</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 
 class PlayerBullet;
 class  PlayerHpBer;
+class  PlayerPowerUpInfo;
 
 class Player: public CharacterBase
 {
@@ -82,15 +83,8 @@ private:
 
 	 PlayerAniemMode m_animeMode = Nomar;
 
-
-	 //前方2方向+ショット
-	 bool m_3WShotFlg = false;
-
-
-	 //左右2方向+ショット
-	 bool m_3LRShotFlg = false;
-
-
 	 PlayerHpBer* m_hpBer;
+
+	 PlayerPowerUpInfo* m_info;
 };
 

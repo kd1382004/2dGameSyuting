@@ -1,5 +1,7 @@
 #pragma once
 
+class PlayerPowerUpInfo;
+
 class PlayerBullet
 {
 public:
@@ -10,7 +12,8 @@ public:
 	// 初期設定
 	//pos...プレイヤーの座標を入れる
 	//deg...プレイヤーの角度を入れる
-	void Init(Math::Vector2 pos, float rad);
+	//Info...PlayerPowerUpInfonのアドレス
+	void Init(Math::Vector2 pos, float rad, PlayerPowerUpInfo *Info);
 
 	// 更新処理
 	void Update();
@@ -80,15 +83,15 @@ private:
 	bool m_aliveFlg = false;
 	float m_rad = 0.0f;
 
-	//弾の貫通回数
-	int m_buletPeneNum;
-
-	//弾のバウンド回数
-	int m_boundNum;
-
 	//何番目の敵に最後当たったか
 	int m_enemuNum;
 
+	//弾の貫通回数
+	int m_buletPeneNum = 0;
+
+	//弾のバウンド回数
+	int m_boundNum = 0;
+
 	//攻撃力
-	int m_atk=0;
+	int m_atk = 0;
 };

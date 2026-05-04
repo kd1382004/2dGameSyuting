@@ -1,14 +1,14 @@
 #include "PlayerBullet.h"
+#include"../PowerUpInfo/PowerUpInfo.h"
 
-
-void PlayerBullet::Init(Math::Vector2 pos, float deg)
+void PlayerBullet::Init(Math::Vector2 pos, float deg, PlayerPowerUpInfo* Info)
 {
 	m_enemuNum = -1;
-	m_buletPeneNum = 5;
-	m_boundNum = 1;
+	m_buletPeneNum = Info->GetBuletPeneNum();
+	m_boundNum = Info->GetBoundNum();
+	m_atk = 10;
 	m_deg = deg;
 	m_siz = { 3,3 };
-	m_atk = 10;
 	m_pos = pos;
 	HitDetection = 16.0f;
 	m_aliveFlg = true;

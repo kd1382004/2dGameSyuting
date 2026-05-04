@@ -5,6 +5,7 @@
 #include"../../Character/Enemy/Skeleton/Skeleton.h"
 #include"../../Hit/CharaHit.h"
 #include"../../Map/Map.h"
+#include"PowerUpScreen/PowerUpScreen.h"
 
 
 void Game::Init()
@@ -22,14 +23,14 @@ void Game::Init()
 	m_skeletonTex.Load("Tex/Character/Enemy/Skeleton/Skeleton.png");
 	m_slimeTex.Load("Tex/Character/Enemy/Slime/Slime_Green.png");
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_slimeTex);
 		m_enemy.back()->Init();
 	}
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		m_enemy.push_back(new Skeleton());
 		m_enemy.back()->SetTex(&m_skeletonTex);
@@ -44,6 +45,9 @@ void Game::Init()
 	m_map = new Map();
 	m_map->Init(Map::MapType::Map1);
 	m_map->setOwner(this);
+
+	//強化画面
+	m_powerUpScreen = new PowerUpScreen();
 }
 
 void Game::Update()
@@ -51,137 +55,143 @@ void Game::Update()
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
-
-
-	//////////////
-	//プレイヤー//
-	//////////////
-	if (m_player)
+	//強化画面じゃなかったら
+	if (!m_powerUpScreenFlg)
 	{
-		/////////////////////
-		//プレイヤー　更新//
-		////////////////////
-		m_player->Update();
-	}
 
-
-	//////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
-
-
-	//////
-	//敵//
-	//////
-	for (int i = 0; i < m_enemy.size(); i++)
-	{
-		if (m_enemy[i])
+		//////////////
+		//プレイヤー//
+		//////////////
+		if (m_player)
 		{
-			if (m_player)
-			{
-				////////////////////////////
-				//敵にプレイヤー座標セット//
-				////////////////////////////
-				m_enemy[i]->SetPlayerPos(m_player->GetPos());
-			}
-
-
-			////////////
-			//敵　更新//
-			////////////
-			m_enemy[i]->Update();
+			/////////////////////
+			//プレイヤー　更新//
+			////////////////////
+			m_player->Update();
 		}
-	}
 
 
-	//////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 
 
-	//////////////
-	//当たり判定//
-	//////////////
-	if (m_charaHit)
-	{
+		//////
+		//敵//
+		//////
 		for (int i = 0; i < m_enemy.size(); i++)
 		{
-			//////////////////
-			//敵とプレイヤー//
-			//////////////////
-			if (m_charaHit->CharacterHit(m_enemy[i], m_player))
+			if (m_enemy[i])
 			{
-				//当たったときの処理
-
-				//プレイヤー
-
-
-
-				//重ならないように座標補正				
-				//m_charaHit->Pushback(m_enemy[i], m_player);
-
-			}
-
-			//////////
-			//敵同士//
-			/////////
-			for (int j = i; j < m_enemy.size(); j++)
-			{
-				if (j == i)
+				if (m_player)
 				{
-					continue;
+					////////////////////////////
+					//敵にプレイヤー座標セット//
+					////////////////////////////
+					m_enemy[i]->SetPlayerPos(m_player->GetPos());
 				}
 
-				if (m_charaHit->CharacterHit(m_enemy[i], m_enemy[j]))
-				{
-					//重ならないように座標補正				
-					m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
-				}
+
+				////////////
+				//敵　更新//
+				////////////
+				m_enemy[i]->Update();
 			}
 		}
 
-		//////////
-		//敵と弾//
-		//////////
-		for (int i = 0; i < m_enemy.size(); i++)
+
+		//////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
+
+
+		//////////////
+		//当たり判定//
+		//////////////
+		if (m_charaHit)
 		{
-			for (int j = 0; j < m_player->GetBulletNum(); j++)
+			for (int i = 0; i < m_enemy.size(); i++)
 			{
-				if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
+				//////////////////
+				//敵とプレイヤー//
+				//////////////////
+				if (m_charaHit->CharacterHit(m_enemy[i], m_player))
 				{
 					//当たったときの処理
 
-					//弾
-					m_player->PlayerBulletHit(j);
+					//プレイヤー
 
-					//敵
-					m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
+
+
+					//重ならないように座標補正				
+					//m_charaHit->Pushback(m_enemy[i], m_player);
+
+				}
+
+				//////////
+				//敵同士//
+				/////////
+				for (int j = i; j < m_enemy.size(); j++)
+				{
+					if (j == i)
+					{
+						continue;
+					}
+
+					if (m_charaHit->CharacterHit(m_enemy[i], m_enemy[j]))
+					{
+						//重ならないように座標補正				
+						m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
+					}
+				}
+			}
+
+			//////////
+			//敵と弾//
+			//////////
+			for (int i = 0; i < m_enemy.size(); i++)
+			{
+				for (int j = 0; j < m_player->GetBulletNum(); j++)
+				{
+					if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
+					{
+						//当たったときの処理
+
+						//弾
+						m_player->PlayerBulletHit(j);
+
+						//敵
+						m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
+					}
 				}
 			}
 		}
-	}
 
-	if (m_map)
+		if (m_map)
+		{
+			m_map->MapHit(m_player);
+			for (int i = 0; i < m_enemy.size(); i++)
+			{
+				m_map->MapHit(m_enemy[i]);
+			}
+
+			for (int j = 0; j < m_player->GetBulletNum(); j++)
+			{
+				m_map->MapHit(m_player->GetBullet(j));
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////////////
+		//マップ更新
+		m_map->Updata();
+	}
+	else
 	{
-		m_map->MapHit(m_player);
-		for (int i = 0; i < m_enemy.size(); i++)
-		{
-			m_map->MapHit(m_enemy[i]);
-		}
-
-		for (int j = 0; j < m_player->GetBulletNum(); j++)
-		{
-			m_map->MapHit(m_player->GetBullet(j));
-		}
+		m_powerUpScreen->Update();
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
-	//マップ更新
-	m_map->Updata();
 
-
-	
 
 	//////////////////////////////////////////////////////////////////////////////
-	
+
 	if (m_player)
 	{
 		m_player->MatConfirmed(m_map->GetScroll());
@@ -217,7 +227,7 @@ void Game::Update()
 
 	//////////////////////////////////////////////////////////////////////////////
 	//クリア処理(敵の数が0になる)
-	if (m_enemy.size() == 0)
+	if (m_enemy.size() == 0 && !m_stageClearFlg)
 	{
 		m_stageClearFlg = true;
 	}
@@ -226,7 +236,14 @@ void Game::Update()
 	//ステージがclearされていたら
 	if (m_stageClearFlg)
 	{
-		
+		if (!m_powerUpScreenFlg)
+		{
+			if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+			{
+				m_powerUpScreenFlg = true;
+				m_powerUpScreen->Init();
+			}
+		}
 	}
 
 
@@ -260,6 +277,10 @@ void Game::Draw2D()
 		m_player->Draw2D();
 	}
 
+	if (m_powerUpScreenFlg)
+	{
+		m_powerUpScreen->Draw2D();
+	}
 
 	// 文字列表示
 	SHADER.m_spriteShader.DrawString(0, 100, "ゲーム Rで変更", Math::Vector4(1, 1, 0, 1));

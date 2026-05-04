@@ -4,21 +4,19 @@ class MapObject
 {
 public:
 	MapObject() {};
-	~MapObject() { Release(); };
+	virtual ~MapObject() { Release(); };
 
 
 	//オブジェクトの情報を入れる
 	//pos...座標
 	//rec...切り取り範囲
-	void Init(Math::Vector2 pos, Math::Rectangle rec);
-
-
-	void Updata();
-	void Draw2D();
+	virtual void Init(Math::Vector2 pos, Math::Rectangle rec);
+	virtual void Updata();
+	virtual void Draw2D();
 
 	void SetTex(KdTexture* tex) { m_tex = tex; }
 
-private:
+protected:
 
 	KdTexture* m_tex;
 
@@ -34,5 +32,7 @@ private:
 	//行列
 	Math::Matrix m_mat;
 
-	void Release();
+	virtual void Release();
+
+	int m_animeMax = 0;
 };

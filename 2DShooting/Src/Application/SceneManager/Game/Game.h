@@ -6,6 +6,7 @@ class Player;
 class EnemyBase;
 class CharaHit;
 class Map;
+class PowerUpScreen;
 
 class Game :public SceneBase
 {
@@ -68,6 +69,14 @@ private:
 	//////////
 	Map* m_map;
 
+
+
 	//ステージクリアフラグ
 	bool m_stageClearFlg = false;
+
+	////////////
+	//強化画面//
+	////////////
+	PowerUpScreen* m_powerUpScreen;
+	bool m_powerUpScreenFlg;
 };

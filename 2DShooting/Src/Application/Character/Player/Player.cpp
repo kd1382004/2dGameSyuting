@@ -1,6 +1,8 @@
 #include "Player.h"
 #include"Bullet/PlayerBullet.h"
 #include"HpBer/HpBer.h"
+#include"PowerUpInfo/PowerUpInfo.h"
+#include"../../Info/InfoKey/InfoKey.h"
 
 void Player::Init()
 {
@@ -21,14 +23,13 @@ void Player::Init()
 
 	m_bulletTex.Load("Tex/Character/Player/Bullet/bullet.png");
 
-
-	m_deg = 90;
-
 	m_MaxHP = 100;
 	m_HP = m_MaxHP;
 
 	m_hpBer = new PlayerHpBer();
 	m_hpBer->Init();
+
+	m_info = new  PlayerPowerUpInfo();
 }
 
 void Player::Update()
@@ -132,9 +133,7 @@ void Player::AnimeRec()
 			m_anime = 0;
 			m_animeMode = Nomar;
 
-			m_3WShotFlg = true;
-			m_3LRShotFlg = true;
-			Shot(m_3WShotFlg, m_3LRShotFlg);
+			Shot(m_info->Get3WShotFlg(), m_info->Get3LRShotFlg());
 
 			m_shotInterval = m_shotIntervalMax;
 			m_shotFlg = false;
@@ -214,7 +213,8 @@ void Player::Move()
 	//à⁄ìÆó èâä˙âª
 	m_move = { 0,0 };
 
-	if (GetAsyncKeyState(m_moveUp) & 0x8000)
+
+	if (InfoKeyAPP.KeyPush(m_moveUp))
 	{
 		m_move.y++;
 		m_animeMode = MoveMode;
@@ -224,7 +224,8 @@ void Player::Move()
 		}
 	}
 
-	if (GetAsyncKeyState(m_moveDown) & 0x8000)
+
+	if (InfoKeyAPP.KeyPush(m_moveDown))
 	{
 		m_move.y--;
 		m_animeMode = MoveMode;
@@ -234,7 +235,8 @@ void Player::Move()
 		}
 	}
 
-	if (GetAsyncKeyState(m_moveRight) & 0x8000)
+	
+	if (InfoKeyAPP.KeyPush(m_moveRight))
 	{
 		m_move.x++;
 		m_animeMode = MoveMode;
@@ -244,7 +246,7 @@ void Player::Move()
 		}
 	}
 
-	if (GetAsyncKeyState(m_moveLeft) & 0x8000)
+	if (InfoKeyAPP.KeyPush(m_moveLeft))
 	{
 		m_move.x--;
 		m_animeMode = MoveMode;
@@ -278,7 +280,7 @@ void Player::Move()
 void Player::Shot()
 {
 	m_shotInterval--;
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	if (InfoKeyAPP.KeyPush(VK_SPACE))
 	{
 		if (m_shotInterval <= 0 && !m_shotFlg)
 		{
@@ -292,7 +294,7 @@ void Player::Shot()
 void Player::Shot(bool _3WShotFlg,bool _3LRShotFlg)
 {
 	m_bullet.push_back(new PlayerBullet);
-	m_bullet.back()->Init(m_pos, m_deg);
+	m_bullet.back()->Init(m_pos, m_deg, m_info);
 	m_bullet.back()->SetTex(&m_bulletTex);
 
 	if (_3WShotFlg)
@@ -302,7 +304,7 @@ void Player::Shot(bool _3WShotFlg,bool _3LRShotFlg)
 		for (int i = 0; i < 2; i++)
 		{
 			m_bullet.push_back(new PlayerBullet);
-			m_bullet.back()->Init(m_pos, deg);
+			m_bullet.back()->Init(m_pos, deg, m_info);
 			m_bullet.back()->SetTex(&m_bulletTex);
 			deg += 90;
 		}
@@ -315,7 +317,7 @@ void Player::Shot(bool _3WShotFlg,bool _3LRShotFlg)
 		for (int i = 0; i < 2; i++)
 		{
 			m_bullet.push_back(new PlayerBullet);
-			m_bullet.back()->Init(m_pos, deg);
+			m_bullet.back()->Init(m_pos, deg, m_info);
 			m_bullet.back()->SetTex(&m_bulletTex);
 			deg += 180;
 		}

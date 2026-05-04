@@ -9,6 +9,7 @@ void EnemyBase::PlayerBulletHit(PlayerBullet* bullet)
 	if (m_HP <= 0)
 	{
 		m_aliveFlg = false;
+		m_anime = 0;
 	}
 }
 

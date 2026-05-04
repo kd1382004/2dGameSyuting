@@ -11,13 +11,21 @@ void Slime::Init()
 
 void Slime::Update()
 {
-	PlayerTrackingMove();
+	if (m_aliveFlg)
+	{
+		PlayerTrackingMove();
+	}
+
 
 	//アニメーション
 	m_anime += 0.3;
 	if (m_anime > 8)
 	{
 		m_anime = 0;
+		if (!m_aliveFlg)
+		{
+			m_deleteFlg = true;
+		}
 	}
 
 
@@ -26,9 +34,18 @@ void Slime::Update()
 
 void Slime::Draw2D()
 {
-	if (m_aliveFlg)
+	if (!m_deleteFlg)
 	{
-		m_rec = { 512 / 8 * (int)m_anime,192 / 3 * 1, 512 / 8,192 / 3 };
+		if (!m_aliveFlg)
+		{
+			m_rec = { 512 / 8 * (int)m_anime,192 / 3 * 2, 512 / 8,192 / 3 };
+		}
+		else
+		{
+			m_rec = { 512 / 8 * (int)m_anime,192 / 3 * 1, 512 / 8,192 / 3 };
+		}
+
+		
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
 	}

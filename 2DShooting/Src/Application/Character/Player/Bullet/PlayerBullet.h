@@ -33,10 +33,10 @@ public:
 	bool GetAliveFlg() { return m_aliveFlg; }
 
 	//弾の貫通回数を返す
-	int GetBulletPene() { return m_buletPene; }
+	int GetBulletPeneNum() { return m_buletPeneNum; }
 
 	//弾の貫通回数を1減らす
-	void DownBulletPene() {  m_buletPene--; }
+	void DownBulletPeneNum() {  m_buletPeneNum--; }
 
 	//どの番号の敵と当たったか
 	void SetEnemyNum(int Num) { m_enemuNum = Num; }
@@ -50,6 +50,14 @@ public:
 	void SetSliveFlg(bool flg) { m_aliveFlg = flg; }
 
 	void MatConfirmed(float scroll);
+
+	//v...壁の法線ベクトル
+	void MapHit(Math::Vector2 v1);
+
+
+
+	
+
 private:
 
 	KdTexture* m_bulletTex = nullptr;
@@ -73,7 +81,10 @@ private:
 	float m_rad = 0.0f;
 
 	//弾の貫通回数
-	int m_buletPene;
+	int m_buletPeneNum;
+
+	//弾のバウンド回数
+	int m_boundNum;
 
 	//何番目の敵に最後当たったか
 	int m_enemuNum;

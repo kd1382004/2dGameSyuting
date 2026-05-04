@@ -43,6 +43,7 @@ private:
 	//ƒvƒŒƒCƒ„[//
 	//////////////
 	KdTexture m_playerTex;
+	KdTexture m_playerShadowTex;
 	Player* m_player;
 
 	//////

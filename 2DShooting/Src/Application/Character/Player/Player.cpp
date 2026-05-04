@@ -55,11 +55,13 @@ void Player::Draw2D()
 		//’e‚Ì•`‰æ
 		BulletDraw();
 
-
+		SHADER.m_spriteShader.SetMatrix(m_shadowMat);
+		SHADER.m_spriteShader.DrawTex(m_shadowTex, m_rec, 1.0f);
 		//ƒvƒŒƒCƒ„[‚Ì•`‰æ
 		SHADER.m_spriteShader.SetMatrix(m_mat);
-
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
+		
+
 	}
 }
 
@@ -79,6 +81,11 @@ void Player::MatConfirmed(float scroll)
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
 	m_mat = m_scaleMat * m_rotationMat * m_transMat;
+
+	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
+	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
+	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
+	m_shadowMat= m_scaleMat * m_rotationMat * m_transMat;
 }
 
 void Player::AnimeRec()
@@ -110,9 +117,11 @@ void Player::AnimeRec()
 		{
 			m_anime = 0;
 			m_animeMode = Nomar;
-			m_bullet.push_back(new PlayerBullet);
-			m_bullet.back()->Init(m_pos, m_deg);
-			m_bullet.back()->SetTex(&m_bulletTex);
+
+			m_3WShotFlg = true;
+			m_3LRShotFlg = true;
+			Shot(m_3WShotFlg, m_3LRShotFlg);
+
 			m_shotInterval = m_shotIntervalMax;
 			m_shotFlg = false;
 		}
@@ -154,9 +163,9 @@ void Player::PlayerBulletHit(int num)
 	//ŠÑ’Ê‰ñ”‚ðŒ¸‚ç‚·
 	if (m_bullet.size() > num && num > 0)
 	{
-		m_bullet[num]->DownBulletPene();
+		m_bullet[num]->DownBulletPeneNum();
 
-		if (m_bullet[num]->GetBulletPene() < 0)
+		if (m_bullet[num]->GetBulletPeneNum() < 0)
 		{
 			m_bullet[num]->SetSliveFlg(false);
 		}
@@ -258,6 +267,40 @@ void Player::Shot()
 			m_shotFlg = true;
 		}
 	}
+}
+
+void Player::Shot(bool _3WShotFlg,bool _3LRShotFlg)
+{
+	m_bullet.push_back(new PlayerBullet);
+	m_bullet.back()->Init(m_pos, m_deg);
+	m_bullet.back()->SetTex(&m_bulletTex);
+
+	if (_3WShotFlg)
+	{
+		float deg = m_deg;
+		deg -= 45;
+		for (int i = 0; i < 2; i++)
+		{
+			m_bullet.push_back(new PlayerBullet);
+			m_bullet.back()->Init(m_pos, deg);
+			m_bullet.back()->SetTex(&m_bulletTex);
+			deg += 90;
+		}
+	}
+
+	if (_3LRShotFlg)
+	{
+		float deg = m_deg;
+		deg -= 90;
+		for (int i = 0; i < 2; i++)
+		{
+			m_bullet.push_back(new PlayerBullet);
+			m_bullet.back()->Init(m_pos, deg);
+			m_bullet.back()->SetTex(&m_bulletTex);
+			deg += 180;
+		}
+	}
+
 }
 
 void Player::BulletUpdata()

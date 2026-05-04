@@ -12,7 +12,9 @@ void Game::Init()
 	//プレイヤー初期化
 	m_player = new Player();
 	m_playerTex.Load("Tex/Character/Player/player.png");
+	m_playerShadowTex.Load("Tex/Character/Player/playerr-Shadow.png");
 	m_player->SetTex(&m_playerTex);
+	m_player->SetShadowTex(&m_playerShadowTex);
 	m_player->Init();
 
 
@@ -20,7 +22,7 @@ void Game::Init()
 	m_skeletonTex.Load("Tex/Character/Enemy/Skeleton/Skeleton.png");
 	m_slimeTex.Load("Tex/Character/Enemy/Slime/Slime_Green.png");
 
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_slimeTex);
@@ -198,7 +200,7 @@ void Game::Update()
 	//敵
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
-		if (!m_enemy[i]->GetAliveFlg())
+		if (m_enemy[i]->GetDeleteFlg())
 		{
 			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
@@ -214,7 +216,7 @@ void Game::Update()
 
 
 
-	//クリア処理
+	//クリア処理(敵の数が0になる)
 	if (m_enemy.size() == 0)
 	{
 		int a = 0;
@@ -303,6 +305,7 @@ void Game::PtrRelease()
 	{
 		delete m_player;
 		m_playerTex.Release();
+		m_playerShadowTex.Release();
 	}
 
 	if (m_charaHit)

@@ -54,7 +54,7 @@ void Map::MapHit(CharacterBase* chara)
 			float nx = x / z;
 			float ny = y / z;
 
-			
+
 
 			Math::Vector2 charaPos = chara->GetPos();
 			charaPos.x += nx * over;
@@ -88,7 +88,31 @@ void Map::MapHit(PlayerBullet* buleet)
 
 		if (v.Length() < sum)
 		{
-			buleet->SetSliveFlg(false);
+
+			float overX = sum - abs(v.x);
+			float overY = sum - abs(v.y);
+			Math::Vector2 normal;
+
+			if (overX < overY) {
+				// ¶‰E‚Ì–Ê
+				if (v.x > 0) {
+					normal = { 1, 0 };   // ¶–Ê‚É“–‚½‚Á‚½
+				}
+				else {
+					normal = { -1, 0 };  // ‰E–Ê‚É“–‚½‚Á‚½
+				}
+			}
+			else {
+				// ã‰º‚Ì–Ê
+				if (v.y > 0) {
+					normal = { 0, 1 };   // ã–Ê
+				}
+				else {
+					normal = { 0, -1 };  // ‰º–Ê
+				}
+			}
+
+			buleet->MapHit(normal);
 		}
 	}
 }

@@ -32,6 +32,7 @@ public:
 
 	virtual void MatConfirmed(float scroll) = 0;
 
+	bool GetDeleteFlg() { return m_deleteFlg; }
 protected:
 
 	// 解放
@@ -70,6 +71,11 @@ protected:
 
 	//生存フラグ
 	bool m_aliveFlg;
+
+	//削除フラグ
+	bool m_deleteFlg = false;
+
+
 
 	//円当たり判定用変数(直径を入れる)
 	float HitDetection;

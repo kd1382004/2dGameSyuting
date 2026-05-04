@@ -32,7 +32,13 @@ public:
 
 	//弾の消去
 	void ReleseBuleet(int num);
+
+	void SetShadowTex(KdTexture* tex) { m_shadowTex = tex; }
 private:
+
+	KdTexture* m_shadowTex;
+
+	Math::Matrix m_shadowMat;
 
 	enum PlayerAniemMode
 	{
@@ -60,6 +66,7 @@ private:
 	//弾
 	//弾発射
 	void Shot();
+	void Shot(bool _3WShotFlg, bool m_3LRShotFlg);
 	void BulletUpdata();
 	void BulletDraw();
 	//撃つかどうか
@@ -72,6 +79,14 @@ private:
 	 float m_shotIntervalMax = 0.5f*60;	//弾の発射間隔(インターバル秒×FPS(60))
 
 
-	 PlayerAniemMode m_animeMode = Nomar;;
+	 PlayerAniemMode m_animeMode = Nomar;
+
+
+	 //前方2方向+ショット
+	 bool m_3WShotFlg = false;
+
+
+	 //左右2方向+ショット
+	 bool m_3LRShotFlg = false;
 };
 

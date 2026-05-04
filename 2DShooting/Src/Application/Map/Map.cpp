@@ -1,6 +1,8 @@
 #include"Map.h"
 #include"MapObject/MapObject.h"
 #include"../SceneManager/Game/Game.h"
+#include"../Character/CharacterBase.h"
+#include"../Character/Player/Bullet/PlayerBullet.h"
 
 Map::Map()
 {
@@ -17,6 +19,78 @@ Map::~Map()
 void Map::Init(MapType mapType)
 {
 	LodMapData(mapType);
+}
+
+void Map::MapHit(CharacterBase* chara)
+{
+	if (!chara->GetAliveFlg())
+	{
+		return;
+	}
+
+
+	for (int i = 0; i < m_mapDeta.size(); i++)
+	{
+		if (m_mapDeta[i] == 0 || m_mapDeta[i] == -999)
+		{
+			continue;
+		}
+
+		Math::Vector2 v = m_mapPos[i] - chara->GetPos();
+
+		//îºåaÅ{îºåa
+		const float sum = chara->GetHitDetection() / 2 + m_mapBlocSiz / 2;
+
+		if (v.Length() < sum)
+		{
+			const float x = chara->GetPos().x - m_mapPos[i].x;
+			const float y = chara->GetPos().y - m_mapPos[i].y;
+			const float z = sqrt(x * x + y * y);
+
+			//èdÇ»ÇËãÔçá
+			float over = sum - z;
+
+			//ìG2Ç©ÇÁìG1Ç÷ÇÃï˚å¸
+			float nx = x / z;
+			float ny = y / z;
+
+			
+
+			Math::Vector2 charaPos = chara->GetPos();
+			charaPos.x += nx * over;
+			charaPos.y += ny * over;
+			chara->SetPos(charaPos);
+		}
+	}
+
+
+}
+
+void Map::MapHit(PlayerBullet* buleet)
+{
+	if (!buleet->GetAliveFlg())
+	{
+		return;
+	}
+
+
+	for (int i = 0; i < m_mapDeta.size(); i++)
+	{
+		if (m_mapDeta[i] == 0 || m_mapDeta[i] == -999)
+		{
+			continue;
+		}
+
+		Math::Vector2 v = m_mapPos[i] - buleet->GetPos();
+
+		//îºåaÅ{îºåa
+		const float sum = buleet->GetHitDetection() / 2 + m_mapBlocSiz / 2;
+
+		if (v.Length() < sum)
+		{
+			buleet->SetSliveFlg(false);
+		}
+	}
 }
 
 void Map::Updata()
@@ -36,7 +110,7 @@ void Map::Updata()
 	//çsóÒçÏê¨
 	for (int i = 0; i < m_mapPos.size(); i++)
 	{
-		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos[i].x- m_scroll, m_mapPos[i].y, 0);
+		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos[i].x - m_scroll, m_mapPos[i].y, 0);
 		m_mapMat[i] = mat;
 	}
 }

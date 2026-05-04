@@ -3,12 +3,14 @@
 
 void Player::Init()
 {
-	m_pos = { 0,-360 };
+	m_pos = { -300,0 };
 	m_speed = { 5.0,5.0 };
 	m_aliveFlg = true;
 	HitDetection = 64;
 	m_siz = { 5,5 };
 	m_shotFlg = false;
+
+	m_animeMode = MoveMode;
 
 	//ÉvÉåÉCÉÑÅ[Keyê›íË
 	m_moveUp = 'W';

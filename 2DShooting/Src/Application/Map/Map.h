@@ -2,7 +2,8 @@
 
 class MapObject;
 class Game;
-
+class CharacterBase;
+class PlayerBullet;
 
 
 class Map
@@ -26,6 +27,10 @@ public:
 
 	void Updata();
 	void Draw2D();
+
+	void MapHit(CharacterBase* chara);
+
+	void MapHit(PlayerBullet* buleet);
 
 	//マップデートをリセット
 	void Reset();

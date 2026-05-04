@@ -20,7 +20,7 @@ void Game::Init()
 	m_skeletonTex.Load("Tex/Character/Enemy/Skeleton/Skeleton.png");
 	m_slimeTex.Load("Tex/Character/Enemy/Slime/Slime_Green.png");
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_slimeTex);
@@ -156,6 +156,21 @@ void Game::Update()
 			}
 		}
 	}
+
+	if (m_map)
+	{
+		m_map->MapHit(m_player);
+		for (int i = 0; i < m_enemy.size(); i++)
+		{
+			m_map->MapHit(m_enemy[i]);
+		}
+
+		for (int j = 0; j < m_player->GetBulletNum(); j++)
+		{
+			m_map->MapHit(m_player->GetBullet(j));
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////
 	//マップ更新
 	m_map->Updata();

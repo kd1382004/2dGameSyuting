@@ -1,7 +1,7 @@
 #pragma once
 #include "../CharacterBase.h"
 
-class PlayerBullet;
+class BulletBace;
 class  PlayerHpBer;
 class  CharacterInfo;
 
@@ -10,7 +10,7 @@ class Player: public CharacterBase
 public:
 
 	Player() {};
-	~Player() { Release(); };
+	~Player() override { Release(); };
 
 	// ‰Šúİ’è
 	void Init()override;
@@ -27,7 +27,7 @@ public:
 	void AnimeRec();
 
 	int GetBulletNum() { return m_bullet.size(); }
-	PlayerBullet* GetBullet(int num);
+	BulletBace* GetBullet(int num);
 
 	//num”Ô–Ú‚Ì’e‚ª“–‚½‚Á‚½Œã‚Ìˆ—
 	void PlayerBulletHit(int num);
@@ -41,6 +41,8 @@ public:
 	void SetShadowTex(KdTexture* tex) { m_shadowTex = tex; }
 
 	CharacterInfo* GetPlayerPlayerPowerUpInfo() { return m_info; }
+
+	int GetHP() { return m_HP; }
 private:
 
 	KdTexture* m_shadowTex;
@@ -81,7 +83,7 @@ private:
 
 	KdTexture m_bulletTex;
 
-	 std::vector< PlayerBullet*> m_bullet;
+	 std::vector< BulletBace*> m_bullet;
 	 float m_shotInterval = 0;			//’e‚Ì”­ËŠÔŠuŠÇ—
 	 float m_shotIntervalMax = 0.5f*0;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
 
@@ -90,6 +92,6 @@ private:
 
 	 PlayerHpBer* m_hpBer;
 
-	 CharacterInfo* m_info;
+	 void HPManager();
 };
 

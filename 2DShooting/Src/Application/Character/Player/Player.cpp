@@ -3,6 +3,7 @@
 #include"HpBer/HpBer.h"
 #include"../Info/CharacterInfoBace.h"
 #include"../../Info/InfoKey/InfoKey.h"
+#include"../Bullet/BulletBace.h"
 
 void Player::Init()
 {
@@ -34,6 +35,10 @@ void Player::Init()
 
 void Player::Update()
 {
+	HPManager();
+
+	m_HPDownCoolTime++;
+
 	////////////
 	//ˆÚ“®ˆ—//
 	////////////
@@ -150,7 +155,7 @@ void Player::AnimeRec()
 
 }
 
-PlayerBullet* Player::GetBullet(int num)
+BulletBace* Player::GetBullet(int num)
 {
 	if (num >= 0 && num < m_bullet.size())
 	{
@@ -360,5 +365,13 @@ void Player::BulletDraw()
 		{
 			m_bullet[i]->Draw2D();
 		}
+	}
+}
+
+void Player::HPManager()
+{
+	if (m_HP <= 0)
+	{
+ 		int a=0;
 	}
 }

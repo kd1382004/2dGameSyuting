@@ -2,7 +2,7 @@
 #include"MapObject/MapObject.h"
 #include"../SceneManager/Game/Game.h"
 #include"../Character/CharacterBase.h"
-#include"../Character/Player/PlayerBullet/PlayerBullet.h"
+#include"../Character/Bullet/BulletBace.h"
 #include"MapObject/WarpObject/WarpObject.h"
 
 Map::Map()
@@ -68,7 +68,7 @@ void Map::MapHit(CharacterBase* chara)
 	}
 }
 
-void Map::MapHit(PlayerBullet* buleet)
+void Map::MapHit(BulletBace* buleet)
 {
 	if (!buleet->GetAliveFlg())
 	{
@@ -115,6 +115,7 @@ void Map::MapHit(PlayerBullet* buleet)
 			}
 
 			buleet->MapHit(normal);
+			buleet->SetEnemyNum(-999);
 		}
 	}
 }

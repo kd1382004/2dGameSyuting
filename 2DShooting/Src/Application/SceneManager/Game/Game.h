@@ -7,6 +7,7 @@ class EnemyBase;
 class CharaHit;
 class Map;
 class PowerUpScreen;
+class DefAnime;
 
 class Game :public SceneBase
 {
@@ -34,6 +35,8 @@ public:
 	void SetNextStageFlg(bool flg) { m_nextStageAnimeFlg = flg; }
 	
 	bool GetStageClearFlg() {return m_stageClearFlg;}
+
+	void NextScene();
 private:
 
 	// ‰ð•ú
@@ -101,4 +104,10 @@ private:
 	KdTexture m_nextStageTex;
 	void NextStagenimeUpdate();
 	void NextStagenimeDraw2D();
+
+	////////
+	//”s–k//
+	////////
+	bool m_DEF = false;
+	DefAnime* m_defAnime;
 };

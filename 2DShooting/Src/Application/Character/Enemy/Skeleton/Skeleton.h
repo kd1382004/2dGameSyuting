@@ -1,12 +1,14 @@
 #pragma once
 
 #include"../EnemyBase.h"
+class SkeletonBullet;
+class CharacterInfo;
 
 class Skeleton :public EnemyBase
 {
 public:
 	Skeleton() {}
-	~Skeleton() {}
+	~Skeleton() {};
 
 	// ‰Šúİ’è
 	void Init()override;
@@ -27,5 +29,11 @@ private:
 
 	//’e‚ğŒ‚‚Â
 	void shot();
+	void Shot(bool _3WShotFlg, bool m_3LRShotFlg);
 
+	KdTexture m_bulletTex;
+
+	int m_shotInterval;
+	bool m_shotFlg;
+	float m_shotIntervalMax = 0.5f * 100;
 };

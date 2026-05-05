@@ -1,13 +1,13 @@
 #pragma once
 #include "../CharacterBase.h"
 
-class PlayerBullet;
+class BulletBace;
 
 class EnemyBase :public CharacterBase
 {
 public:
 	EnemyBase() { m_speed = { 1, 1 }; }
-	~EnemyBase() { Release(); }
+	~EnemyBase() override { Release(); }
 
 	// 初期設定
 	virtual void Init() {}
@@ -25,17 +25,25 @@ public:
 	void SetPlayerPos(Math::Vector2 playerPos) { m_plaeyrPos = playerPos; };
 
 
-	void PlayerBulletHit(PlayerBullet* bullet);
+	void PlayerBulletHit(BulletBace* bullet);
 
 
 	virtual void BlockHit() {};
+
+	int GetBulletNum() { return  m_bullet.size(); }
+
+	BulletBace* GetBullet(int i) { return   m_bullet[i]; }
+
+	void BulletHit(BulletBace* bullet);
 protected:
 
 	// 解放
-	virtual void Release(){}
+	virtual void Release() {}
 
 	//追跡用等のプレイヤー座標
 	Math::Vector2 m_plaeyrPos = { 0,0 };
+
+	std::vector< BulletBace*> m_bullet;
 private:
 
 };

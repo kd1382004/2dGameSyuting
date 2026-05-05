@@ -1,7 +1,7 @@
 #pragma once
 //キャラクターの当たり判定
 class  CharacterBase;
-class  PlayerBullet;
+class  BulletBace;
 
 class CharaHit
 {
@@ -21,7 +21,7 @@ public:
 	//弾とキャラが当たったかどうかを返す
 	//true...当たった
 	//false...当たってない
-	bool BulletHit(PlayerBullet* bullet, CharacterBase* enemy,int enemyNum);
+	bool BulletHit(BulletBace* bullet, CharacterBase* enemy, int enemyNum);
 
 private:
 

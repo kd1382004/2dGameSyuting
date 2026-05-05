@@ -14,53 +14,22 @@ public:
 	//pos...プレイヤーの座標を入れる
 	//deg...プレイヤーの角度を入れる
 	//Info...PlayerPowerUpInfonのアドレス
-	void Init(Math::Vector2 pos, float rad, CharacterInfo* Info);
+	void Init(Math::Vector2 pos, float rad, CharacterInfo* Info)override;
+	
 
 	// 更新処理
-	void Update();
+	void Update()override;
 
 	// 描画処理
-	void Draw2D();
+	void Draw2D()override;
 
 	//敵と当たってからの処理
-	void Hit();
+	void Hit()override;
 
-	//キャラの画像をアドレスでセット
-	void SetTex(KdTexture* tex) { m_bulletTex = tex; }
-
-	Math::Vector2 GetPos() { return m_pos; }
-	void SetPos(Math::Vector2 pos) { m_pos = pos; }
-
-	//当たり判定用変数(直径)を返す
-	float GetHitDetection() { return HitDetection; }
-
-	//生存フラグを返す
-	bool GetAliveFlg() { return m_aliveFlg; }
-
-	//弾の貫通回数を返す
-	int GetBulletPeneNum() { return m_buletPeneNum; }
-
-	//弾の貫通回数を1減らす
-	void DownBulletPeneNum() { m_buletPeneNum--; }
-
-	//どの番号の敵と当たったか
-	void SetEnemyNum(int Num) { m_enemuNum = Num; }
-
-	//どの番号の敵と最後に当たったか
-	int GetEnemyNum() { return m_enemuNum; }
-
-	//攻撃力ゲッター
-	int GetAtk() { return m_atk; }
-
-	void SetSliveFlg(bool flg) { m_aliveFlg = flg; }
-
-	void MatConfirmed(float scroll);
+	void MatConfirmed(float scroll)override;
 
 	//v...壁の法線ベクトル
-	void MapHit(Math::Vector2 v1);
-
-
-
+	void MapHit(Math::Vector2 v1)override;
 
 
 private:

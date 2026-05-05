@@ -115,6 +115,12 @@
     <Filter Include="Src\Application\Character\Info">
       <UniqueIdentifier>{fdb9a9d2-4223-4823-8a06-5185daef761b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet">
+      <UniqueIdentifier>{95370872-68bc-4a60-b7a2-32beb39bcd26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\DefAnime">
+      <UniqueIdentifier>{9944ae7e-902f-48d1-a6a2-759a5c4499ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -285,6 +291,12 @@
     <ClInclude Include="Src\Application\Character\Info\CharacterInfoBace.h">
       <Filter>Src\Application\Character\Info</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet\SkeletonBullet.h">
+      <Filter>Src\Application\Character\Enemy\Skeleton\SkeletonBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.h">
+      <Filter>Src\Application\SceneManager\Game\DefAnime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -421,6 +433,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Character\Player\PlayerBullet\PlayerBullet.cpp">
       <Filter>Src\Application\Character\Player\PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet\SkeletonBullet.cpp">
+      <Filter>Src\Application\Character\Enemy\Skeleton\SkeletonBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.cpp">
+      <Filter>Src\Application\SceneManager\Game\DefAnime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -163,6 +163,7 @@
     <ClInclude Include="Src\Application\Character\CharacterBase.h" />
     <ClInclude Include="Src\Application\Character\Enemy\EnemyBase.h" />
     <ClInclude Include="Src\Application\Character\Enemy\Skeleton\Skeleton.h" />
+    <ClInclude Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet\SkeletonBullet.h" />
     <ClInclude Include="Src\Application\Character\Enemy\Slime\Slime.h" />
     <ClInclude Include="Src\Application\Character\Info\CharacterInfoBace.h" />
     <ClInclude Include="Src\Application\Character\Player\HpBer\HpBer.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Src\Application\Map\MapObject\WarpObject\WarpObject.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\main.h" />
+    <ClInclude Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\Game.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot\PowerUp3WShot.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBase.h" />
@@ -213,6 +215,7 @@
     <ClCompile Include="Src\Application\Character\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\Skeleton\Skeleton.cpp" />
+    <ClCompile Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet\SkeletonBullet.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\Slime\Slime.cpp" />
     <ClCompile Include="Src\Application\Character\Player\HpBer\HpBer.cpp" />
     <ClCompile Include="Src\Application\Character\Player\Player.cpp" />
@@ -224,6 +227,7 @@
     <ClCompile Include="Src\Application\Map\MapObject\WarpObject\WarpObject.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
+    <ClCompile Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\Game.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot\PowerUp3WShot.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBase.cpp" />

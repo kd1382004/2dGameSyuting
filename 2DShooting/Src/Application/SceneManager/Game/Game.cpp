@@ -7,12 +7,13 @@
 #include"../../Map/Map.h"
 #include"PowerUpScreen/PowerUpScreen.h"
 #include"../../Info/InfoKey/InfoKey.h"
-
+#include"../../Character/Info/CharacterInfoBace.h"
+#include"DefAnime/DefAnime.h"
 
 void Game::Init()
 {
 	m_stageNum = 1;
-
+	m_DEF = false;
 	//プレイヤー初期化
 	m_player = new Player();
 	m_playerTex.Load("Tex/Character/Player/player.png");
@@ -46,6 +47,15 @@ void Game::Update()
 		return;
 	}
 
+	if (m_DEF)
+	{
+		if (m_defAnime)
+		{
+			m_defAnime->Update(this);
+		}
+
+		return;
+	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
@@ -53,11 +63,22 @@ void Game::Update()
 	if (!m_powerUpScreenFlg)
 	{
 
+
+
+
 		//////////////
 		//プレイヤー//
 		//////////////
 		if (m_player)
 		{
+			if (m_player->GetHP() <= 0)
+			{
+
+			}
+
+
+
+
 			/////////////////////
 			//プレイヤー　更新//
 			////////////////////
@@ -112,12 +133,28 @@ void Game::Update()
 					//当たったときの処理
 
 					//プレイヤー
-
+					m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
 
 
 					//重ならないように座標補正				
 					//m_charaHit->Pushback(m_enemy[i], m_player);
 
+				}
+
+				//////////////////////
+				//敵の弾とプレイヤー//
+				//////////////////////
+				if (m_enemy[i]->GetBulletNum() > 0)
+				{
+					for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
+					{
+						if (m_charaHit->BulletHit(m_enemy[i]->GetBullet(j), m_player, -1))
+						{
+							m_enemy[i]->BulletHit(m_enemy[i]->GetBullet(j));
+							m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
+						}
+
+					}
 				}
 
 				//////////
@@ -165,6 +202,14 @@ void Game::Update()
 			for (int i = 0; i < m_enemy.size(); i++)
 			{
 				m_map->MapHit(m_enemy[i]);
+				if (m_enemy[i]->GetBulletNum() > 0)
+				{
+					for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
+					{
+						m_map->MapHit(m_enemy[i]->GetBullet(j));
+					}
+				}
+
 			}
 
 			for (int j = 0; j < m_player->GetBulletNum(); j++)
@@ -245,20 +290,34 @@ void Game::Update()
 		}
 	}
 
-
-
-	//////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
-
-	//シーン切り替え
-	if (GetAsyncKeyState('R') & 0x8000)
+	if (m_player)
 	{
-		m_owner->SetNextSceneType(RESULT);
+		if (m_player->GetHP() <= 0)
+		{
+			m_DEF = true;
+			m_defAnime = new DefAnime();
+			m_defAnime->Init();
+		}
 	}
+
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
 }
 
 void Game::Draw2D()
 {
+
+	if (m_DEF&& m_defAnime)
+	{
+		if (m_defAnime)
+		{
+			m_defAnime->Draw2D();
+		}
+		return;
+	}
+
+
 	//マップ描画
 	m_map->Draw2D();
 
@@ -285,9 +344,6 @@ void Game::Draw2D()
 	{
 		NextStagenimeDraw2D();
 	}
-
-	// 文字列表示
-	SHADER.m_spriteShader.DrawString(0, 100, "ゲーム Rで変更", Math::Vector4(1, 1, 0, 1));
 }
 
 
@@ -310,6 +366,11 @@ Math::Vector2 Game::GetPlayerPos()
 	}
 
 	return Math::Vector2();
+}
+
+void Game::NextScene()
+{
+	m_owner->SetNextSceneType(RESULT);
 }
 
 void Game::Release()
@@ -351,6 +412,11 @@ void Game::PtrRelease()
 	}
 
 	m_nextStageTex.Release();
+
+	if (m_defAnime)
+	{
+		delete m_defAnime;
+	}
 }
 
 void Game::InitStage(int StageNum)

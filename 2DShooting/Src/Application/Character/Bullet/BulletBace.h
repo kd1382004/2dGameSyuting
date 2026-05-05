@@ -1,5 +1,5 @@
 #pragma once
-class  PlayerPowerUpInfo;
+class CharacterInfo;
 
 class BulletBace
 {
@@ -11,16 +11,16 @@ public:
 	//pos...プレイヤーの座標を入れる
 	//deg...プレイヤーの角度を入れる
 	//Info...PlayerPowerUpInfonのアドレス
-	void Init(Math::Vector2 pos, float rad, PlayerPowerUpInfo* Info) {};
+	virtual void Init(Math::Vector2 pos, float rad, CharacterInfo* Info) {};
 
 	// 更新処理
-	void Update() {};
+	virtual	void Update() {};
 
 	// 描画処理
-	void Draw2D() {};
+	virtual	void Draw2D() {};
 
 	//敵と当たってからの処理
-	void Hit() {};
+	virtual	void Hit() {};
 
 	//キャラの画像をアドレスでセット
 	void SetTex(KdTexture* tex) { m_bulletTex = tex; }
@@ -51,10 +51,10 @@ public:
 
 	void SetSliveFlg(bool flg) { m_aliveFlg = flg; }
 
-	void MatConfirmed(float scroll) {};
+	virtual void MatConfirmed(float scroll) {};
 
 	//v...壁の法線ベクトル
-	void MapHit(Math::Vector2 v1) {};
+	virtual void MapHit(Math::Vector2 v1) {};
 
 protected:
 	KdTexture* m_bulletTex = nullptr;

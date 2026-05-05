@@ -22,6 +22,9 @@ public:
 	int GetBoundNum() { return m_boundNum; }
 	void SetBoundNum(int i) { m_boundNum += i; }//‘‚â‚·‰ñ”“ü‚ê‚é
 
+	//UŒ‚—Í
+	int GetATK() { return m_atk; }
+	void SetATK(int atk) { m_atk += atk ;}//‘‚â‚·—Ê‚ğ“ü‚ê‚é
 protected:
 
 

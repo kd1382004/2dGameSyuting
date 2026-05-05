@@ -3,7 +3,7 @@
 class MapObject;
 class Game;
 class CharacterBase;
-class PlayerBullet;
+class BulletBace;
 
 
 class Map
@@ -30,7 +30,7 @@ public:
 
 	void MapHit(CharacterBase* chara);
 
-	void MapHit(PlayerBullet* buleet);
+	void MapHit(BulletBace* buleet);
 
 	//マップデートをリセット
 	void Reset();

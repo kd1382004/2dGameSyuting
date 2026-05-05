@@ -1,8 +1,8 @@
 #include"EnemyBase.h"
-#include"../Player/PlayerBullet/PlayerBullet.h"
+#include"../Bullet/BulletBace.h"
+#include"../Bullet/BulletBace.h"
 
-
-void EnemyBase::PlayerBulletHit(PlayerBullet* bullet)
+void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 {
 	m_HP -= bullet->GetAtk();
 
@@ -10,6 +10,16 @@ void EnemyBase::PlayerBulletHit(PlayerBullet* bullet)
 	{
 		m_aliveFlg = false;
 		m_anime = 0;
+	}
+}
+
+void EnemyBase::BulletHit(BulletBace* bullet)
+{
+	bullet->DownBulletPeneNum();
+
+	if (bullet->GetBulletPeneNum() < 0)
+	{
+		bullet->SetSliveFlg(false);
 	}
 }
 

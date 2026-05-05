@@ -1,4 +1,5 @@
 #include "Slime.h"
+#include"../../Info/CharacterInfoBace.h"
 
 void Slime::Init()
 {
@@ -7,6 +8,9 @@ void Slime::Init()
 	m_pos = { (float)(rand() % 1280 - 640),(float)(rand() % 720 - 360) };
 	m_HP = 100;
 	m_siz = { 2,2 };
+	m_info = new CharacterInfo();
+
+	m_info->SetATK(10);
 }
 
 void Slime::Update()

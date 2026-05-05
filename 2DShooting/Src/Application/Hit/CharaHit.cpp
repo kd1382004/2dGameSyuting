@@ -1,6 +1,6 @@
 #include "CharaHit.h"
 #include"../Character/CharacterBase.h"
-#include "../Character/Player/PlayerBullet/PlayerBullet.h"
+#include "../Character/Bullet/BulletBace.h"
 
 
 bool CharaHit::CharacterHit(CharacterBase* chara1, CharacterBase* chara2)
@@ -77,7 +77,7 @@ void CharaHit::Pushback(CharacterBase* chara1, CharacterBase* chara2)
 	}
 }
 
-bool CharaHit::BulletHit(PlayerBullet* bullet, CharacterBase* enemy,int enemyNum)
+bool CharaHit::BulletHit(BulletBace* bullet, CharacterBase* enemy,int enemyNum)
 {
 	if (!bullet->GetAliveFlg() || !enemy->GetAliveFlg())
 	{

@@ -1,10 +1,15 @@
 #pragma once
 
 
+class CharacterInfo;
+
 //キャラクターの親クラス
 class CharacterBase
 {
 public:
+	CharacterBase() {};
+	virtual ~CharacterBase() {};
+
 	// 初期設定
 	virtual void Init() = 0;
 
@@ -35,6 +40,11 @@ public:
 	bool GetDeleteFlg() { return m_deleteFlg; }
 
 	virtual void BlockHit() {};
+
+	CharacterInfo* GetCharaInfo() { return m_info; }
+
+
+	void HPDown(int dmg);
 protected:
 
 	// 解放
@@ -78,6 +88,9 @@ protected:
 	bool m_deleteFlg = false;
 
 
+	int m_HPDownCoolTime=0;
+	static const int m_HPDownCoolTimeMax = 10;
+
 
 	//円当たり判定用変数(直径を入れる)
 	float HitDetection;
@@ -91,6 +104,8 @@ protected:
 	float m_deg = 0.0f;
 
 	float m_anime = 0;
+
+	CharacterInfo* m_info;
 private:
 
 };

@@ -1,35 +1,36 @@
-#include "PlayerBullet.h"
-#include"../../Info/CharacterInfoBace.h"
+#include "SkeletonBullet.h"
+#include"../../../Info/CharacterInfoBace.h"
 
-
-void PlayerBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
+void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
 {
-	m_enemuNum = -1;
+	m_enemuNum = -999;
 	m_buletPeneNum = Info->GetBuletPeneNum();
 	m_boundNum = Info->GetBoundNum();
-	m_atk = Info->GetATK();
+	m_atk = 10;
 	m_deg = deg;
-	m_siz = { 3,3 };
+	m_siz = { 1,1 };
 	m_pos = pos;
-	HitDetection = 16.0f;
+	HitDetection = 15.0f;
 	m_aliveFlg = true;
+	m_rec = { 0,0,21,15 };
+	m_speed = 1;
 
-	//è§’åº¦ã‹ã‚‰ç§»å‹•é‡ã‚’æ±‚ã‚ã‚‹
- 	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
+	//Šp“x‚©‚çˆÚ“®—Ê‚ğ‹‚ß‚é
+	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
 	m_move.y = sin(DirectX::XMConvertToRadians(deg)) * m_speed;
 	m_mat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0) * Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg)) * Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }
 
-void PlayerBullet::Update()
+void SkeletonBullet::Update()
 {
 	if (!m_aliveFlg) { return; }
 
 
-	//åº§æ¨™æ›´æ–°
+	//À•WXV
 	m_pos += m_move;
 }
 
-void PlayerBullet::Draw2D()
+void SkeletonBullet::Draw2D()
 {
 	if (m_aliveFlg)
 	{
@@ -38,19 +39,19 @@ void PlayerBullet::Draw2D()
 	}
 }
 
-void PlayerBullet::Hit()
+void SkeletonBullet::Hit()
 {
 
 }
 
-void PlayerBullet::MatConfirmed(float scroll)
+void SkeletonBullet::MatConfirmed(float scroll)
 {
-	//è¡Œåˆ—åˆæˆ
-	//è¡Œåˆ—ä½œæˆ
+	//s—ñ‡¬
+	//s—ñì¬
 	m_mat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0) * Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg)) * Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 }
 
-void PlayerBullet::MapHit(Math::Vector2 v)
+void SkeletonBullet::MapHit(Math::Vector2 v)
 {
 
 	m_boundNum--;

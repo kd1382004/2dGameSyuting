@@ -1,5 +1,5 @@
 #pragma once
-class PlayerPowerUpInfo;
+class CharacterInfo;
 
 class PowerUpBase
 {
@@ -9,7 +9,7 @@ public:
 
 	//表示場所をセット
 	virtual void Init(Math::Vector2 pos) {};
-	virtual void Update(PlayerPowerUpInfo* playerInfo) {};
+	virtual void Update(CharacterInfo* playerInfo) {};
 	virtual void Draw2D() {};
 
 

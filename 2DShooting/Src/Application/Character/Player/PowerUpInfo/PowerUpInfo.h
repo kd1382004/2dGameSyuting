@@ -1,5 +1,7 @@
 #pragma once
 
+#include"../../Info/CharacterInfoBace.h"
+
 class PlayerPowerUpInfo
 {
 public:

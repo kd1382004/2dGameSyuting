@@ -3,7 +3,7 @@
 
 class PlayerBullet;
 class  PlayerHpBer;
-class  PlayerPowerUpInfo;
+class  CharacterInfo;
 
 class Player: public CharacterBase
 {
@@ -35,9 +35,12 @@ public:
 	//íeÇÃè¡ãé
 	void ReleseBuleet(int num);
 
+
+	void ReleseBuleet();
+
 	void SetShadowTex(KdTexture* tex) { m_shadowTex = tex; }
 
-	PlayerPowerUpInfo* GetPlayerPlayerPowerUpInfo() { return m_info; }
+	CharacterInfo* GetPlayerPlayerPowerUpInfo() { return m_info; }
 private:
 
 	KdTexture* m_shadowTex;
@@ -87,6 +90,6 @@ private:
 
 	 PlayerHpBer* m_hpBer;
 
-	 PlayerPowerUpInfo* m_info;
+	 CharacterInfo* m_info;
 };
 

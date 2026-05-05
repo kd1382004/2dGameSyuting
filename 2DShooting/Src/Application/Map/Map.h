@@ -13,7 +13,7 @@ public:
 	//マップの種類
 	enum MapType
 	{
-		Map1,
+		Map1 = 1,
 		Map2,
 		Map3
 	};
@@ -35,7 +35,7 @@ public:
 	//マップデートをリセット
 	void Reset();
 
-	void setOwner(Game *owner) { m_owner = owner; }
+	void setOwner(Game* owner) { m_owner = owner; }
 
 	float GetScroll() { return m_scroll; }
 private:
@@ -48,6 +48,9 @@ private:
 
 	//オブジェクトのポインター
 	std::vector<MapObject*> m_mapObj;
+
+	//ワープ
+	KdTexture m_warpTex;
 
 	//マップデータ
 	std::vector<int> m_mapDeta;

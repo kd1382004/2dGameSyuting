@@ -31,6 +31,9 @@ public:
 
 	Math::Vector2 GetPlayerPos();
 
+	void SetNextStageFlg(bool flg) { m_nextStageAnimeFlg = flg; }
+	
+	bool GetStageClearFlg() {return m_stageClearFlg;}
 private:
 
 	// 解放
@@ -40,12 +43,21 @@ private:
 	//このクラス内で作ったポインタ消去関数
 	void PtrRelease();
 
+	//////////////////
+	//ステージ初期化//
+	//////////////////
+	//StageNum...ステージ番号
+	void InitStage(int StageNum);
+
+	//ステージ番号
+	int m_stageNum = 1;
+
 	//////////////
 	//プレイヤー//
 	//////////////
 	KdTexture m_playerTex;
 	KdTexture m_playerShadowTex;
-	Player* m_player;
+	Player* m_player = nullptr;
 
 	//////
 	//敵//
@@ -62,12 +74,12 @@ private:
 	//////////////
 	//当たり判定//
 	//////////////
-	CharaHit* m_charaHit;
+	CharaHit* m_charaHit = nullptr;
 
 	//////////
 	//マップ//
 	//////////
-	Map* m_map;
+	Map* m_map = nullptr;
 
 
 
@@ -79,4 +91,14 @@ private:
 	////////////
 	PowerUpScreen* m_powerUpScreen;
 	bool m_powerUpScreenFlg;
+
+	///////////////////////
+	//clearアニメーション//
+	//////////////////////
+	bool m_nextStageAnimeFlg = false;
+	float m_nextStageAlh = 0;
+	float m_nextStageAlhPu = 0.05;
+	KdTexture m_nextStageTex;
+	void NextStagenimeUpdate();
+	void NextStagenimeDraw2D();
 };

@@ -1,5 +1,5 @@
 #include "PowerupBound.h"
-#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
+#include"../../../../Character/Info/CharacterInfoBace.h"
 
 void PowerupBound::Init(Math::Vector2 pos)
 {
@@ -11,7 +11,7 @@ void PowerupBound::Init(Math::Vector2 pos)
 
 }
 
-void PowerupBound::Update(PlayerPowerUpInfo* playerInfo)
+void PowerupBound::Update(CharacterInfo* playerInfo)
 {
 	playerInfo->SetBoundNum(1);
 }

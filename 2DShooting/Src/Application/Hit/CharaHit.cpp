@@ -1,6 +1,6 @@
 #include "CharaHit.h"
 #include"../Character/CharacterBase.h"
-#include "../Character/Player/Bullet/PlayerBullet.h"
+#include "../Character/Player/PlayerBullet/PlayerBullet.h"
 
 
 bool CharaHit::CharacterHit(CharacterBase* chara1, CharacterBase* chara2)

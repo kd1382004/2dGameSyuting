@@ -1,5 +1,5 @@
 #include "PowerupPeneShot.h"
-#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
+#include"../../../../Character/Info/CharacterInfoBace.h"
 
 void PowerupPeneShot::Init(Math::Vector2 pos)
 {
@@ -11,7 +11,7 @@ void PowerupPeneShot::Init(Math::Vector2 pos)
 
 }
 
-void PowerupPeneShot::Update(PlayerPowerUpInfo* playerInfo)
+void PowerupPeneShot::Update(CharacterInfo* playerInfo)
 {
 	playerInfo->SetBuletPeneNum(1);
 }

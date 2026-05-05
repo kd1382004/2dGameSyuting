@@ -1,7 +1,7 @@
 #include "Player.h"
-#include"Bullet/PlayerBullet.h"
+#include"PlayerBullet/PlayerBullet.h"
 #include"HpBer/HpBer.h"
-#include"PowerUpInfo/PowerUpInfo.h"
+#include"../Info/CharacterInfoBace.h"
 #include"../../Info/InfoKey/InfoKey.h"
 
 void Player::Init()
@@ -29,7 +29,7 @@ void Player::Init()
 	m_hpBer = new PlayerHpBer();
 	m_hpBer->Init();
 
-	m_info = new  PlayerPowerUpInfo();
+	m_info = new CharacterInfo();
 }
 
 void Player::Update()
@@ -170,6 +170,16 @@ void Player::ReleseBuleet(int num)
 			m_bullet.erase(m_bullet.begin() + num);
 
 		}
+	}
+}
+
+void Player::ReleseBuleet()
+{
+	for (int i = 0; i < m_bullet.size(); i++ )
+	{
+		delete m_bullet[i];
+		m_bullet.erase(m_bullet.begin() + i);
+		i--;
 	}
 }
 

@@ -1,15 +1,14 @@
 #include"MapObject.h"
 
 
-void MapObject::Init(Math::Vector2 pos, Math::Rectangle rec)
+void MapObject::Init(Math::Vector2 pos)
 {
 	m_pos = pos;
-	m_rec = rec;
 
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }
 
-void MapObject::Updata()
+void MapObject::Updata(float scroll)
 {
 
 }

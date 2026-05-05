@@ -60,7 +60,7 @@ void PowerUpScreen::Init()
 	}
 }
 
-void PowerUpScreen::Update(PlayerPowerUpInfo* playerInfo)
+void PowerUpScreen::Update(CharacterInfo* playerInfo)
 {
 	if (InfoKeyAPP.KeyPush('A', true) || InfoKeyAPP.KeyPush(VK_LEFT, true))
 	{

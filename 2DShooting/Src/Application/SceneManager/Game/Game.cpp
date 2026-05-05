@@ -11,6 +11,8 @@
 
 void Game::Init()
 {
+	m_stageNum = 1;
+
 	//プレイヤー初期化
 	m_player = new Player();
 	m_playerTex.Load("Tex/Character/Player/player.png");
@@ -24,35 +26,26 @@ void Game::Init()
 	m_skeletonTex.Load("Tex/Character/Enemy/Skeleton/Skeleton.png");
 	m_slimeTex.Load("Tex/Character/Enemy/Slime/Slime_Green.png");
 
-	for (int i = 0; i < 0; i++)
-	{
-		m_enemy.push_back(new Slime());
-		m_enemy.back()->SetTex(&m_slimeTex);
-		m_enemy.back()->Init();
-	}
-
-	for (int i = 0; i < 0; i++)
-	{
-		m_enemy.push_back(new Skeleton());
-		m_enemy.back()->SetTex(&m_skeletonTex);
-		m_enemy.back()->Init();
-	}
-
 	//当たり判定
 	m_charaHit = new CharaHit();
 
-
-	//マップ
-	m_map = new Map();
-	m_map->Init(Map::MapType::Map1);
-	m_map->setOwner(this);
-
 	//強化画面
 	m_powerUpScreen = new PowerUpScreen();
+
+	//ステージごとに変わるやつ
+	InitStage(m_stageNum);
+
+	m_nextStageTex.Load("Tex/NextStage/NextStage.png");
 }
 
 void Game::Update()
 {
+	if (m_nextStageAnimeFlg)
+	{
+		NextStagenimeUpdate();
+		return;
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
@@ -180,9 +173,7 @@ void Game::Update()
 			}
 		}
 
-		//////////////////////////////////////////////////////////////////////////////
-		//マップ更新
-		m_map->Updata();
+
 	}
 	else
 	{
@@ -194,7 +185,9 @@ void Game::Update()
 		}
 	}
 
-
+	//////////////////////////////////////////////////////////////////////////////
+	//マップ更新
+	m_map->Updata();
 
 	//////////////////////////////////////////////////////////////////////////////
 
@@ -288,6 +281,11 @@ void Game::Draw2D()
 		m_powerUpScreen->Draw2D();
 	}
 
+	if (m_nextStageAnimeFlg)
+	{
+		NextStagenimeDraw2D();
+	}
+
 	// 文字列表示
 	SHADER.m_spriteShader.DrawString(0, 100, "ゲーム Rで変更", Math::Vector4(1, 1, 0, 1));
 }
@@ -351,4 +349,75 @@ void Game::PtrRelease()
 	{
 		delete m_map;
 	}
+
+	m_nextStageTex.Release();
+}
+
+void Game::InitStage(int StageNum)
+{
+	//マップ
+	if (m_map)
+	{
+		delete m_map;
+	}
+
+	m_player->SetPos(Math::Vector2{ -580, 0 });
+	m_player->ReleseBuleet();
+
+	m_map = new Map();
+	m_map->setOwner(this);
+	m_map->Init((Map::MapType)StageNum);
+	m_map->Updata();
+	m_stageClearFlg = false;
+
+	for (int i = 0; i < 5; i++)
+	{
+		m_enemy.push_back(new Slime());
+		m_enemy.back()->SetTex(&m_slimeTex);
+		m_enemy.back()->Init();
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		m_enemy.push_back(new Skeleton());
+		m_enemy.back()->SetTex(&m_skeletonTex);
+		m_enemy.back()->Init();
+	}
+
+	if (m_player)
+	{
+		m_player->MatConfirmed(m_map->GetScroll());
+	}
+
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		m_enemy[i]->MatConfirmed(m_map->GetScroll());
+	}
+}
+
+void Game::NextStagenimeUpdate()
+{
+	m_nextStageAlh += m_nextStageAlhPu;
+	if (m_nextStageAlh > 2)
+	{
+		//次のStageに変更する関数を呼び出す
+		m_stageNum++;
+		m_nextStageAlhPu *= -1;
+		InitStage(m_stageNum);
+	}
+
+	if (m_nextStageAlh < 0)
+	{
+		m_nextStageAnimeFlg = false;
+		m_nextStageAlh = 0;
+		m_nextStageAlhPu *= -1;
+	}
+
+}
+
+void Game::NextStagenimeDraw2D()
+{
+	Math::Matrix mat = Math::Matrix::CreateTranslation(0, 0, 0);
+	SHADER.m_spriteShader.SetMatrix(mat);
+	SHADER.m_spriteShader.DrawTex(&m_nextStageTex, Math::Rectangle{ 0,0,1280,720 }, m_nextStageAlh);
 }

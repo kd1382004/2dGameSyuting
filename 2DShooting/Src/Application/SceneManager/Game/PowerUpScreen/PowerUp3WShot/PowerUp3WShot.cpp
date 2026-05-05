@@ -1,5 +1,5 @@
 #include "PowerUp3WShot.h"
-#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
+#include"../../../../Character/Info/CharacterInfoBace.h"
 
 void Powerup3WShot::Init(Math::Vector2 pos)
 {
@@ -11,7 +11,7 @@ void Powerup3WShot::Init(Math::Vector2 pos)
 
 }
 
-void Powerup3WShot::Update(PlayerPowerUpInfo* playerInfo)
+void Powerup3WShot::Update(CharacterInfo* playerInfo)
 {
 	playerInfo->Set3WShotFlg(true);
 }

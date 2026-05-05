@@ -2,7 +2,8 @@
 #include"MapObject/MapObject.h"
 #include"../SceneManager/Game/Game.h"
 #include"../Character/CharacterBase.h"
-#include"../Character/Player/Bullet/PlayerBullet.h"
+#include"../Character/Player/PlayerBullet/PlayerBullet.h"
+#include"MapObject/WarpObject/WarpObject.h"
 
 Map::Map()
 {
@@ -10,6 +11,7 @@ Map::Map()
 
 Map::~Map()
 {
+	m_warpTex.Release();
 	m_mapTex.Release();
 	m_mapMat.clear();
 	m_mapPos.clear();
@@ -31,7 +33,7 @@ void Map::MapHit(CharacterBase* chara)
 
 	for (int i = 0; i < m_mapDeta.size(); i++)
 	{
-		if (m_mapDeta[i] == 0 || m_mapDeta[i] == -999)
+		if (m_mapDeta[i] == 0 || m_mapDeta[i] == -999 || m_mapDeta[i] == 9)
 		{
 			continue;
 		}
@@ -60,6 +62,8 @@ void Map::MapHit(CharacterBase* chara)
 			charaPos.x += nx * over;
 			charaPos.y += ny * over;
 			chara->SetPos(charaPos);
+			chara->BlockHit();
+
 		}
 	}
 }
@@ -74,7 +78,7 @@ void Map::MapHit(PlayerBullet* buleet)
 
 	for (int i = 0; i < m_mapDeta.size(); i++)
 	{
-		if (m_mapDeta[i] == 0 || m_mapDeta[i] == -999)
+		if (m_mapDeta[i] == 0 || m_mapDeta[i] == -999 || m_mapDeta[i] == 9)
 		{
 			continue;
 		}
@@ -135,6 +139,9 @@ void Map::Updata()
 		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos[i].x - m_scroll, m_mapPos[i].y, 0);
 		m_mapMat[i] = mat;
 	}
+
+
+	m_mapObj.back()->Updata(m_scroll);
 }
 
 void Map::Draw2D()
@@ -147,6 +154,7 @@ void Map::Draw2D()
 		switch (m_mapDeta[i])
 		{
 		case 0:
+		case 9:
 			rec = { 0,0,64,64 };
 			break;
 
@@ -160,11 +168,15 @@ void Map::Draw2D()
 		SHADER.m_spriteShader.SetMatrix(m_mapMat[i]);
 		SHADER.m_spriteShader.DrawTex(&m_mapTex, rec);
 	}
+
+	m_mapObj.back()->Draw2D();
 }
 
 void Map::LodMapData(MapType mapType)
 {
-	switch (mapType)
+	int a = mapType % 3 + 1;
+
+	switch ((MapType)a)
 	{
 	case Map1:
 		LodMapData1();
@@ -178,11 +190,13 @@ void Map::LodMapData(MapType mapType)
 	default:
 		break;
 	}
+
 }
 
 void Map::LodMapData1()
 {
 	FILE* fp = fopen("Data/Map/Map1/MapData.txt", "r");
+	m_warpTex.Load("Data/Map/Object/WarpHall.png");
 	if (fp != NULL)
 	{
 		char ch;
@@ -206,12 +220,73 @@ void Map::LodMapData1()
 	int yNum = 0;
 	for (int i = 0; i < m_mapDeta.size(); i++)
 	{
-		m_mapPos.push_back({ -640 + (xNum * (float)m_mapBlocSiz),(360 /*- (float)m_mapBlocSiz)*/ - (yNum * (float)m_mapBlocSiz)) });
+		m_mapPos.push_back({ -640 + (xNum * (float)m_mapBlocSiz),(360 - (yNum * (float)m_mapBlocSiz)) });
 		xNum++;
 		if (m_mapDeta[i] == -999)
 		{
 			yNum++;
 			xNum = 0;
+		}
+
+		if (m_mapDeta[i] == 9)
+		{
+			m_mapObj.push_back(new  WarpObject);
+			m_mapObj.back()->Init(m_mapPos.back());
+			m_mapObj.back()->SetTex(&m_warpTex);
+			m_mapObj.back()->SetOwner(m_owner);
+		}
+
+		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos.back().x, m_mapPos.back().y, 0);
+		m_mapMat.push_back(mat);
+	}
+
+	m_mapTex.Load("Tex/Map/Map1/tf_jungle_a2.png");
+	m_scrollMin = m_mapPos[0].x + 640;
+	m_scrollMax = m_mapPos.back().x - 640;
+
+}
+
+void Map::LodMapData2()
+{
+	FILE* fp = fopen("Data/Map/Map2/MapData.txt", "r");
+	m_warpTex.Load("Data/Map/Object/WarpHall.png");
+	if (fp != NULL)
+	{
+		char ch;
+
+		while ((ch = fgetc(fp)) != EOF)	//EOF=ファイルの終了 End Of File
+		{
+			if (ch == '\n')
+			{
+				m_mapDeta.push_back(-999);
+			}
+			else
+			{
+				m_mapDeta.push_back(atoi(&ch));
+			}
+		}
+		fclose(fp);
+	}
+
+
+	int xNum = 0;
+	int yNum = 0;
+	for (int i = 0; i < m_mapDeta.size(); i++)
+	{
+		m_mapPos.push_back({ -640 + (xNum * (float)m_mapBlocSiz),(360 - (yNum * (float)m_mapBlocSiz)) });
+		xNum++;
+		if (m_mapDeta[i] == -999)
+		{
+			yNum++;
+			xNum = 0;
+		}
+
+		if (m_mapDeta[i] == 9)
+		{
+			m_mapObj.push_back(new  WarpObject);
+			m_mapObj.back()->Init(m_mapPos.back());
+			m_mapObj.back()->SetTex(&m_warpTex);
+			m_mapObj.back()->SetOwner(m_owner);
 		}
 
 		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos.back().x, m_mapPos.back().y, 0);
@@ -223,13 +298,55 @@ void Map::LodMapData1()
 	m_scrollMax = m_mapPos.back().x - 640;
 }
 
-void Map::LodMapData2()
-{
-
-}
-
 void Map::LodMapData3()
 {
+	FILE* fp = fopen("Data/Map/Map3/MapData.txt", "r");
+	m_warpTex.Load("Data/Map/Object/WarpHall.png");
+	if (fp != NULL)
+	{
+		char ch;
 
+		while ((ch = fgetc(fp)) != EOF)	//EOF=ファイルの終了 End Of File
+		{
+			if (ch == '\n')
+			{
+				m_mapDeta.push_back(-999);
+			}
+			else
+			{
+				m_mapDeta.push_back(atoi(&ch));
+			}
+		}
+		fclose(fp);
+	}
+
+
+	int xNum = 0;
+	int yNum = 0;
+	for (int i = 0; i < m_mapDeta.size(); i++)
+	{
+		m_mapPos.push_back({ -640 + (xNum * (float)m_mapBlocSiz),(360 - (yNum * (float)m_mapBlocSiz)) });
+		xNum++;
+		if (m_mapDeta[i] == -999)
+		{
+			yNum++;
+			xNum = 0;
+		}
+
+		if (m_mapDeta[i] == 9)
+		{
+			m_mapObj.push_back(new  WarpObject);
+			m_mapObj.back()->Init(m_mapPos.back());
+			m_mapObj.back()->SetTex(&m_warpTex);
+			m_mapObj.back()->SetOwner(m_owner);
+		}
+
+		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos.back().x, m_mapPos.back().y, 0);
+		m_mapMat.push_back(mat);
+	}
+
+	m_mapTex.Load("Tex/Map/Map1/tf_jungle_a2.png");
+	m_scrollMin = m_mapPos[0].x + 640;
+	m_scrollMax = m_mapPos.back().x - 640;
 }
 

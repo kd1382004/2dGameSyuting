@@ -1,7 +1,8 @@
 #include "PlayerBullet.h"
-#include"../PowerUpInfo/PowerUpInfo.h"
+#include"../../Info/CharacterInfoBace.h"
 
-void PlayerBullet::Init(Math::Vector2 pos, float deg, PlayerPowerUpInfo* Info)
+
+void PlayerBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
 {
 	m_enemuNum = -1;
 	m_buletPeneNum = Info->GetBuletPeneNum();
@@ -14,7 +15,7 @@ void PlayerBullet::Init(Math::Vector2 pos, float deg, PlayerPowerUpInfo* Info)
 	m_aliveFlg = true;
 
 	//角度から移動量を求める
-	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
+ 	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
 	m_move.y = sin(DirectX::XMConvertToRadians(deg)) * m_speed;
 	m_mat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0) * Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg)) * Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }
@@ -52,9 +53,9 @@ void PlayerBullet::MatConfirmed(float scroll)
 void PlayerBullet::MapHit(Math::Vector2 v)
 {
 
-	m_buletPeneNum--;
+	m_boundNum--;
 
-	if (m_buletPeneNum < 0)
+	if (m_boundNum < 0)
 	{
 		m_aliveFlg = false;
 	}

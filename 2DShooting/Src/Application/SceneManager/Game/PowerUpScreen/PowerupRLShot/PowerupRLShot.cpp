@@ -1,5 +1,5 @@
 #include"PowerupRLShot.h"
-#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
+#include"../../../../Character/Info/CharacterInfoBace.h"
 
 void PowerupRLShot::Init(Math::Vector2 pos)
 {
@@ -11,7 +11,7 @@ void PowerupRLShot::Init(Math::Vector2 pos)
 
 }
 
-void PowerupRLShot::Update(PlayerPowerUpInfo* playerInfo)
+void PowerupRLShot::Update(CharacterInfo* playerInfo)
 {
 	playerInfo->Set3LRShotFlg(true);
 }

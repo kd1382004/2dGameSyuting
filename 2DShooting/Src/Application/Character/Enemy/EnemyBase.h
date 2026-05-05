@@ -13,19 +13,22 @@ public:
 	virtual void Init() {}
 
 	// 更新処理
-	virtual void Update(){}
+	virtual void Update() {}
 
 	// 描画処理
-	virtual void Draw2D(){}
+	virtual void Draw2D() {}
 
-	virtual void MatConfirmed(float scroll){}
+	virtual void MatConfirmed(float scroll) {}
 
 
 	//追跡用等にプレイヤー座標セット
-	void SetPlayerPos(Math::Vector2 playerPos) {m_plaeyrPos = playerPos;};
+	void SetPlayerPos(Math::Vector2 playerPos) { m_plaeyrPos = playerPos; };
 
 
-	void PlayerBulletHit(PlayerBullet*bullet);
+	void PlayerBulletHit(PlayerBullet* bullet);
+
+
+	virtual void BlockHit() {};
 protected:
 
 	// 解放

@@ -73,9 +73,6 @@
     <Filter Include="Src\Application\Map\MapObject">
       <UniqueIdentifier>{8913ea21-aebf-4866-b173-e6cde17bcaaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Character\Player\Bullet">
-      <UniqueIdentifier>{d8dd4e49-4d9c-4c27-b23d-96949a098085}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\Character\Enemy\Slime">
       <UniqueIdentifier>{c8b88ea4-34b3-4e89-8e01-60782d73c18f}</UniqueIdentifier>
     </Filter>
@@ -103,14 +100,20 @@
     <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot">
       <UniqueIdentifier>{1820fa50-51a4-4b07-ab11-26d667053209}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Character\Player\PowerUpInfo">
-      <UniqueIdentifier>{b8dff413-f071-40fa-a058-4fafd3b82a58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\Info">
       <UniqueIdentifier>{6cf745dd-458f-4dbd-a589-0d76bb010fa8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\Info\InfoKey">
       <UniqueIdentifier>{e4a7d957-383d-43bb-a573-eee286366681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Character\Bullet">
+      <UniqueIdentifier>{4852096a-4a15-42b3-83dc-94b8fc9ba24a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Character\Player\PlayerBullet">
+      <UniqueIdentifier>{fbd0ae60-8a76-4978-874a-20838244b1da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Character\Info">
+      <UniqueIdentifier>{fdb9a9d2-4223-4823-8a06-5185daef761b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +225,6 @@
     <ClInclude Include="Src\Application\SceneManager\Result\result.h">
       <Filter>Src\Application\SceneManager\Result</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Character\CharacterBase.h">
-      <Filter>Src\Application\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Character\Player\Player.h">
       <Filter>Src\Application\Character\Player</Filter>
     </ClInclude>
@@ -239,9 +239,6 @@
     </ClInclude>
     <ClInclude Include="Src\Application\Map\Map.h">
       <Filter>Src\Application\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Character\Player\Bullet\PlayerBullet.h">
-      <Filter>Src\Application\Character\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\Character\Enemy\Slime\Slime.h">
       <Filter>Src\Application\Character\Enemy\Slime</Filter>
@@ -273,11 +270,20 @@
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot\PowerupPeneShot.h">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Character\Player\PowerUpInfo\PowerUpInfo.h">
-      <Filter>Src\Application\Character\Player\PowerUpInfo</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Info\InfoKey\InfoKey.h">
       <Filter>Src\Application\Info\InfoKey</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Character\CharacterBase.h">
+      <Filter>Src\Application\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Character\Bullet\BulletBace.h">
+      <Filter>Src\Application\Character\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Character\Player\PlayerBullet\PlayerBullet.h">
+      <Filter>Src\Application\Character\Player\PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Character\Info\CharacterInfoBace.h">
+      <Filter>Src\Application\Character\Info</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +383,6 @@
     <ClCompile Include="Src\Application\Map\Map.cpp">
       <Filter>Src\Application\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Character\Player\Bullet\PlayerBullet.cpp">
-      <Filter>Src\Application\Character\Player\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\Character\Enemy\Slime\Slime.cpp">
       <Filter>Src\Application\Character\Enemy\Slime</Filter>
     </ClCompile>
@@ -412,6 +415,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Info\InfoKey\InfoKey.cpp">
       <Filter>Src\Application\Info\InfoKey</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Bullet\BulletBace.cpp">
+      <Filter>Src\Application\Character\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Player\PlayerBullet\PlayerBullet.cpp">
+      <Filter>Src\Application\Character\Player\PlayerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

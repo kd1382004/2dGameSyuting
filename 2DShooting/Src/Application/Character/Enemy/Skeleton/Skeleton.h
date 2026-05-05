@@ -19,6 +19,7 @@ public:
 
 	void MatConfirmed(float scroll)override;
 
+	void BlockHit()override;;
 private:
 
 	// ‰ð•ú

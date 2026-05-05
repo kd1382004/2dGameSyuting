@@ -33,6 +33,8 @@ public:
 	virtual void MatConfirmed(float scroll) = 0;
 
 	bool GetDeleteFlg() { return m_deleteFlg; }
+
+	virtual void BlockHit() {};
 protected:
 
 	// ‰ð•ú

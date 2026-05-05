@@ -1,14 +1,15 @@
 #pragma once
+class PlayerPowerUpInfo;
 
 class PowerUpBase
 {
 public:
-	PowerUpBase() {};
+	PowerUpBase() { m_EXBackTex.Load("Tex/PowerUpScreen/Premade dialog box  big.png"); };
 	virtual ~PowerUpBase() { Release(); };
 
 	//表示場所をセット
 	virtual void Init(Math::Vector2 pos) {};
-	virtual void Update() {};
+	virtual void Update(PlayerPowerUpInfo* playerInfo) {};
 	virtual void Draw2D() {};
 
 
@@ -20,9 +21,12 @@ public:
 
 
 	void SetSelectSiz(float siz);
+
+	void DrawEXBack();
+
 protected:
 
-	virtual void Release() {};
+	virtual void Release() { m_EXBackTex.Release(); };
 
 	Math::Vector2 m_pos = {};
 	Math::Rectangle m_rec = { 0,0,150,221 };
@@ -33,5 +37,10 @@ protected:
 	Math::Matrix m_iconMat;
 	bool m_selectFlg = false;
 	float m_siz = 1;
+
+	KdTexture m_EXBackTex;
+	Math::Vector2 m_EXBackPos = { -3,-115 };
+	Math::Rectangle m_EXBackRec = { 0,0,900,100 };
+	Math::Matrix m_EXBackMat;
 
 };

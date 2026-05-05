@@ -36,6 +36,8 @@ public:
 	void ReleseBuleet(int num);
 
 	void SetShadowTex(KdTexture* tex) { m_shadowTex = tex; }
+
+	PlayerPowerUpInfo* GetPlayerPlayerPowerUpInfo() { return m_info; }
 private:
 
 	KdTexture* m_shadowTex;

@@ -6,6 +6,7 @@
 #include"../../Hit/CharaHit.h"
 #include"../../Map/Map.h"
 #include"PowerUpScreen/PowerUpScreen.h"
+#include"../../Info/InfoKey/InfoKey.h"
 
 
 void Game::Init()
@@ -185,7 +186,12 @@ void Game::Update()
 	}
 	else
 	{
-		m_powerUpScreen->Update();
+		m_powerUpScreen->Update(m_player->GetPlayerPlayerPowerUpInfo());
+
+		if (InfoKeyAPP.KeyPush(VK_SPACE))
+		{
+			m_powerUpScreenFlg = false;
+		}
 	}
 
 
@@ -238,7 +244,7 @@ void Game::Update()
 	{
 		if (!m_powerUpScreenFlg)
 		{
-			if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+			if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
 			{
 				m_powerUpScreenFlg = true;
 				m_powerUpScreen->Init();

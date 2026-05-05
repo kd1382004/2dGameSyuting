@@ -1,4 +1,5 @@
 #include "PowerUp3WShot.h"
+#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
 
 void Powerup3WShot::Init(Math::Vector2 pos)
 {
@@ -10,9 +11,9 @@ void Powerup3WShot::Init(Math::Vector2 pos)
 
 }
 
-void Powerup3WShot::Update()
+void Powerup3WShot::Update(PlayerPowerUpInfo* playerInfo)
 {
-
+	playerInfo->Set3WShotFlg(true);
 }
 
 void Powerup3WShot::Draw2D()
@@ -26,6 +27,7 @@ void Powerup3WShot::Draw2D()
 
 void Powerup3WShot::DrawEX()
 {
+	DrawEXBack();
 	SHADER.m_spriteShader.DrawString(-350, -100, "ŽËŒ‚‚ª‘O•û3•ûŒü‚É•ªŽU‚µ‚Ä”­ŽË‚³‚ê‚é", Math::Vector4(0, 0, 0, 1));
 }
 

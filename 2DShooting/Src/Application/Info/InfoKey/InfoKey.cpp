@@ -20,7 +20,11 @@ bool InfoKey::KeyPush(int Key, bool hold, bool holdFlg)
 	}
 	else if (Key == VK_SPACE)//スペース
 	{
-		flg = KeyPush(&KeySpace, Key, hold,holdFlg);
+		flg = KeyPush(&KeySpace, Key, hold, holdFlg);
+	}
+	else if (Key == VK_RETURN)
+	{
+		flg = KeyPush(&KeyEnter, Key, hold, holdFlg);
 	}
 
 	return flg;
@@ -38,7 +42,7 @@ bool InfoKey::KeyPush(Key* key, int num, bool hold, bool holdFlg)
 	if (GetAsyncKeyState(num) & 0x8000)
 	{
 		if (hold)
-		{ 
+		{
 			if (!holdFlg)
 			{
 				if (!key->m_pushFlg)
@@ -65,7 +69,7 @@ bool InfoKey::KeyPush(Key* key, int num, bool hold, bool holdFlg)
 					key->m_pushS = 0;
 				}
 			}
-			
+
 		}
 		else
 		{

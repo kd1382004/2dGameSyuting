@@ -1,4 +1,5 @@
 #include "PowerupBound.h"
+#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
 
 void PowerupBound::Init(Math::Vector2 pos)
 {
@@ -10,9 +11,9 @@ void PowerupBound::Init(Math::Vector2 pos)
 
 }
 
-void PowerupBound::Update()
+void PowerupBound::Update(PlayerPowerUpInfo* playerInfo)
 {
-
+	playerInfo->SetBoundNum(1);
 }
 
 void PowerupBound::Draw2D()
@@ -26,6 +27,7 @@ void PowerupBound::Draw2D()
 
 void PowerupBound::DrawEX()
 {
+	DrawEXBack();
 	SHADER.m_spriteShader.DrawString(-350, -100, "’e‚ª•Ç‚È‚Ç‚ð’µ‚Ë•Ô‚é‚æ‚¤‚É", Math::Vector4(0, 0, 0, 1));
 }
 

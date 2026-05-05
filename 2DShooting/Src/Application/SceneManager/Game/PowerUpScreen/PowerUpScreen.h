@@ -1,6 +1,7 @@
 #pragma once
 
 class PowerUpBase;
+class PlayerPowerUpInfo;
 
 class PowerUpScreen
 {
@@ -9,7 +10,7 @@ public:
 	~PowerUpScreen() { Release(); }
 
 	void Init();
-	void Update();
+	void Update(PlayerPowerUpInfo* playerInfo);
 	void Draw2D();
 
 private:

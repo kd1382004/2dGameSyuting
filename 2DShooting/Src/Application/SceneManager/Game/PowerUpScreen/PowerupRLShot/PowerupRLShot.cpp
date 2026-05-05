@@ -1,4 +1,5 @@
 #include"PowerupRLShot.h"
+#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
 
 void PowerupRLShot::Init(Math::Vector2 pos)
 {
@@ -10,9 +11,9 @@ void PowerupRLShot::Init(Math::Vector2 pos)
 
 }
 
-void PowerupRLShot::Update()
+void PowerupRLShot::Update(PlayerPowerUpInfo* playerInfo)
 {
-
+	playerInfo->Set3LRShotFlg(true);
 }
 
 void PowerupRLShot::Draw2D()
@@ -26,6 +27,7 @@ void PowerupRLShot::Draw2D()
 
 void PowerupRLShot::DrawEX()
 {
+	DrawEXBack();
 	SHADER.m_spriteShader.DrawString(-350, -100, "ç∂âEÇ©ÇÁÇ‡íeÇ™î≠éÀÇ≥ÇÍÇÈ", Math::Vector4(0, 0, 0, 1));
 }
 

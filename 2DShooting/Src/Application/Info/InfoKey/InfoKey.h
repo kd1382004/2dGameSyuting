@@ -28,6 +28,8 @@ private:
 
 	void Init();
 
+	bool KeyPush(Key* key, int num, bool hold, bool holdFlg);
+
 	//大文字アルファベット
 	Key KeyAlphabet[26];
 
@@ -37,9 +39,12 @@ private:
 	//スペースキー
 	Key KeySpace;
 
+	//エンターキー
+	Key KeyEnter;
+
 	static const int m_pushSMax = 10;
 
-	bool KeyPush(Key* key, int num, bool hold, bool holdFlg);
+
 private:
 
 	InfoKey() { Init(); }

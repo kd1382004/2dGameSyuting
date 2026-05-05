@@ -53,7 +53,6 @@ void PowerUpScreen::Init()
 		std::uniform_int_distribution<int> dist(0, siz);
 		num = dist(rand_engine);
 
-		m_powerUPSlect[num]->SetSelectFlg(true);
 		m_powerUp[i] = m_powerUPSlect[num];
 		m_powerUp[i]->Init(m_powerUpPos[i]);
 
@@ -61,9 +60,9 @@ void PowerUpScreen::Init()
 	}
 }
 
-void PowerUpScreen::Update()
+void PowerUpScreen::Update(PlayerPowerUpInfo* playerInfo)
 {
-	if (InfoKeyAPP.KeyPush('A',true) || InfoKeyAPP.KeyPush(VK_LEFT, true))
+	if (InfoKeyAPP.KeyPush('A', true) || InfoKeyAPP.KeyPush(VK_LEFT, true))
 	{
 		m_selectNum--;
 		if (m_selectNum <= 0)
@@ -72,7 +71,7 @@ void PowerUpScreen::Update()
 		}
 	}
 
-	
+
 	if (InfoKeyAPP.KeyPush('D', true) || InfoKeyAPP.KeyPush(VK_RIGHT, true))
 	{
 		m_selectNum++;
@@ -88,6 +87,16 @@ void PowerUpScreen::Update()
 		{
 			m_selectPos = m_powerUpPos[m_selectNum];
 			m_powerUp[i]->SetSelectSiz(m_selectSiz);
+
+			if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+			{
+				if (!m_powerUp[i]->GetSelectFlg())
+				{
+					m_powerUp[i]->Update(playerInfo);
+					m_powerUp[i]->SetSelectFlg(true);
+				}
+
+			}
 		}
 		else
 		{
@@ -112,6 +121,8 @@ void PowerUpScreen::Draw2D()
 			m_powerUp[i]->Draw2D();
 		}
 	}
+
+	m_powerUp[m_selectNum]->DrawEX();
 }
 
 void PowerUpScreen::Release()

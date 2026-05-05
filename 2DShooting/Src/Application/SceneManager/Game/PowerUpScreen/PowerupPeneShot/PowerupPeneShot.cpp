@@ -1,4 +1,5 @@
 #include "PowerupPeneShot.h"
+#include"../../../../Character/Player/PowerUpInfo/PowerUpInfo.h"
 
 void PowerupPeneShot::Init(Math::Vector2 pos)
 {
@@ -10,9 +11,9 @@ void PowerupPeneShot::Init(Math::Vector2 pos)
 
 }
 
-void PowerupPeneShot::Update()
+void PowerupPeneShot::Update(PlayerPowerUpInfo* playerInfo)
 {
-
+	playerInfo->SetBuletPeneNum(1);
 }
 
 void PowerupPeneShot::Draw2D()
@@ -26,7 +27,8 @@ void PowerupPeneShot::Draw2D()
 
 void PowerupPeneShot::DrawEX()
 {
-	SHADER.m_spriteShader.DrawString(-350, -100, "’e‚ª•Ç‚È‚Ç‚ð’µ‚Ë•Ô‚é‚æ‚¤‚É", Math::Vector4(0, 0, 0, 1));
+	DrawEXBack();
+	SHADER.m_spriteShader.DrawString(-350, -100, "’e‚ª“G‚ðŠÑ’Ê‚·‚é‚æ‚¤‚É", Math::Vector4(0, 0, 0, 1));
 }
 
 void PowerupPeneShot::Release()

@@ -9,7 +9,7 @@ void PlayerBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
 	m_boundNum = Info->GetBoundNum();
 	m_atk = Info->GetATK();
 	m_deg = deg;
-	m_siz = { 3,3 };
+	m_siz = { 2,2 };
 	m_pos = pos;
 	HitDetection = 16.0f;
 	m_aliveFlg = true;

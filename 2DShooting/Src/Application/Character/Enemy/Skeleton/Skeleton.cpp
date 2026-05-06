@@ -13,6 +13,8 @@ void Skeleton::Init()
 	m_bulletTex.Load("Tex/Character/Enemy/Skeleton/Bullet/Bullet.png");
 	m_info = new CharacterInfo();
 
+	m_siz = { 2,2 };
+
 	m_info->SetATK(10);
 }
 
@@ -59,7 +61,7 @@ void Skeleton::Update()
 		{
 			m_shotFlg = false;
 			m_shotInterval = m_shotIntervalMax;
-			Shot(m_info->Get3WShotFlg(), m_info->Get3LRShotFlg());
+			Shot(m_info->Get3WShotFlg(), m_info->GetLRShotFlg());
 		}
 
 	}
@@ -69,6 +71,16 @@ void Skeleton::Update()
 
 		if (m_shotFlg)
 		{
+			if (m_deg >= 0 && m_deg <= 90|| m_deg >= 270 && m_deg <= 360)
+			{
+				m_siz.x = 2;
+			}
+			else
+			{
+				m_siz.x = -2;
+
+			}
+
 			m_rec = { 32 * (int)m_anime, 0,32,32 };
 		}
 		else
@@ -109,7 +121,7 @@ void Skeleton::MatConfirmed(float scroll)
 	}
 
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
-	m_scaleMat = Math::Matrix::CreateScale(2, 2, 0);
+	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_mat = m_scaleMat * /*m_rotationMat **/ m_transMat;
 }

@@ -1,5 +1,6 @@
 #pragma once
 class CharacterInfo;
+class Player;
 
 class PowerUpBase
 {
@@ -10,6 +11,7 @@ public:
 	//表示場所をセット
 	virtual void Init(Math::Vector2 pos) {};
 	virtual void Update(CharacterInfo* playerInfo) {};
+	virtual void Update(Player* player) {};
 	virtual void Draw2D() {};
 
 
@@ -30,11 +32,8 @@ protected:
 
 	Math::Vector2 m_pos = {};
 	Math::Rectangle m_rec = { 0,0,150,221 };
-	Math::Rectangle m_iconRec = { 0,0,32,32 };
 	KdTexture m_tex;
-	KdTexture m_iconTex;
 	Math::Matrix m_mat;
-	Math::Matrix m_iconMat;
 	bool m_selectFlg = false;
 	float m_siz = 1;
 

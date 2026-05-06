@@ -8,6 +8,8 @@ class CharaHit;
 class Map;
 class PowerUpScreen;
 class DefAnime;
+class InfoGame;
+
 
 class Game :public SceneBase
 {
@@ -33,10 +35,16 @@ public:
 	Math::Vector2 GetPlayerPos();
 
 	void SetNextStageFlg(bool flg) { m_nextStageAnimeFlg = flg; }
-	
-	bool GetStageClearFlg() {return m_stageClearFlg;}
+
+	bool GetStageClearFlg() { return m_stageClearFlg; }
 
 	void NextScene();
+
+	void PowerUpNumUP() { m_powerUpNum++; }
+
+	void PowerUpScreenFlg() { m_powerUpScreenFlg = false; }
+
+	Player* GetPlayer() { return m_player; }
 private:
 
 	// 解放
@@ -94,6 +102,7 @@ private:
 	////////////
 	PowerUpScreen* m_powerUpScreen;
 	bool m_powerUpScreenFlg;
+	int m_powerUpScreenNum = 0;
 
 	///////////////////////
 	//clearアニメーション//
@@ -110,4 +119,25 @@ private:
 	////////
 	bool m_DEF = false;
 	DefAnime* m_defAnime;
+
+	////////////////////////
+	//ゲーム中に見せる情報//
+	////////////////////////
+	InfoGame* m_infoGame;
+
+
+	//////////////////////////
+	//リザルトに持ってく情報//
+	//////////////////////////
+
+	//敵を倒した数
+	int m_EnemyDeath;
+
+	//強化した数
+	int m_powerUpNum;
+
+	//ステージクリア数
+	int m_stageClearNum;
+
+
 };

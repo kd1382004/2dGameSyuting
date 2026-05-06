@@ -2,6 +2,7 @@
 
 class PowerUpBase;
 class CharacterInfo;
+class Game;
 
 class PowerUpScreen
 {
@@ -10,7 +11,7 @@ public:
 	~PowerUpScreen() { Release(); }
 
 	void Init();
-	void Update(CharacterInfo* playerInfo);
+	void Update(CharacterInfo* playerInfo, Game*game);
 	void Draw2D();
 
 private:

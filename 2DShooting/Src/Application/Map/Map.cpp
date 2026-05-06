@@ -162,6 +162,10 @@ void Map::Draw2D()
 		case 1:
 			rec = { 64,64,64,64 };
 			break;
+		case 2:
+			rec = { 64 * 2,64,64,64 };
+			break;
+
 		default:
 			break;
 		}
@@ -175,9 +179,7 @@ void Map::Draw2D()
 
 void Map::LodMapData(MapType mapType)
 {
-	int a = mapType % 3 + 1;
-
-	switch ((MapType)a)
+	switch (mapType)
 	{
 	case Map1:
 		LodMapData1();

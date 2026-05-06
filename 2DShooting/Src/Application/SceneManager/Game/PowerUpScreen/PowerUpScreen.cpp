@@ -3,7 +3,9 @@
 #include"PowerupRLShot/PowerupRLShot.h"
 #include"PowerupBound/PowerupBound.h"
 #include"PowerupPeneShot/PowerupPeneShot.h"
+#include"HPHeel/HPHeel.h"
 #include"../../../Info/InfoKey/InfoKey.h"
+#include"../Game.h"
 
 
 PowerUpScreen::PowerUpScreen()
@@ -22,6 +24,15 @@ PowerUpScreen::PowerUpScreen()
 
 void PowerUpScreen::Init()
 {
+	for (int i = 0; i < m_powerUPSlect.size(); i++)
+	{
+		if (m_powerUPSlect[i])
+		{
+			m_powerUPSlect.erase(m_powerUPSlect.begin() + i);
+		}
+	}
+
+
 	std::shared_ptr<Powerup3WShot> p3WS;
 	p3WS = std::make_shared<Powerup3WShot>();
 	m_powerUPSlect.push_back(p3WS);
@@ -41,6 +52,9 @@ void PowerUpScreen::Init()
 	pPenS = std::make_shared<PowerupPeneShot>();
 	m_powerUPSlect.push_back(pPenS);
 
+	std::shared_ptr<HPHeel> pHPH;
+	pHPH = std::make_shared<HPHeel>();
+	m_powerUPSlect.push_back(pHPH);
 
 	for (int i = 0; i < m_powerUpMax; i++)
 	{
@@ -56,11 +70,11 @@ void PowerUpScreen::Init()
 		m_powerUp[i] = m_powerUPSlect[num];
 		m_powerUp[i]->Init(m_powerUpPos[i]);
 
-		m_powerUPSlect.erase(m_powerUPSlect.begin() + num);;
+		m_powerUPSlect.erase(m_powerUPSlect.begin() + num);
 	}
 }
 
-void PowerUpScreen::Update(CharacterInfo* playerInfo)
+void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
 {
 	if (InfoKeyAPP.KeyPush('A', true) || InfoKeyAPP.KeyPush(VK_LEFT, true))
 	{
@@ -93,7 +107,9 @@ void PowerUpScreen::Update(CharacterInfo* playerInfo)
 				if (!m_powerUp[i]->GetSelectFlg())
 				{
 					m_powerUp[i]->Update(playerInfo);
+					m_powerUp[i]->Update(game->GetPlayer());
 					m_powerUp[i]->SetSelectFlg(true);
+					game->PowerUpScreenFlg();
 				}
 
 			}

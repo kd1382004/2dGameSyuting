@@ -9,6 +9,8 @@
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../../Character/Info/CharacterInfoBace.h"
 #include"DefAnime/DefAnime.h"
+#include"InfoGame/InfoGame.h"
+
 
 void Game::Init()
 {
@@ -30,8 +32,16 @@ void Game::Init()
 	//当たり判定
 	m_charaHit = new CharaHit();
 
+	m_infoGame = new InfoGame();
+	m_infoGame->Init();
+
 	//強化画面
 	m_powerUpScreen = new PowerUpScreen();
+
+
+	m_EnemyDeath = 0;
+	m_powerUpNum = 0;
+	m_stageClearNum = 0;
 
 	//ステージごとに変わるやつ
 	InitStage(m_stageNum);
@@ -222,17 +232,24 @@ void Game::Update()
 	}
 	else
 	{
-		m_powerUpScreen->Update(m_player->GetPlayerPlayerPowerUpInfo());
-
-		if (InfoKeyAPP.KeyPush(VK_SPACE))
-		{
-			m_powerUpScreenFlg = false;
-		}
+		m_powerUpScreen->Update(m_player->GetPlayerPlayerPowerUpInfo(), this);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	//マップ更新
-	m_map->Updata();
+	if (m_map)
+	{
+		m_map->Updata();
+	}
+
+	//情報画面更新
+	if (m_infoGame)
+	{
+		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo());
+		m_infoGame->SetPWUPNum(m_powerUpScreenNum);
+	}
+
+
 
 	//////////////////////////////////////////////////////////////////////////////
 
@@ -259,6 +276,7 @@ void Game::Update()
 			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
 			i--;
+			m_EnemyDeath++;
 		}
 	}
 
@@ -274,18 +292,21 @@ void Game::Update()
 	if (m_enemy.size() == 0 && !m_stageClearFlg)
 	{
 		m_stageClearFlg = true;
+		m_stageClearNum++;
+		m_powerUpScreenNum++;
 	}
 
 
 	//ステージがclearされていたら
 	if (m_stageClearFlg)
 	{
-		if (!m_powerUpScreenFlg)
+		if (!m_powerUpScreenFlg && m_powerUpScreenNum > 0)
 		{
 			if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
 			{
 				m_powerUpScreenFlg = true;
 				m_powerUpScreen->Init();
+				m_powerUpScreenNum--;
 			}
 		}
 	}
@@ -308,7 +329,7 @@ void Game::Update()
 void Game::Draw2D()
 {
 
-	if (m_DEF&& m_defAnime)
+	if (m_DEF && m_defAnime)
 	{
 		if (m_defAnime)
 		{
@@ -335,10 +356,18 @@ void Game::Draw2D()
 		m_player->Draw2D();
 	}
 
+	if (m_infoGame)
+	{
+		m_infoGame->Drow2D();
+	}
+
 	if (m_powerUpScreenFlg)
 	{
 		m_powerUpScreen->Draw2D();
 	}
+
+
+
 
 	if (m_nextStageAnimeFlg)
 	{
@@ -436,14 +465,14 @@ void Game::InitStage(int StageNum)
 	m_map->Updata();
 	m_stageClearFlg = false;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_slimeTex);
 		m_enemy.back()->Init();
 	}
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		m_enemy.push_back(new Skeleton());
 		m_enemy.back()->SetTex(&m_skeletonTex);

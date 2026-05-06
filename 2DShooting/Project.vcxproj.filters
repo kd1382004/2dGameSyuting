@@ -121,6 +121,15 @@
     <Filter Include="Src\Application\SceneManager\Game\DefAnime">
       <UniqueIdentifier>{9944ae7e-902f-48d1-a6a2-759a5c4499ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\InfoGame">
+      <UniqueIdentifier>{7b5d8c5b-2d24-4ed2-9f83-9b4e6978a54f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Info\NumDraw">
+      <UniqueIdentifier>{c9f6bcc9-16a3-42d6-ba0e-35fc5a3cec7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\HPHeel">
+      <UniqueIdentifier>{62c77e68-8d1c-4e3b-af90-8dd2e7341cc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -297,6 +306,15 @@
     <ClInclude Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.h">
       <Filter>Src\Application\SceneManager\Game\DefAnime</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\InfoGame\InfoGame.h">
+      <Filter>Src\Application\SceneManager\Game\InfoGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Info\NumDraw\NumDraw.h">
+      <Filter>Src\Application\Info\NumDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\HPHeel\HPHeel.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\HPHeel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -439,6 +457,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.cpp">
       <Filter>Src\Application\SceneManager\Game\DefAnime</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\InfoGame\InfoGame.cpp">
+      <Filter>Src\Application\SceneManager\Game\InfoGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Info\NumDraw\NumDraw.cpp">
+      <Filter>Src\Application\Info\NumDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\HPHeel\HPHeel.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\HPHeel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

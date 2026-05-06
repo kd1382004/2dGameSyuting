@@ -43,6 +43,9 @@ public:
 	CharacterInfo* GetPlayerPlayerPowerUpInfo() { return m_info; }
 
 	int GetHP() { return m_HP; }
+	int GetMaxHP() { return m_MaxHP; }
+
+	void HPHeel(int heel);
 private:
 
 	KdTexture* m_shadowTex;
@@ -85,7 +88,7 @@ private:
 
 	 std::vector< BulletBace*> m_bullet;
 	 float m_shotInterval = 0;			//’e‚Ì”­ËŠÔŠuŠÇ—
-	 float m_shotIntervalMax = 0.5f*0;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
+	 float m_shotIntervalMax = 0.5f*60;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
 
 
 	 PlayerAniemMode m_animeMode = Nomar;

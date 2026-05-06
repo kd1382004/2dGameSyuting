@@ -10,8 +10,8 @@ void Player::Init()
 	m_pos = { -300,0 };
 	m_speed = { 5.0,5.0 };
 	m_aliveFlg = true;
-	HitDetection = 64;
-	m_siz = { 5,5 };
+	HitDetection = 50;
+	m_siz = { 3,3 };
 	m_shotFlg = false;
 
 	m_animeMode = MoveMode;
@@ -31,6 +31,8 @@ void Player::Init()
 	m_hpBer->Init();
 
 	m_info = new CharacterInfo();
+
+	m_info->SetATK(100);
 }
 
 void Player::Update()
@@ -138,12 +140,10 @@ void Player::AnimeRec()
 			m_anime = 0;
 			m_animeMode = Nomar;
 
-			Shot(m_info->Get3WShotFlg(), m_info->Get3LRShotFlg());
+			Shot(m_info->Get3WShotFlg(), m_info->GetLRShotFlg());
 
 			m_shotInterval = m_shotIntervalMax;
 			m_shotFlg = false;
-
-			m_HP--;
 		}
 
 		m_rec = { 100 * (int)m_anime,100 * 4,100,100 };
@@ -186,6 +186,16 @@ void Player::ReleseBuleet()
 		m_bullet.erase(m_bullet.begin() + i);
 		i--;
 	}
+}
+
+void Player::HPHeel(int heel)
+{
+	 m_HP += heel;
+
+	 if (m_HP >= m_MaxHP)
+	 {
+		 m_HP = m_MaxHP;
+	 }
 }
 
 void Player::PlayerBulletHit(int num)

@@ -7,6 +7,9 @@ struct Key
 
 	//押されてどのくらいか
 	int m_pushS = 0;
+
+	//ゲッター用
+	bool m_getPushFlg;
 };
 
 class InfoKey
@@ -24,7 +27,10 @@ public:
 	//holdFlg...Keyを1度離さないと復活しない( hold=true && ture でなる )
 	bool KeyPush(int Key, bool hold = false, bool holdFlg = false);
 
+	bool GetKeyPush(int Key);
+
 private:
+
 
 	void Init();
 

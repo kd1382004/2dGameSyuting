@@ -5,7 +5,7 @@ class BulletBace;
 class  PlayerHpBer;
 class  CharacterInfo;
 
-class Player: public CharacterBase
+class Player : public CharacterBase
 {
 public:
 
@@ -45,6 +45,11 @@ public:
 	int GetHP() { return m_HP; }
 	int GetMaxHP() { return m_MaxHP; }
 
+	int GetEnemyDehHeelLv() { return m_enemyDehHeelLv; }
+	void SetEnemyDehHeelLv(int lv) { m_enemyDehHeelLv += lv; }
+
+	int EnemyDehHeelAmount();
+
 	void HPHeel(int heel);
 private:
 
@@ -54,7 +59,7 @@ private:
 
 	enum PlayerAniemMode
 	{
-		Nomar,  
+		Nomar,
 		MoveMode,//ˆÚ“®
 		ATKMode, //UŒ‚
 	};
@@ -65,15 +70,15 @@ private:
 	void Move();
 
 	//ƒvƒŒƒCƒ„[ƒL[‘€ì
-	
+
 	//ãˆÚ“®
 	int m_moveUp;
 	//‰ºˆÚ“®
-	int m_moveDown;	
+	int m_moveDown;
 	//¶ˆÚ“®
-	int m_moveLeft;	
+	int m_moveLeft;
 	//‰EˆÚ“®
-	int m_moveRight;	
+	int m_moveRight;
 
 	//’e
 	//’e”­Ë
@@ -86,15 +91,16 @@ private:
 
 	KdTexture m_bulletTex;
 
-	 std::vector< BulletBace*> m_bullet;
-	 float m_shotInterval = 0;			//’e‚Ì”­ËŠÔŠuŠÇ—
-	 float m_shotIntervalMax = 0.5f*60;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
+	std::vector< BulletBace*> m_bullet;
+	float m_shotInterval = 0;			//’e‚Ì”­ËŠÔŠuŠÇ—
+	float m_shotIntervalMax = 0.5f * 60;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
 
 
-	 PlayerAniemMode m_animeMode = Nomar;
+	PlayerAniemMode m_animeMode = Nomar;
 
-	 PlayerHpBer* m_hpBer;
+	PlayerHpBer* m_hpBer;
 
-	 void HPManager();
+	//“G‚ğ“|‚·“x‰ñ•œLv
+	int m_enemyDehHeelLv = 0;
 };
 

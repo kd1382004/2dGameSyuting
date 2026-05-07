@@ -45,6 +45,8 @@ public:
 
 
 	void HPDown(int dmg);
+
+	void HPCoolTimeManager();
 protected:
 
 	// ‰ğ•ú
@@ -88,9 +90,9 @@ protected:
 	bool m_deleteFlg = false;
 
 
-	int m_HPDownCoolTime=0;
-	static const int m_HPDownCoolTimeMax = 10;
 
+	static const int m_HPDownCoolTimeMax = 60;
+	int m_HPDownCoolTime = m_HPDownCoolTimeMax;
 
 	//‰~“–‚½‚è”»’è—p•Ï”(’¼Œa‚ğ“ü‚ê‚é)
 	float HitDetection;
@@ -106,6 +108,9 @@ protected:
 	float m_anime = 0;
 
 	CharacterInfo* m_info;
+
+	float m_charaAlpha = 1;
+	float m_charaAlphaPush = 0.1;
 private:
 
 };

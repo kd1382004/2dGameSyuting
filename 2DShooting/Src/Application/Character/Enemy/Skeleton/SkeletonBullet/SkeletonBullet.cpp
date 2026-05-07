@@ -6,7 +6,7 @@ void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
 	m_enemuNum = -999;
 	m_buletPeneNum = Info->GetBuletPeneNum();
 	m_boundNum = Info->GetBoundNum();
-	m_atk = 10;
+	m_atk = Info->GetATK() + Info->GetATKLV() * 2;
 	m_deg = deg;
 	m_siz = { 1,1 };
 	m_pos = pos;

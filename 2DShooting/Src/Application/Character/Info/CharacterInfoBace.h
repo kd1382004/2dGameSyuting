@@ -24,7 +24,11 @@ public:
 
 	//UŒ‚—Í
 	int GetATK() { return m_atk; }
-	void SetATK(int atk) { m_atk += atk ;}//‘‚â‚·—Ê‚ğ“ü‚ê‚é
+	int GetATKLV() { return m_atkLV; }
+	void SetATKLV(int atk) {
+		m_atkLV += atk;
+		m_atk = m_atkLV * 10 + 10;
+	}//‘‚â‚·—Ê‚ğ“ü‚ê‚é
 protected:
 
 
@@ -40,6 +44,9 @@ protected:
 	//’e‚ÌƒoƒEƒ“ƒh‰ñ”
 	int m_boundNum = 0;
 
+	//UŒ‚—ÍLV
+	int m_atkLV = 0;
+
 	//UŒ‚—Í
-	int m_atk = 0;
+	int m_atk = 10;
 };

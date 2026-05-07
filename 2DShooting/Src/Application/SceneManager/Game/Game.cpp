@@ -10,11 +10,11 @@
 #include"../../Character/Info/CharacterInfoBace.h"
 #include"DefAnime/DefAnime.h"
 #include"InfoGame/InfoGame.h"
-
+#include "../../Info/GameResult/GameResult.h"
 
 void Game::Init()
 {
-	m_stageNum = 1;
+	m_stageNum = 0;
 	m_DEF = false;
 	//プレイヤー初期化
 	m_player = new Player();
@@ -42,6 +42,7 @@ void Game::Init()
 	m_EnemyDeath = 0;
 	m_powerUpNum = 0;
 	m_stageClearNum = 0;
+	m_score = 0;
 
 	//ステージごとに変わるやつ
 	InitStage(m_stageNum);
@@ -72,23 +73,11 @@ void Game::Update()
 	//強化画面じゃなかったら
 	if (!m_powerUpScreenFlg)
 	{
-
-
-
-
 		//////////////
 		//プレイヤー//
 		//////////////
 		if (m_player)
 		{
-			if (m_player->GetHP() <= 0)
-			{
-
-			}
-
-
-
-
 			/////////////////////
 			//プレイヤー　更新//
 			////////////////////
@@ -247,6 +236,7 @@ void Game::Update()
 	{
 		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo());
 		m_infoGame->SetPWUPNum(m_powerUpScreenNum);
+		m_infoGame->SetPlyerHpHeel(m_player->GetEnemyDehHeelLv());
 	}
 
 
@@ -273,10 +263,16 @@ void Game::Update()
 	{
 		if (m_enemy[i]->GetDeleteFlg())
 		{
+			ScorePush(1);
 			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
 			i--;
 			m_EnemyDeath++;
+
+			if (m_player)
+			{
+				m_player->HPHeel(m_player->EnemyDehHeelAmount());
+			}
 		}
 	}
 
@@ -305,7 +301,7 @@ void Game::Update()
 			if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
 			{
 				m_powerUpScreenFlg = true;
-				m_powerUpScreen->Init();
+				m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo());
 				m_powerUpScreenNum--;
 			}
 		}
@@ -399,6 +395,11 @@ Math::Vector2 Game::GetPlayerPos()
 
 void Game::NextScene()
 {
+
+	GameResultInfoAPP.SetEnemyDeath(m_EnemyDeath);
+	GameResultInfoAPP.SetmScore(m_score);
+	GameResultInfoAPP.SetmStageClearNum(m_stageClearNum);
+	GameResultInfoAPP.SetPowerUpNum(m_powerUpNum);
 	m_owner->SetNextSceneType(RESULT);
 }
 
@@ -461,22 +462,40 @@ void Game::InitStage(int StageNum)
 
 	m_map = new Map();
 	m_map->setOwner(this);
-	m_map->Init((Map::MapType)StageNum);
+	m_map->Init((Map::MapType)(StageNum % 3));
 	m_map->Updata();
 	m_stageClearFlg = false;
 
-	for (int i = 0; i < 0; i++)
+	m_player->SetPos(m_map->PlayerSpawnPos());
+
+
+	int slimeNum = m_map->GetConSlimeSpawnNum() + m_stageNum;
+
+	if (slimeNum > m_map->GetSlimeSpawnNum())
+	{
+		slimeNum = m_map->GetSlimeSpawnNum();
+	}
+	for (int i = 0; i < slimeNum; i++)
 	{
 		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_slimeTex);
 		m_enemy.back()->Init();
+		m_enemy.back()->SetPos(m_map->SlimeSpawnPos());
 	}
 
-	for (int i = 0; i < 0; i++)
+
+	int skeletonNum = m_map->GetConSkeletonSpawnNum() + m_stageNum;
+
+	if (skeletonNum > m_map->GetSkeletonSpawnNum())
+	{
+		skeletonNum = m_map->GetSkeletonSpawnNum();
+	}
+	for (int i = 0; i < skeletonNum; i++)
 	{
 		m_enemy.push_back(new Skeleton());
 		m_enemy.back()->SetTex(&m_skeletonTex);
 		m_enemy.back()->Init();
+		m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
 	}
 
 	if (m_player)
@@ -515,4 +534,11 @@ void Game::NextStagenimeDraw2D()
 	Math::Matrix mat = Math::Matrix::CreateTranslation(0, 0, 0);
 	SHADER.m_spriteShader.SetMatrix(mat);
 	SHADER.m_spriteShader.DrawTex(&m_nextStageTex, Math::Rectangle{ 0,0,1280,720 }, m_nextStageAlh);
+}
+
+void Game::ScorePush(int lv)
+{
+	int scorePush;
+	scorePush = 100 + 10 * lv + 5 * m_powerUpScreenNum;
+	m_score += scorePush;
 }

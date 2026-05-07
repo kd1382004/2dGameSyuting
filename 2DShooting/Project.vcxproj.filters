@@ -130,6 +130,24 @@
     <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\HPHeel">
       <UniqueIdentifier>{62c77e68-8d1c-4e3b-af90-8dd2e7341cc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\ATKUP">
+      <UniqueIdentifier>{08eec15c-9db2-4a81-9ce5-cc1b76fee9d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PlayerHeel">
+      <UniqueIdentifier>{c1758229-2135-47eb-b3d6-4512b2893e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Info\GameResult">
+      <UniqueIdentifier>{758c8c6d-ee32-4fd7-adcf-46d5a51ec068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Button">
+      <UniqueIdentifier>{be0b7fb1-04d7-47e3-8619-dd287b694bf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Button\PlayButton">
+      <UniqueIdentifier>{960b08c2-d626-40cb-8524-4057b8f6ab04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Button\TitleButton">
+      <UniqueIdentifier>{631ba75f-91e8-4011-857e-bea2fc37ba9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -315,6 +333,24 @@
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\HPHeel\HPHeel.h">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\HPHeel</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\ATKUP\ATKUP.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\ATKUP</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PlayerHeel\PlayerHeel.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PlayerHeel</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Info\GameResult\GameResult.h">
+      <Filter>Src\Application\Info\GameResult</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Button\ButtonBase.h">
+      <Filter>Src\Application\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Button\PlayButton\PlayButton.h">
+      <Filter>Src\Application\Button\PlayButton</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Button\TitleButton\TitleButton.h">
+      <Filter>Src\Application\Button\TitleButton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -466,6 +502,24 @@
     </ClCompile>
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\HPHeel\HPHeel.cpp">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\HPHeel</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\ATKUP\ATKUP.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\ATKUP</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PlayerHeel\PlayerHeel.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PlayerHeel</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Info\GameResult\GameResult.cpp">
+      <Filter>Src\Application\Info\GameResult</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Button\ButtonBase.cpp">
+      <Filter>Src\Application\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Button\PlayButton\PlayButton.cpp">
+      <Filter>Src\Application\Button\PlayButton</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Button\TitleButton\TitleButton.cpp">
+      <Filter>Src\Application\Button\TitleButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,7 @@ public:
 
 
 	void SetPWUPNum(int num) { m_PWUPNum = num; }
+	void SetPlyerHpHeel(int num) { m_PlyerHpHeel = num; }
 private:
 
 	void Release();
@@ -72,4 +73,18 @@ private:
 	Math::Vector2 m_PWUPNumLVPos;
 	Math::Matrix m_PWUPNumLVMat;
 	int m_PWUPNum = 0;
+
+	KdTexture m_ATKUPIconTex;
+	Math::Vector2 m_ATKUPIconPos;
+	Math::Matrix m_ATKUPIconMat;
+	Math::Vector2 m_ATKUPLVPos;
+	Math::Matrix m_ATKUPLVMat;
+	int m_ATKUP = 0;
+
+		KdTexture m_PlyerHpHeelIconTex;
+	Math::Vector2 m_PlyerHpHeelIconPos;
+	Math::Matrix m_PlyerHpHeelIconMat;
+	Math::Vector2 m_PlyerHpHeelLVPos;
+	Math::Matrix m_PlyerHpHeelLVMat;
+	int m_PlyerHpHeel = 0;
 };

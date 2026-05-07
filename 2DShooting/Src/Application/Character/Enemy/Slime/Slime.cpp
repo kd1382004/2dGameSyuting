@@ -10,13 +10,14 @@ void Slime::Init()
 	m_siz = { 2,2 };
 	m_info = new CharacterInfo();
 
-	m_info->SetATK(10);
+	m_info->SetATKLV(0);
 }
 
 void Slime::Update()
 {
 	if (m_aliveFlg)
 	{
+		HPCoolTimeManager();
 		PlayerTrackingMove();
 	}
 
@@ -51,7 +52,7 @@ void Slime::Draw2D()
 
 		
 		SHADER.m_spriteShader.SetMatrix(m_mat);
-		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
+		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
 }
 

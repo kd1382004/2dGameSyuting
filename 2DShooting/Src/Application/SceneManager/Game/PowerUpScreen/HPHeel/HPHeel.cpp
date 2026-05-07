@@ -3,7 +3,7 @@
 
 void HPHeel::Init(Math::Vector2 pos)
 {
-	m_tex.Load("Tex/PowerUpScreen/HPHeel/HPHeel.png");
+	m_tex.Load("Tex/PowerUpScreen/HPHeel/HpHeel.png");
 	m_pos = pos;
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }

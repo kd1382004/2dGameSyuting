@@ -177,6 +177,60 @@ void Map::Draw2D()
 	m_mapObj.back()->Draw2D();
 }
 
+Math::Vector2 Map::SlimeSpawnPos()
+{
+	Math::Vector2 spawnPos = {};
+
+	int num;
+
+	if (m_conSlimeSawnPos.size() == 0)
+	{
+		std::random_device rand_dev{};
+		std::mt19937 rand_engine(rand_dev());
+		int siz = m_SlimeSawnPos.size();
+		siz -= 1;
+		std::uniform_int_distribution<int> dist(0, siz);
+		num = dist(rand_engine);
+
+		spawnPos = m_SlimeSawnPos[num];
+		m_SlimeSawnPos.erase(m_SlimeSawnPos.begin() + num);
+	}
+	else
+	{
+		spawnPos = m_conSlimeSawnPos[0];
+		m_conSlimeSawnPos.erase(m_conSlimeSawnPos.begin());
+	}
+
+	return spawnPos;
+}
+
+Math::Vector2 Map::SkeletonSpawnPos()
+{
+	Math::Vector2 spawnPos = {};
+
+	int num;
+
+	if (m_conSkeletonSawnPos.size() == 0)
+	{
+		std::random_device rand_dev{};
+		std::mt19937 rand_engine(rand_dev());
+		int siz = m_SkeletonSawnPos.size();
+		siz -= 1;
+		std::uniform_int_distribution<int> dist(0, siz);
+		num = dist(rand_engine);
+
+		spawnPos = m_SkeletonSawnPos[num];
+		m_SkeletonSawnPos.erase(m_SkeletonSawnPos.begin() + num);
+	}
+	else
+	{
+		spawnPos = m_conSkeletonSawnPos[0];
+		m_conSkeletonSawnPos.erase(m_conSkeletonSawnPos.begin());
+	}
+
+	return spawnPos;
+}
+
 void Map::LodMapData(MapType mapType)
 {
 	switch (mapType)
@@ -203,6 +257,7 @@ void Map::LodMapData1()
 	if (fp != NULL)
 	{
 		char ch;
+		int a = 0;
 
 		while ((ch = fgetc(fp)) != EOF)	//EOF=ファイルの終了 End Of File
 		{
@@ -212,10 +267,37 @@ void Map::LodMapData1()
 			}
 			else
 			{
-				m_mapDeta.push_back(atoi(&ch));
+
+
+				if (ch == 'L')
+				{
+					m_mapDeta.push_back('L');
+				}
+				else if (ch == 'P')
+				{
+					m_mapDeta.push_back('P');
+				}
+				else if (ch == 'K')
+				{
+					m_mapDeta.push_back('K');
+				}
+				else if (ch == 'M')
+				{
+					m_mapDeta.push_back('M');
+				}
+				else if (ch == 'J')
+				{
+					m_mapDeta.push_back('J');
+				}
+				else
+				{
+					m_mapDeta.push_back(atoi(&ch));
+				}
 			}
 		}
 		fclose(fp);
+
+		int b = 0;
 	}
 
 
@@ -237,6 +319,36 @@ void Map::LodMapData1()
 			m_mapObj.back()->Init(m_mapPos.back());
 			m_mapObj.back()->SetTex(&m_warpTex);
 			m_mapObj.back()->SetOwner(m_owner);
+		}
+
+		if (m_mapDeta[i] == 'P')
+		{
+			m_playerSpawnPos = m_mapPos[i];
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'M')
+		{
+			m_conSlimeSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'L')
+		{
+			m_SlimeSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'J')
+		{
+			m_conSkeletonSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'K')
+		{
+			m_SkeletonSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
 		}
 
 		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos.back().x, m_mapPos.back().y, 0);

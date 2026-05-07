@@ -6,6 +6,10 @@ class SceneManager;
 class SceneBase
 {
 public:
+
+	SceneBase(){}
+	~SceneBase() {}
+
 	// ‰Šúİ’è
 	virtual void Init() = 0;
 

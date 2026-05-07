@@ -4,6 +4,10 @@
 #include"PowerupBound/PowerupBound.h"
 #include"PowerupPeneShot/PowerupPeneShot.h"
 #include"HPHeel/HPHeel.h"
+#include"ATKUP/ATKUP.h"
+#include"PlayerHeel/PlayerHeel.h"
+
+#include"../../../Character/Info/CharacterInfoBace.h"
 #include"../../../Info/InfoKey/InfoKey.h"
 #include"../Game.h"
 
@@ -19,28 +23,35 @@ PowerUpScreen::PowerUpScreen()
 	}
 
 	m_selectPos = m_powerUpPos[0];
-	m_selectSiz = 1.2;
+	m_selectSiz = 1.2f;
 }
 
-void PowerUpScreen::Init()
+void PowerUpScreen::Init(CharacterInfo* playerInfo)
 {
-	for (int i = 0; i < m_powerUPSlect.size(); i++)
-	{
-		if (m_powerUPSlect[i])
+
+		if (m_powerUPSlect.size()>0)
 		{
-			m_powerUPSlect.erase(m_powerUPSlect.begin() + i);
+			m_powerUPSlect.clear();
+
 		}
+	
+
+	
+	if (!playerInfo->Get3WShotFlg())
+	{
+		std::shared_ptr<Powerup3WShot> p3WS;
+		p3WS = std::make_shared<Powerup3WShot>();
+		m_powerUPSlect.push_back(p3WS);
 	}
 
 
-	std::shared_ptr<Powerup3WShot> p3WS;
-	p3WS = std::make_shared<Powerup3WShot>();
-	m_powerUPSlect.push_back(p3WS);
 
-
-	std::shared_ptr<PowerupRLShot> pRLS;
-	pRLS = std::make_shared<PowerupRLShot>();
-	m_powerUPSlect.push_back(pRLS);
+	if (!playerInfo->GetLRShotFlg())
+	{
+		std::shared_ptr<PowerupRLShot> pRLS;
+		pRLS = std::make_shared<PowerupRLShot>();
+		m_powerUPSlect.push_back(pRLS);
+	}
 
 
 	std::shared_ptr<PowerupBound> pBou;
@@ -55,6 +66,15 @@ void PowerUpScreen::Init()
 	std::shared_ptr<HPHeel> pHPH;
 	pHPH = std::make_shared<HPHeel>();
 	m_powerUPSlect.push_back(pHPH);
+
+	std::shared_ptr<ATKUP> pATKUP;
+	pATKUP = std::make_shared<ATKUP>();
+	m_powerUPSlect.push_back(pATKUP);
+	
+
+	std::shared_ptr<PlayerHeel> pPHH;
+	pPHH = std::make_shared<PlayerHeel>();
+	m_powerUPSlect.push_back(pPHH);
 
 	for (int i = 0; i < m_powerUpMax; i++)
 	{
@@ -99,20 +119,24 @@ void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
 	{
 		if (i == m_selectNum)
 		{
-			m_selectPos = m_powerUpPos[m_selectNum];
-			m_powerUp[i]->SetSelectSiz(m_selectSiz);
-
-			if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+			if (m_powerUp[i])
 			{
-				if (!m_powerUp[i]->GetSelectFlg())
-				{
-					m_powerUp[i]->Update(playerInfo);
-					m_powerUp[i]->Update(game->GetPlayer());
-					m_powerUp[i]->SetSelectFlg(true);
-					game->PowerUpScreenFlg();
-				}
+				m_selectPos = m_powerUpPos[m_selectNum];
+				m_powerUp[i]->SetSelectSiz(m_selectSiz);
 
+				if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+				{
+					if (!m_powerUp[i]->GetSelectFlg())
+					{
+						m_powerUp[i]->Update(playerInfo);
+						m_powerUp[i]->Update(game->GetPlayer());
+						m_powerUp[i]->SetSelectFlg(true);
+						game->PowerUpScreenFlg();
+					}
+
+				}
 			}
+			
 		}
 		else
 		{

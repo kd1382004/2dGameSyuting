@@ -4,7 +4,12 @@
 
 void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 {
-	m_HP -= bullet->GetAtk();
+
+	if (m_HPDownCoolTime == m_HPDownCoolTimeMax)
+	{
+		m_HPDownCoolTime = 0;
+		m_HP -= bullet->GetAtk();
+	}
 
 	if (m_HP <= 0)
 	{

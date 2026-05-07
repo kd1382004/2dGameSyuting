@@ -43,6 +43,25 @@ void InfoGame::Init()
 	m_BoundNumLVMat = Math::Matrix::CreateTranslation(m_BoundNumLVPos.x, m_BoundNumLVPos.y, 0);
 
 
+	m_PlyerHpHeelIconTex.Load("Tex/PowerUpScreen/PlayerHeel/PlayerHeelIcon.png");
+	m_PlyerHpHeelIconPos = { -380,-280 };
+	m_PlyerHpHeelIconMat = Math::Matrix::CreateTranslation(m_PlyerHpHeelIconPos.x, m_PlyerHpHeelIconPos.y, 0);
+
+	m_PlyerHpHeelLVPos = { m_PlyerHpHeelIconPos.x + 35,m_PlyerHpHeelIconPos.y - 5 };
+	m_PlyerHpHeelLVMat = Math::Matrix::CreateTranslation(m_PlyerHpHeelLVPos.x, m_PlyerHpHeelLVPos.y, 0);
+
+	m_ATKUPIconTex.Load("Tex/PowerUpScreen/ATKUP/ATKUPIcon.png");
+	m_ATKUPIconPos = { -380,-340 };
+	m_ATKUPIconMat = Math::Matrix::CreateTranslation(m_ATKUPIconPos.x, m_ATKUPIconPos.y, 0);
+
+	m_ATKUPLVPos = { m_ATKUPIconPos.x + 35,m_ATKUPIconPos.y - 5 };
+	m_ATKUPLVMat = Math::Matrix::CreateTranslation(m_ATKUPLVPos.x, m_ATKUPLVPos.y, 0);
+
+
+
+
+
+
 	m_PWUPNumIconTex.Load("Tex/PowerUpScreen/PWUPNum/PWUPNum.png");
 	m_PWUPNumIconPos = { 400,-280 };
 	m_PWUPNumIconMat = Math::Matrix::CreateTranslation(m_PWUPNumIconPos.x, m_PWUPNumIconPos.y, 0);
@@ -83,6 +102,9 @@ void InfoGame::Update(CharacterInfo* info)
 	m_PeneNum = info->GetBuletPeneNum();
 
 	m_BoundNum = info->GetBoundNum();
+
+	m_ATKUP = info->GetATKLV();
+
 
 	if (m_PWUPNum != 0)
 	{
@@ -155,6 +177,20 @@ void InfoGame::Drow2D()
 	SHADER.m_spriteShader.SetMatrix(m_BoundNumLVMat);
 	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
 	NumDrawAPP.Drow(m_BoundNum, LAligned, Math::Vector2{ m_BoundNumLVPos.x + 20,m_BoundNumLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
+
+	SHADER.m_spriteShader.SetMatrix(m_PlyerHpHeelIconMat);
+	SHADER.m_spriteShader.DrawTex(&m_PlyerHpHeelIconTex, Math::Rectangle{ 0,0,32,32 });
+
+	SHADER.m_spriteShader.SetMatrix(m_PlyerHpHeelLVMat);
+	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
+	NumDrawAPP.Drow(m_PlyerHpHeel, LAligned, Math::Vector2{ m_PlyerHpHeelLVPos.x + 20,m_PlyerHpHeelLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
+
+	SHADER.m_spriteShader.SetMatrix(m_ATKUPIconMat);
+	SHADER.m_spriteShader.DrawTex(&m_ATKUPIconTex, Math::Rectangle{ 0,0,32,32 });
+
+	SHADER.m_spriteShader.SetMatrix(m_ATKUPLVMat);
+	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
+	NumDrawAPP.Drow(m_ATKUP, LAligned, Math::Vector2{ m_ATKUPLVPos.x + 20,m_ATKUPLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
 
 
 	SHADER.m_spriteShader.SetMatrix(m_PWUPNumIconMat);

@@ -77,8 +77,6 @@ void NumDraw::Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* co
 						mat = Smat * Tmat;
 						SHADER.m_spriteShader.SetMatrix(mat);
 						SHADER.m_spriteShader.DrawColorTex(&m_tex, rec1, color);
-
-						//pos.x -= (recX * siz)/2;
 					}
 				}
 

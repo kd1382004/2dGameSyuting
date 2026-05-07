@@ -10,7 +10,7 @@ public:
 	PowerUpScreen();
 	~PowerUpScreen() { Release(); }
 
-	void Init();
+	void Init(CharacterInfo* playerInfo);
 	void Update(CharacterInfo* playerInfo, Game*game);
 	void Draw2D();
 

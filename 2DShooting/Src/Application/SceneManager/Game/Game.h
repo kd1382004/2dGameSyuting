@@ -15,6 +15,7 @@ class Game :public SceneBase
 {
 public:
 
+	Game() {};
 	~Game() { Release(); };
 
 	// 初期設定
@@ -101,7 +102,7 @@ private:
 	//強化画面//
 	////////////
 	PowerUpScreen* m_powerUpScreen;
-	bool m_powerUpScreenFlg;
+	bool m_powerUpScreenFlg = false;
 	int m_powerUpScreenNum = 0;
 
 	///////////////////////
@@ -131,13 +132,17 @@ private:
 	//////////////////////////
 
 	//敵を倒した数
-	int m_EnemyDeath;
+	int m_EnemyDeath = 0;
 
 	//強化した数
-	int m_powerUpNum;
+	int m_powerUpNum = 0;
 
 	//ステージクリア数
-	int m_stageClearNum;
+	int m_stageClearNum = 0;
 
+	int m_score = 0;
 
+	//スコアを増やす
+	//lv...敵のレベルを入れる
+	void ScorePush(int lv);
 };

@@ -17,14 +17,14 @@ void Player::Init()
 	m_animeMode = MoveMode;
 
 	//プレイヤーKey設定
-	m_moveUp = 'W';
-	m_moveDown = 'S';
-	m_moveLeft = 'A';
-	m_moveRight = 'D';
+	m_moveUp = VK_UP;
+	m_moveDown = VK_DOWN;
+	m_moveLeft = VK_LEFT;
+	m_moveRight = VK_RIGHT;
 
 	m_bulletTex.Load("Tex/Character/Player/Bullet/bullet.png");
 
-	m_MaxHP = 100;
+	m_MaxHP = 500;
 	m_HP = m_MaxHP;
 
 	m_hpBer = new PlayerHpBer();
@@ -32,14 +32,12 @@ void Player::Init()
 
 	m_info = new CharacterInfo();
 
-	m_info->SetATK(100);
+	m_info->SetATKLV(0);
 }
 
 void Player::Update()
 {
-	HPManager();
-
-	m_HPDownCoolTime++;
+	HPCoolTimeManager();
 
 	////////////
 	//移動処理//
@@ -59,7 +57,7 @@ void Player::Update()
 	//アニメーション
 	AnimeRec();
 
-	
+
 }
 
 void Player::Draw2D()
@@ -70,11 +68,11 @@ void Player::Draw2D()
 		BulletDraw();
 
 		SHADER.m_spriteShader.SetMatrix(m_shadowMat);
-		SHADER.m_spriteShader.DrawTex(m_shadowTex, m_rec, 1.0f);
+		SHADER.m_spriteShader.DrawTex(m_shadowTex, m_rec, 1.0);
 		//プレイヤーの描画
 		SHADER.m_spriteShader.SetMatrix(m_mat);
-		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
-		
+		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
+
 
 		m_hpBer->Drow2D();
 	}
@@ -93,13 +91,13 @@ void Player::MatConfirmed(float scroll)
 	if (m_hpBer)
 	{
 		m_hpBer->SetPlayerPos(m_pos);
-		m_hpBer->SetHPPercent((float)m_HP/ m_MaxHP);
+		m_hpBer->SetHPPercent((float)m_HP / m_MaxHP);
 		m_hpBer->MatConfirmed(scroll);
 	}
 
 	//行列合成
 	//行列作成
-	m_transMat = Math::Matrix::CreateTranslation(m_pos.x- scroll, m_pos.y, 0);
+	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
 	m_mat = m_scaleMat * m_rotationMat * m_transMat;
@@ -107,7 +105,7 @@ void Player::MatConfirmed(float scroll)
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
-	m_shadowMat= m_scaleMat * m_rotationMat * m_transMat;
+	m_shadowMat = m_scaleMat * m_rotationMat * m_transMat;
 }
 
 void Player::AnimeRec()
@@ -180,7 +178,7 @@ void Player::ReleseBuleet(int num)
 
 void Player::ReleseBuleet()
 {
-	for (int i = 0; i < m_bullet.size(); i++ )
+	for (int i = 0; i < m_bullet.size(); i++)
 	{
 		delete m_bullet[i];
 		m_bullet.erase(m_bullet.begin() + i);
@@ -188,20 +186,31 @@ void Player::ReleseBuleet()
 	}
 }
 
+int Player::EnemyDehHeelAmount()
+{
+	int heel;
+	
+	heel = m_enemyDehHeelLv * 0.1 * 13;
+
+	return heel;
+}
+
 void Player::HPHeel(int heel)
 {
-	 m_HP += heel;
+	m_HP += heel;
 
-	 if (m_HP >= m_MaxHP)
-	 {
-		 m_HP = m_MaxHP;
-	 }
+	if (m_HP >= m_MaxHP)
+	{
+		m_HP = m_MaxHP;
+	}
 }
 
 void Player::PlayerBulletHit(int num)
 {
+
 	//貫通回数を減らす
-	if (m_bullet.size() > num && num > 0)
+	int a = m_bullet.size();
+	if (m_bullet.size() > num && num >= 0)
 	{
 		m_bullet[num]->DownBulletPeneNum();
 
@@ -260,7 +269,7 @@ void Player::Move()
 		}
 	}
 
-	
+
 	if (InfoKeyAPP.KeyPush(m_moveRight))
 	{
 		m_move.x++;
@@ -316,7 +325,7 @@ void Player::Shot()
 	}
 }
 
-void Player::Shot(bool _3WShotFlg,bool _3LRShotFlg)
+void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 {
 	m_bullet.push_back(new PlayerBullet);
 	m_bullet.back()->Init(m_pos, m_deg, m_info);
@@ -375,13 +384,5 @@ void Player::BulletDraw()
 		{
 			m_bullet[i]->Draw2D();
 		}
-	}
-}
-
-void Player::HPManager()
-{
-	if (m_HP <= 0)
-	{
- 		int a=0;
 	}
 }

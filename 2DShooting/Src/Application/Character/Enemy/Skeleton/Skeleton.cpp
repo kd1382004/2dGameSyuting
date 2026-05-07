@@ -13,9 +13,8 @@ void Skeleton::Init()
 	m_bulletTex.Load("Tex/Character/Enemy/Skeleton/Bullet/Bullet.png");
 	m_info = new CharacterInfo();
 
+	m_info->SetATKLV(1);
 	m_siz = { 2,2 };
-
-	m_info->SetATK(10);
 }
 
 void Skeleton::Update()
@@ -26,6 +25,8 @@ void Skeleton::Update()
 
 	if (m_aliveFlg)
 	{
+		HPCoolTimeManager();
+
 		m_pos.y += m_move.y;
 
 		float moveX = m_plaeyrPos.x - m_pos.x;
@@ -109,7 +110,7 @@ void Skeleton::Draw2D()
 		}
 
 		SHADER.m_spriteShader.SetMatrix(m_mat);
-		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, 1.0f);
+		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
 }
 

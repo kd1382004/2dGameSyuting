@@ -5,6 +5,9 @@ class Title :public SceneBase
 {
 public:
 
+	Title() {};
+	~Title() { Release(); };
+
 	// ‰Šúİ’è
 	void Init()override;
 

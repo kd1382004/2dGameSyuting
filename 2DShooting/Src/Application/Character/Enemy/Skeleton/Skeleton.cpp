@@ -6,13 +6,13 @@ void Skeleton::Init()
 {
 	m_aliveFlg = true;
 	HitDetection = 64;
-	m_pos = { (float)(rand() % 640 - 320),(float)(rand() % 720 / 2 - 360 / 2) };
+	m_pos = {};
 	m_HP = 10;
 	m_speed.y = 1;
 	m_move.y = m_speed.y;
 	m_bulletTex.Load("Tex/Character/Enemy/Skeleton/Bullet/Bullet.png");
 	m_info = new CharacterInfo();
-
+	m_rec = { 32 * (int)m_anime, 32,32,32 };
 	m_info->SetATKLV(1);
 	m_siz = { 2,2 };
 }

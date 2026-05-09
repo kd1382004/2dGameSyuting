@@ -3,8 +3,8 @@
 class GameResultInfo
 {
 public:
-	
-	~GameResultInfo(){}
+
+	~GameResultInfo() {}
 
 
 
@@ -13,13 +13,22 @@ public:
 
 
 	void SetPowerUpNum(int Num) { m_powerUpNum = Num; }
-	int GetPowerUpNum() {return m_powerUpNum;}
+	int GetPowerUpNum() { return m_powerUpNum; }
 
 	void SetmStageClearNum(int Num) { m_stageClearNum = Num; }
 	int GetmStageClearNum() { return m_stageClearNum; }
 
-	void SetmScore(int Num) { m_score = Num; }
-	int GetmScore() { return m_score; }
+	void SetScore(int Num) { m_score = Num; }
+	int GetScore() { return m_score; }
+
+	void SetMapNum(int Num) { m_mapNum = Num; }
+	int GetMapNum() { return m_mapNum; }
+
+	void SetScroll(float scroll) { m_scroll = scroll; }
+	float GetScroll() { return m_scroll; }
+
+	void SetplayerDefPos(Math::Vector2 Pos) { m_playerDefPos = Pos; }
+	Math::Vector2 GetplayerDefPos() { return m_playerDefPos; }
 private:
 
 
@@ -34,7 +43,13 @@ private:
 
 	int m_score = 0;
 
+	//マップステージ
+	int m_mapNum = 0;
 
+	Math::Vector2 m_playerDefPos;
+
+	//
+	float m_scroll = 0;
 	void Init() {};
 private:
 

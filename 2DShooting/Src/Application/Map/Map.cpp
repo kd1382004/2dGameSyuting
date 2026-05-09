@@ -123,16 +123,26 @@ void Map::MapHit(BulletBace* buleet)
 void Map::Updata()
 {
 	//スクロール処理
-	m_scroll = m_owner->GetPlayerPos().x;
+	if (m_owner)
+	{
+		m_scroll = m_owner->GetPlayerPos().x;
 
-	if (m_scroll < m_scrollMin)
-	{
-		m_scroll = m_scrollMin;
+		if (m_scroll < m_scrollMin)
+		{
+			m_scroll = m_scrollMin;
+		}
+		else if (m_scroll > m_scrollMax)
+		{
+			m_scroll = m_scrollMax;
+		}
 	}
-	else if (m_scroll > m_scrollMax)
+	else
 	{
-		m_scroll = m_scrollMax;
+		m_scroll = 0;
 	}
+
+
+	
 
 	//行列作成
 	for (int i = 0; i < m_mapPos.size(); i++)
@@ -229,6 +239,19 @@ Math::Vector2 Map::SkeletonSpawnPos()
 	}
 
 	return spawnPos;
+}
+
+void Map::ResultUpdata(float scroll)
+{
+	//行列作成
+	for (int i = 0; i < m_mapPos.size(); i++)
+	{
+		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos[i].x - scroll, m_mapPos[i].y, 0);
+		m_mapMat[i] = mat;
+	}
+
+
+	m_mapObj.back()->Updata(scroll);
 }
 
 void Map::LodMapData(MapType mapType)

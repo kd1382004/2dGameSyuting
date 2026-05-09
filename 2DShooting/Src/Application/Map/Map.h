@@ -26,6 +26,7 @@ public:
 	void Init(MapType mapType);
 
 	void Updata();
+
 	void Draw2D();
 
 	void MapHit(CharacterBase* chara);
@@ -50,6 +51,8 @@ public:
 
 	int GetSkeletonSpawnNum() { return m_conSkeletonSawnPos.size() + m_SkeletonSawnPos.size(); }
 	int GetConSkeletonSpawnNum() { return m_conSkeletonSawnPos.size(); }
+
+	void ResultUpdata(float scroll);
 private:
 
 	void LodMapData(MapType mapType);
@@ -79,7 +82,7 @@ private:
 
 	float m_scroll;
 
-	Game* m_owner;
+	Game* m_owner=nullptr;
 
 	int m_scrollMin;
 	int m_scrollMax;

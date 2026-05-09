@@ -98,9 +98,9 @@ protected:
 	float HitDetection;
 
 	//HP
-	int m_HP;
+	int m_HP = 0;
 
-	int m_MaxHP;
+	int m_MaxHP = 0;
 
 	//Šp“x
 	float m_deg = 0.0f;

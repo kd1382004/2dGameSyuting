@@ -55,6 +55,16 @@ private:
 	//このクラス内で作ったポインタ消去関数
 	void PtrRelease();
 
+	//////////////////////////////////
+	//ステージスタートアニメーション//
+	//////////////////////////////////
+
+	void StageStartAnimeUpdate();
+	void StageStartAnimeDraw2D();
+	bool m_stageStartAnimeFlg = true;
+	float m_stageStartAnimeCnt = 0;
+
+
 	//////////////////
 	//ステージ初期化//
 	//////////////////

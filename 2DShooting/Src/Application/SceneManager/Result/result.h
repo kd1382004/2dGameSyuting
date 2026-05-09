@@ -2,6 +2,7 @@
 #include"../SceneBase.h"
 
 class ButtonBase;
+class Map;
 
 class Result :public SceneBase
 {
@@ -24,8 +25,13 @@ private:
 	/////////
 	//”wŒi//
 	////////
-	KdTexture m_backTex;
-	Math::Matrix m_backMat;
+	Map* m_back;
+
+	//ƒvƒŒƒCƒ„[
+	KdTexture m_playerTex;
+	Math::Vector2 m_playerPos;
+	Math::Matrix m_playerMat;
+
 
 
 	////////////////////

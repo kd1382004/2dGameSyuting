@@ -5,12 +5,17 @@
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../../Button/PlayButton/PlayButton.h"
 #include"../../Button/TitleButton/TitleButton.h"
-
+#include"../../Map/Map.h"
 
 void Result::Init()
 {
-	m_backTex.Load("Tex/Result/ResultBack.png");
-	m_backMat = Math::Matrix::CreateTranslation(0, 0, 0);
+	m_back = new Map();
+	m_back->Init((Map::MapType)GameResultInfoAPP.GetMapNum());
+	m_back->ResultUpdata(GameResultInfoAPP.GetScroll());
+
+	m_playerTex.Load("Tex/Character/Player/Soldier-Death.png");
+	m_playerPos = GameResultInfoAPP.GetplayerDefPos();
+	m_playerMat = Math::Matrix::CreateScale(3, 3, 0) * Math::Matrix::CreateTranslation(m_playerPos.x - GameResultInfoAPP.GetScroll(), m_playerPos.y, 0);
 
 	m_resultTex.Load("Tex/Result/Result.png");
 	m_resultPos = { 0,300 };
@@ -19,7 +24,7 @@ void Result::Init()
 	m_ScoreTex.Load("Tex/Result/Score.png");
 	m_ScorePos = { -350,250 + m_yPosGap };
 	m_ScoreMat = Math::Matrix::CreateTranslation(m_ScorePos.x, m_ScorePos.y, 0);
-	m_ScoreNum = GameResultInfoAPP.GetmScore();
+	m_ScoreNum = GameResultInfoAPP.GetScore();
 	if (m_ScoreNum > NumMax) { m_ScoreNum = NumMax; }
 	m_ScoreNumPos = { m_ScorePos.x + m_NumXGap,m_ScorePos.y, 0 };
 
@@ -63,9 +68,6 @@ void Result::Init()
 	titleButton->SetDefaultSiz(3);
 	titleButton->SetSelectSiz(1.5);
 	m_button.push_back(titleButton);
-
-
-
 }
 
 void Result::Update()
@@ -127,9 +129,11 @@ void Result::Update()
 
 void Result::Draw2D()
 {
-	//”wŒi
-	SHADER.m_spriteShader.SetMatrix(m_backMat);
-	SHADER.m_spriteShader.DrawTex(&m_backTex, Math::Rectangle{ 0,0,1280,720 });
+	////”wŒi
+	m_back->Draw2D();
+
+	SHADER.m_spriteShader.SetMatrix(m_playerMat);
+	SHADER.m_spriteShader.DrawTex(&m_playerTex, Math::Rectangle{ 300,0,100,100 });
 
 	//ƒŠƒUƒ‹ƒg
 	SHADER.m_spriteShader.SetMatrix(m_resultMat);
@@ -168,7 +172,7 @@ void Result::Draw2D()
 
 void Result::Release()
 {
-	m_backTex.Release();
+	m_playerTex.Release();
 	m_ScoreTex.Release();
 	m_stageClearTex.Release();
 	m_EnemyTex.Release();

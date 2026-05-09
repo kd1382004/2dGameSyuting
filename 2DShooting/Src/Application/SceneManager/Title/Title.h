@@ -1,6 +1,10 @@
 #pragma once
 #include"../SceneBase.h"
 
+class ButtonBase;
+class Map;
+class Player;
+
 class Title :public SceneBase
 {
 public:
@@ -22,4 +26,18 @@ private:
 	// ‰ğ•ú
 	void Release()override;
 
+	//ƒQ[ƒ€–¼
+	KdTexture m_titleTex;
+	Math::Vector2 m_titlePos;
+	Math::Matrix m_titleMat;
+
+	//ƒ{ƒ^ƒ“
+	std::vector<std::shared_ptr<ButtonBase>> m_button;
+	int m_slect;
+
+	Map* m_back;
+
+	KdTexture m_playerTex;
+	KdTexture m_playerShadowTex;
+	Player* m_player = nullptr;
 };

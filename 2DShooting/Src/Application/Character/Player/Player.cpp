@@ -13,7 +13,7 @@ void Player::Init()
 	HitDetection = 50;
 	m_siz = { 3,3 };
 	m_shotFlg = false;
-
+	m_rec = { 100 * (int)m_anime,100 * 1,100,100 };
 	m_animeMode = MoveMode;
 
 	//ÉvÉåÉCÉÑÅ[Keyê›íË
@@ -24,7 +24,7 @@ void Player::Init()
 
 	m_bulletTex.Load("Tex/Character/Player/Bullet/bullet.png");
 
-	m_MaxHP = 500;
+	m_MaxHP = 200;
 	m_HP = m_MaxHP;
 
 	m_hpBer = new PlayerHpBer();
@@ -190,7 +190,7 @@ int Player::EnemyDehHeelAmount()
 {
 	int heel;
 	
-	heel = m_enemyDehHeelLv * 0.1 * 13;
+   	heel = m_enemyDehHeelLv * 0.1 * 53;
 
 	return heel;
 }

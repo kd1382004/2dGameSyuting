@@ -7,10 +7,13 @@
 #include"../../Map/Map.h"
 #include"PowerUpScreen/PowerUpScreen.h"
 #include"../../Info/InfoKey/InfoKey.h"
+#include"../../Info/NumDraw/NumDraw.h"
 #include"../../Character/Info/CharacterInfoBace.h"
 #include"DefAnime/DefAnime.h"
 #include"InfoGame/InfoGame.h"
 #include "../../Info/GameResult/GameResult.h"
+#include"../../Info/HighScore/HighScore.h"
+
 
 void Game::Init()
 {
@@ -52,9 +55,19 @@ void Game::Init()
 
 void Game::Update()
 {
+
+
+
+
 	if (m_nextStageAnimeFlg)
 	{
 		NextStagenimeUpdate();
+		return;
+	}
+
+	if (m_stageStartAnimeFlg)
+	{
+		StageStartAnimeUpdate();
 		return;
 	}
 
@@ -293,19 +306,18 @@ void Game::Update()
 	}
 
 
-	//ステージがclearされていたら
-	if (m_stageClearFlg)
+	//強化が可能なら
+	if (!m_powerUpScreenFlg && m_powerUpScreenNum > 0)
 	{
-		if (!m_powerUpScreenFlg && m_powerUpScreenNum > 0)
+		if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
 		{
-			if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
-			{
-				m_powerUpScreenFlg = true;
-				m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo());
-				m_powerUpScreenNum--;
-			}
+			m_powerUpScreenFlg = true;
+			m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo());
+			m_powerUpScreenNum--;
+			m_powerUpNum++;
 		}
 	}
+
 
 	if (m_player)
 	{
@@ -314,6 +326,8 @@ void Game::Update()
 			m_DEF = true;
 			m_defAnime = new DefAnime();
 			m_defAnime->Init();
+			GameResultInfoAPP.SetScroll(m_map->GetScroll());
+			GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
 		}
 	}
 
@@ -363,7 +377,10 @@ void Game::Draw2D()
 	}
 
 
-
+	if (m_stageStartAnimeFlg)
+	{
+		StageStartAnimeDraw2D();
+	}
 
 	if (m_nextStageAnimeFlg)
 	{
@@ -395,9 +412,37 @@ Math::Vector2 Game::GetPlayerPos()
 
 void Game::NextScene()
 {
+	HighScoreAPP.nowScre.score = m_score;
+	HighScoreAPP.nowScre.clearNum = m_stageClearNum;
+	HighScoreAPP.nowScre.enemyNum = m_EnemyDeath;
+	HighScoreAPP.nowScre.powerUpNum = m_powerUpNum;
+	if (m_player->GetCharaInfo()->Get3WShotFlg())
+	{
+		HighScoreAPP.nowScre._3wShotLv = 1;
+	}
+	else
+	{
+		HighScoreAPP.nowScre._3wShotLv = 0;
+	}
+
+	if (m_player->GetCharaInfo()->GetLRShotFlg())
+	{
+		HighScoreAPP.nowScre._LRShotLv = 1;
+	}
+	else
+	{
+		HighScoreAPP.nowScre._LRShotLv = 0;
+	}
+
+
+	HighScoreAPP.nowScre.peneLv = m_player->GetCharaInfo()->GetBuletPeneNum();
+	HighScoreAPP.nowScre.bounLv = m_player->GetCharaInfo()->GetBoundNum();
+	HighScoreAPP.nowScre.ATKUpLv = m_player->GetCharaInfo()->GetATK();
+	HighScoreAPP.nowScre.hpHeelLv = m_player->GetEnemyDehHeelLv();
+	HighScoreAPP.HighScoreNew();
 
 	GameResultInfoAPP.SetEnemyDeath(m_EnemyDeath);
-	GameResultInfoAPP.SetmScore(m_score);
+	GameResultInfoAPP.SetScore(m_score);
 	GameResultInfoAPP.SetmStageClearNum(m_stageClearNum);
 	GameResultInfoAPP.SetPowerUpNum(m_powerUpNum);
 	m_owner->SetNextSceneType(RESULT);
@@ -449,6 +494,27 @@ void Game::PtrRelease()
 	}
 }
 
+void Game::StageStartAnimeUpdate()
+{
+
+	m_stageStartAnimeCnt -= 1.0 / 60;
+
+	if (m_stageStartAnimeCnt < 0)
+	{
+		m_stageStartAnimeFlg = false;
+	}
+
+}
+
+void Game::StageStartAnimeDraw2D()
+{
+	int num = m_stageStartAnimeCnt;
+	if (num < 4)
+	{
+		NumDrawAPP.Drow(num, LAligned, Math::Vector2{ 0,0 }, &Math::Color{ 1,1,1,1 }, 10);
+	}
+}
+
 void Game::InitStage(int StageNum)
 {
 	//マップ
@@ -457,17 +523,16 @@ void Game::InitStage(int StageNum)
 		delete m_map;
 	}
 
-	m_player->SetPos(Math::Vector2{ -580, 0 });
-	m_player->ReleseBuleet();
-
 	m_map = new Map();
 	m_map->setOwner(this);
 	m_map->Init((Map::MapType)(StageNum % 3));
-	m_map->Updata();
+	GameResultInfoAPP.SetMapNum((StageNum % 3));
 	m_stageClearFlg = false;
-
-	m_player->SetPos(m_map->PlayerSpawnPos());
-
+	if (m_player)
+	{
+		m_player->SetPos(m_map->PlayerSpawnPos());
+	}
+	m_map->Updata();
 
 	int slimeNum = m_map->GetConSlimeSpawnNum() + m_stageNum;
 
@@ -500,6 +565,7 @@ void Game::InitStage(int StageNum)
 
 	if (m_player)
 	{
+		m_player->ReleseBuleet();
 		m_player->MatConfirmed(m_map->GetScroll());
 	}
 
@@ -507,6 +573,10 @@ void Game::InitStage(int StageNum)
 	{
 		m_enemy[i]->MatConfirmed(m_map->GetScroll());
 	}
+
+
+	m_stageStartAnimeCnt = 4;
+	m_stageStartAnimeFlg = true;
 }
 
 void Game::NextStagenimeUpdate()

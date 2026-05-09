@@ -32,14 +32,22 @@ void Skeleton::Update()
 		float moveX = m_plaeyrPos.x - m_pos.x;
 		float moveY = m_plaeyrPos.y - m_pos.y;
 		float rad = atan2(moveY, moveX);
-		float deg = DirectX::XMConvertToDegrees(rad);
-
-		if (deg < 0)
+		if (fabs(moveX) < 0.0001f && fabs(moveY) < 0.0001f)
 		{
-			deg += 360;
+			int a = 0;
+		}
+		else
+		{
+			float deg = DirectX::XMConvertToDegrees(rad);
+
+			if (deg < 0)
+			{
+				deg += 360;
+			}
+
+			m_deg = deg;
 		}
 
-		m_deg = deg;
 
 		shot();
 	}
@@ -72,7 +80,7 @@ void Skeleton::Update()
 
 		if (m_shotFlg)
 		{
-			if (m_deg >= 0 && m_deg <= 90|| m_deg >= 270 && m_deg <= 360)
+			if (m_deg >= 0 && m_deg <= 90 || m_deg >= 270 && m_deg <= 360)
 			{
 				m_siz.x = 2;
 			}
@@ -130,6 +138,25 @@ void Skeleton::MatConfirmed(float scroll)
 void Skeleton::BlockHit()
 {
 	m_move.y *= -1;
+}
+
+void Skeleton::SetStatus(int stage)
+{
+	int HPUp = 0;
+	if (stage != 0)
+	{
+		HPUp = stage / 3 * 10;
+	}
+
+	m_HP = 20 + HPUp;
+
+	int atkLv = stage * 0.8;
+	m_info->SetATKLV(atkLv);
+}
+
+void Skeleton::EnemyHit()
+{
+	BlockHit();
 }
 
 void Skeleton::Release()

@@ -19,6 +19,7 @@ public:
 
 	void MatConfirmed(float scroll)override;
 
+	void SetStatus(int stage)override;
 private:
 
 	// ‰ð•ú

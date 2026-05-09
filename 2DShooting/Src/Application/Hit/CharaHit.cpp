@@ -35,6 +35,11 @@ void CharaHit::Pushback(CharacterBase* chara1, CharacterBase* chara2)
 	const float y = chara1->GetPos().y - chara2->GetPos().y;
 	const float z = sqrt(x * x + y * y);
 
+	if (z < 0.0001f)
+	{
+		return;
+	}
+
 	//”¼Œa{”¼Œa
 	const float sum = chara1->GetHitDetection() / 2 + chara2->GetHitDetection() / 2;
 
@@ -56,7 +61,7 @@ void CharaHit::Pushback(CharacterBase* chara1, CharacterBase* chara2)
 		enemyiPos.x += nx * (over * 0.5);
 		enemyiPos.y += ny * (over * 0.5);
 		enemyjPos.x -= nx * (over * 0.5);
-		enemyjPos.y -= nx * (over * 0.5);
+		enemyjPos.y -= ny * (over * 0.5);
 
 		chara1->SetPos(enemyiPos);
 		chara2->SetPos(enemyjPos);
@@ -72,7 +77,7 @@ void CharaHit::Pushback(CharacterBase* chara1, CharacterBase* chara2)
 	{
 		Math::Vector2 enemyjPos = chara2->GetPos();
 		enemyjPos.x -= nx * over;
-		enemyjPos.y -= nx * over;
+		enemyjPos.y -= ny * over;
 		chara2->SetPos(enemyjPos);
 	}
 }
@@ -96,13 +101,19 @@ bool CharaHit::BulletHit(BulletBace* bullet, CharacterBase* enemy,int enemyNum)
 	Math::Vector2 charaPos2 = enemy->GetPos();
 
 
-	int a = charaPos1.x - charaPos2.x;
-	int b = charaPos1.y - charaPos2.y;
+	float a = charaPos1.x - charaPos2.x;
+	float b = charaPos1.y - charaPos2.y;
+	if (std::isnan(a) || std::isnan(b))
+	{
+		// À•W‚ª‰ó‚ê‚Ä‚¢‚é ¨ “–‚½‚è”»’è•s”\
+		return false;
+	}
+
 	float c = sqrt(a * a + b * b);
 
 	if (c < bullet->GetHitDetection() / 2 + enemy->GetHitDetection() / 2)
 	{
-		hitFlg = true;
+   		hitFlg = true;
 		bullet->SetEnemyNum(enemyNum);
 	}
 

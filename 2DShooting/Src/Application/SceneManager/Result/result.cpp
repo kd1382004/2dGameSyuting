@@ -19,7 +19,7 @@ void Result::Init()
 
 	m_resultTex.Load("Tex/Result/Result.png");
 	m_resultPos = { 0,300 };
-	m_resultMat = Math::Matrix::CreateTranslation(m_resultPos.x, m_resultPos.y, 0);
+	m_resultMat = Math::Matrix::CreateScale(0.9, 0.9, 0) * Math::Matrix::CreateTranslation(m_resultPos.x, m_resultPos.y, 0);
 
 	m_ScoreTex.Load("Tex/Result/Score.png");
 	m_ScorePos = { -350,250 + m_yPosGap };
@@ -137,25 +137,29 @@ void Result::Draw2D()
 
 	//ƒŠƒUƒ‹ƒg
 	SHADER.m_spriteShader.SetMatrix(m_resultMat);
-	SHADER.m_spriteShader.DrawTex(&m_resultTex, Math::Rectangle{ 0,0,600,150 });
+	SHADER.m_spriteShader.DrawTex(&m_resultTex, Math::Rectangle{ 0,0,828,150 });
 
 	//Score
 	SHADER.m_spriteShader.SetMatrix(m_ScoreMat);
+	m_nameRec = { 0,0,341,60 };
 	SHADER.m_spriteShader.DrawTex(&m_ScoreTex, m_nameRec);
 	NumDrawAPP.Drow(m_ScoreNum, RAligned, m_ScoreNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
 
 	//stageClear
 	SHADER.m_spriteShader.SetMatrix(m_stageClearMat);
+	m_nameRec = { 0,0,416,60 };
 	SHADER.m_spriteShader.DrawTex(&m_stageClearTex, m_nameRec);
 	NumDrawAPP.Drow(m_stageClearNum, RAligned, m_stageClearNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
 
 	//Enemy
 	SHADER.m_spriteShader.SetMatrix(m_EnemyMat);
+	m_nameRec = { 0,0,376,60 };
 	SHADER.m_spriteShader.DrawTex(&m_EnemyTex, m_nameRec);
 	NumDrawAPP.Drow(m_EnemyNum, RAligned, m_EnemyNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
 
 	//PowerUp
 	SHADER.m_spriteShader.SetMatrix(m_PowerUpMat);
+	m_nameRec = { 0,0,475,60 };
 	SHADER.m_spriteShader.DrawTex(&m_PowerUpTex, m_nameRec);
 	NumDrawAPP.Drow(m_PowerUpNum, RAligned, m_PowerUpNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
 

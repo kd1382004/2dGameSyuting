@@ -21,7 +21,11 @@ public:
 
 	void MatConfirmed(float scroll)override;
 
-	void BlockHit()override;;
+	void BlockHit()override;
+
+	void SetStatus(int stage)override;
+
+	void EnemyHit()override;
 private:
 
 	// ‰ð•ú

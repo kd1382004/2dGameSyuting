@@ -13,7 +13,7 @@ void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
 	HitDetection = 15.0f;
 	m_aliveFlg = true;
 	m_rec = { 0,0,21,15 };
-	m_speed = 1;
+	m_speed = 1.0f;
 
 	//Šp“x‚©‚çˆÚ“®—Ê‚ğ‹‚ß‚é
 	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;

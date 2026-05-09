@@ -34,7 +34,7 @@ void Slime::Update()
 	}
 
 
-	
+
 }
 
 void Slime::Draw2D()
@@ -50,7 +50,7 @@ void Slime::Draw2D()
 			m_rec = { 512 / 8 * (int)m_anime,192 / 3 * 1, 512 / 8,192 / 3 };
 		}
 
-		
+
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
@@ -59,9 +59,25 @@ void Slime::Draw2D()
 void Slime::MatConfirmed(float scroll)
 {
 	//s—ñì¬
-	m_transMat = Math::Matrix::CreateTranslation(m_pos.x- scroll, m_pos.y, 0);
+	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
 	m_mat = m_scaleMat * m_transMat;
+}
+
+void Slime::SetStatus(int stage)
+{
+	int HPUp = 0;
+	if (stage != 0)
+	{
+		HPUp = stage / 3 * 20;
+	}
+
+
+	m_speed += Math::Vector2{ (float)stage * 0.1f, (float)stage * 0.1f };
+	m_HP = 30 + HPUp;
+
+	int atkLv = stage * 0.5;
+	m_info->SetATKLV(atkLv);
 }
 
 void Slime::Release()
@@ -72,6 +88,12 @@ void Slime::Release()
 void Slime::PlayerTrackingMove()
 {
 	m_move = m_plaeyrPos - m_pos;
+	float lenSq = m_move.x * m_move.x + m_move.y * m_move.y;
+	if (lenSq < 0.000001f)
+	{
+		return;
+	}
+
 	m_move.Normalize();
 	m_move *= m_speed;
 	float rad = atan2(m_move.y, m_move.x);

@@ -102,7 +102,7 @@ void HighScore::Save()
 		fprintf(fp, "スコア,ステージクリア,敵,パワーアップ,3方向ショット,左右弾,貫通,バウンド,HP吸収,攻撃力上昇\n");
 		for (int i = 0; i < m_scoreSavemax; i++)
 		{
-			fprintf(fp, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n")
+			fprintf(fp, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
 				m_scoreSave[i].score, m_scoreSave[i].clearNum,
 				m_scoreSave[i].enemyNum, m_scoreSave[i].powerUpNum,
 				m_scoreSave[i]._3wShotLv, m_scoreSave[i]._LRShotLv,

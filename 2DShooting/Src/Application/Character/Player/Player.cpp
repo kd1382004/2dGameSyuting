@@ -24,7 +24,7 @@ void Player::Init()
 
 	m_bulletTex.Load("Tex/Character/Player/Bullet/bullet.png");
 
-	m_MaxHP = 200;
+	m_MaxHP = 100;
 	m_HP = m_MaxHP;
 
 	m_hpBer = new PlayerHpBer();
@@ -138,7 +138,7 @@ void Player::AnimeRec()
 			m_anime = 0;
 			m_animeMode = Nomar;
 
-			Shot(m_info->Get3WShotFlg(), m_info->GetLRShotFlg());
+          Shot(m_info->Get3WShotFlg(), m_info->GetLRShotFlg());
 
 			m_shotInterval = m_shotIntervalMax;
 			m_shotFlg = false;
@@ -165,13 +165,15 @@ BulletBace* Player::GetBullet(int num)
 
 void Player::ReleseBuleet(int num)
 {
-	if (m_bullet.size() > num && num > 0)
-	{
-		if (!m_bullet[num]->GetAliveFlg())
-		{
-			delete m_bullet[num];
-			m_bullet.erase(m_bullet.begin() + num);
 
+	for (int i = 0; i < m_bullet.size(); i++)
+	{
+		if (!m_bullet[i]->GetAliveFlg())
+		{
+			delete m_bullet[i];
+			m_bullet.erase(m_bullet.begin() + i);
+
+			i--;
 		}
 	}
 }

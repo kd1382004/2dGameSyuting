@@ -27,5 +27,16 @@ private:
 	KdTexture m_backTex;
 	Math::Matrix m_backTexMat;
 
+	KdTexture m_fnishTex;
+	Math::Matrix m_fnishTexMat;
+	Math::Vector2 m_fnishTexPos;
+	float m_fnishSiz;
+
+	KdTexture m_EntToresTex;
+	Math::Matrix m_EntToreseTexMat;
+	Math::Vector2 m_EntToresTexPos;
+	float m_EntToresAlpha=1;
+	float m_EntToresAlphaPush=0.01f;
+
 	void Release();
 };

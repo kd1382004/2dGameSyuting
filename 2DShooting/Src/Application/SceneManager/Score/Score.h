@@ -2,6 +2,8 @@
 #include"../SceneBase.h"
 
 class ButtonBase;
+class Map;
+class Player;
 
 class Score :public SceneBase
 {
@@ -23,6 +25,12 @@ private:
 
 	// 解放
 	void Release()override;
+
+	Map* m_back;
+
+	KdTexture m_playerTex;
+	KdTexture m_playerShadowTex;
+	Player* m_player = nullptr;
 
 	static const int m_NoBackMax = 3;
 
@@ -87,4 +95,32 @@ private:
 	//ボタン
 	std::shared_ptr<ButtonBase> m_button;
 	int m_slect;
+
+
+	////////////////////
+	//画像切り取り範囲//
+	////////////////////
+	Math::Rectangle m_nameRec = { 0,0,0,0 };
+
+	//////////////////
+	//ステージクリア//
+	//////////////////
+	KdTexture m_stageClearTex;
+	Math::Vector2 m_stageClearPos;
+	Math::Matrix m_stageClearMat;
+	int m_stageClearNum;
+	Math::Vector2 m_stageClearNumPos;
+
+	////////////////
+	//倒した敵の数//
+	////////////////
+	KdTexture m_EnemyTex;
+	Math::Vector2 m_EnemyPos;
+	Math::Matrix m_EnemyMat;
+	int m_EnemyNum;
+	Math::Vector2 m_EnemyNumPos;
+
+
+	const float m_yPosGap = -100.0f;
+	const float m_NumXGap = 500;
 };

@@ -122,4 +122,9 @@ void Title::Draw2D()
 void Title::Release()
 {
 	m_titleTex.Release();
+
+	if (m_back)
+	{
+		delete m_back;
+	}
 }

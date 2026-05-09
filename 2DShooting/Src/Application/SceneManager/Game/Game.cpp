@@ -163,7 +163,7 @@ void Game::Update()
 						if (m_charaHit->BulletHit(m_enemy[i]->GetBullet(j), m_player, -1))
 						{
 							m_enemy[i]->BulletHit(m_enemy[i]->GetBullet(j));
-							m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
+   							m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
 						}
 
 					}
@@ -183,6 +183,8 @@ void Game::Update()
 					{
 						//d‚È‚ç‚È‚¢‚æ‚¤‚ÉÀ•W•â³				
 						m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
+						m_enemy[i]->EnemyHit();
+						m_enemy[j]->EnemyHit();
 					}
 				}
 			}
@@ -194,7 +196,7 @@ void Game::Update()
 			{
 				for (int j = 0; j < m_player->GetBulletNum(); j++)
 				{
-					if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
+  					if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
 					{
 						//“–‚½‚Á‚½‚Æ‚«‚Ìˆ—
 
@@ -289,11 +291,8 @@ void Game::Update()
 		}
 	}
 
-	//‹…
-	for (int i = 0; i < m_player->GetBulletNum(); i++)
-	{
-		m_player->ReleseBuleet(i);
-	}
+	m_player->ReleseBuleet(0);
+	
 
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -437,7 +436,7 @@ void Game::NextScene()
 
 	HighScoreAPP.nowScre.peneLv = m_player->GetCharaInfo()->GetBuletPeneNum();
 	HighScoreAPP.nowScre.bounLv = m_player->GetCharaInfo()->GetBoundNum();
-	HighScoreAPP.nowScre.ATKUpLv = m_player->GetCharaInfo()->GetATK();
+	HighScoreAPP.nowScre.ATKUpLv = m_player->GetCharaInfo()->GetATKLV();
 	HighScoreAPP.nowScre.hpHeelLv = m_player->GetEnemyDehHeelLv();
 	HighScoreAPP.HighScoreNew();
 
@@ -572,6 +571,7 @@ void Game::InitStage(int StageNum)
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
 		m_enemy[i]->MatConfirmed(m_map->GetScroll());
+		m_enemy[i]->SetStatus(StageNum);
 	}
 
 

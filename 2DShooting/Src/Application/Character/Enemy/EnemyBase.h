@@ -21,6 +21,8 @@ public:
 	virtual void MatConfirmed(float scroll) {}
 
 
+	virtual void SetStatus(int Stage) {};
+
 	//追跡用等にプレイヤー座標セット
 	void SetPlayerPos(Math::Vector2 playerPos) { m_plaeyrPos = playerPos; };
 
@@ -35,6 +37,8 @@ public:
 	BulletBace* GetBullet(int i) { return   m_bullet[i]; }
 
 	void BulletHit(BulletBace* bullet);
+
+	virtual void EnemyHit(){}
 protected:
 
 	// 解放

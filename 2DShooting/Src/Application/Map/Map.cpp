@@ -391,6 +391,7 @@ void Map::LodMapData2()
 	if (fp != NULL)
 	{
 		char ch;
+		int a = 0;
 
 		while ((ch = fgetc(fp)) != EOF)	//EOF=ファイルの終了 End Of File
 		{
@@ -400,10 +401,37 @@ void Map::LodMapData2()
 			}
 			else
 			{
-				m_mapDeta.push_back(atoi(&ch));
+
+
+				if (ch == 'L')
+				{
+					m_mapDeta.push_back('L');
+				}
+				else if (ch == 'P')
+				{
+					m_mapDeta.push_back('P');
+				}
+				else if (ch == 'K')
+				{
+					m_mapDeta.push_back('K');
+				}
+				else if (ch == 'M')
+				{
+					m_mapDeta.push_back('M');
+				}
+				else if (ch == 'J')
+				{
+					m_mapDeta.push_back('J');
+				}
+				else
+				{
+					m_mapDeta.push_back(atoi(&ch));
+				}
 			}
 		}
 		fclose(fp);
+
+		int b = 0;
 	}
 
 
@@ -425,6 +453,36 @@ void Map::LodMapData2()
 			m_mapObj.back()->Init(m_mapPos.back());
 			m_mapObj.back()->SetTex(&m_warpTex);
 			m_mapObj.back()->SetOwner(m_owner);
+		}
+
+		if (m_mapDeta[i] == 'P')
+		{
+			m_playerSpawnPos = m_mapPos[i];
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'M')
+		{
+			m_conSlimeSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'L')
+		{
+			m_SlimeSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'J')
+		{
+			m_conSkeletonSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'K')
+		{
+			m_SkeletonSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
 		}
 
 		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos.back().x, m_mapPos.back().y, 0);
@@ -443,6 +501,7 @@ void Map::LodMapData3()
 	if (fp != NULL)
 	{
 		char ch;
+		int a = 0;
 
 		while ((ch = fgetc(fp)) != EOF)	//EOF=ファイルの終了 End Of File
 		{
@@ -452,10 +511,37 @@ void Map::LodMapData3()
 			}
 			else
 			{
-				m_mapDeta.push_back(atoi(&ch));
+
+
+				if (ch == 'L')
+				{
+					m_mapDeta.push_back('L');
+				}
+				else if (ch == 'P')
+				{
+					m_mapDeta.push_back('P');
+				}
+				else if (ch == 'K')
+				{
+					m_mapDeta.push_back('K');
+				}
+				else if (ch == 'M')
+				{
+					m_mapDeta.push_back('M');
+				}
+				else if (ch == 'J')
+				{
+					m_mapDeta.push_back('J');
+				}
+				else
+				{
+					m_mapDeta.push_back(atoi(&ch));
+				}
 			}
 		}
 		fclose(fp);
+
+		int b = 0;
 	}
 
 
@@ -477,6 +563,36 @@ void Map::LodMapData3()
 			m_mapObj.back()->Init(m_mapPos.back());
 			m_mapObj.back()->SetTex(&m_warpTex);
 			m_mapObj.back()->SetOwner(m_owner);
+		}
+
+		if (m_mapDeta[i] == 'P')
+		{
+			m_playerSpawnPos = m_mapPos[i];
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'M')
+		{
+			m_conSlimeSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'L')
+		{
+			m_SlimeSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'J')
+		{
+			m_conSkeletonSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
+		}
+
+		if (m_mapDeta[i] == 'K')
+		{
+			m_SkeletonSawnPos.push_back(m_mapPos[i]);
+			m_mapDeta[i] = 0;
 		}
 
 		Math::Matrix mat = Math::Matrix::CreateTranslation(m_mapPos.back().x, m_mapPos.back().y, 0);

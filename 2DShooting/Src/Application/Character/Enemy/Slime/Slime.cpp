@@ -12,7 +12,6 @@ void Slime::Init()
 	m_info = new CharacterInfo();
 
 	m_info->SetATKLV(0);
-	StateTypeChange(StateType::TypeFIRE, 10);
 }
 
 void Slime::Update()
@@ -21,7 +20,7 @@ void Slime::Update()
 	{
 		StateTypeManager();
 		HPCoolTimeManager();
-	
+
 	}
 
 	switch (m_mode)
@@ -61,13 +60,18 @@ void Slime::Draw2D()
 
 
 
-		for (int i = 0; i < m_praticle.size(); i++)
+		if (m_aliveFlg)
 		{
-			m_praticle[i]->Draw();
-		}
+			for (int i = 0; i < m_praticle.size(); i++)
+			{
+				m_praticle[i]->Draw();
+			}
 
+		}
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
+
+
 	}
 }
 
@@ -136,7 +140,7 @@ void Slime::MODEMove()
 	if (m_anime > 8)
 	{
 		m_anime = 0;
-		
+
 	}
 }
 

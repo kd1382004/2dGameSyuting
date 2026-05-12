@@ -52,7 +52,8 @@ public:
 	//状態変化
 	//type...状態を入れる
 	//Time...時間を入れる
-	void StateTypeChange(StateType type, int Time = 0);
+	//dmg...ダメージを与える系統なら1回当たりのダメージを入れる
+	void StateTypeChange(StateType type, int Time = 0, int  dmg = 0);
 
 
 	void ChangeMode(Mode mode);
@@ -72,7 +73,7 @@ protected:
 
 
 	Mode m_mode = MOVE;
-	
+
 private:
 
 
@@ -86,5 +87,8 @@ private:
 
 	//クールタイムM
 	int m_firemDMGCoolTim = 0;
+
+	//一回当たりのダメージ
+	int m_fireDmg = 0;
 };
 

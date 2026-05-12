@@ -204,6 +204,7 @@ void Game::Update()
 
 						//“G
 						m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
+						m_enemy[i]->StateTypeChange(StateType::TypeFIRE, 10);
 					}
 				}
 			}

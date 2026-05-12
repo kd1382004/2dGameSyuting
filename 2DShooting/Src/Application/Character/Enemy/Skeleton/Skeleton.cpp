@@ -1,6 +1,7 @@
 #include "Skeleton.h"
 #include"SkeletonBullet/SkeletonBullet.h"
 #include"../../Info/CharacterInfoBace.h"
+#include"../../../Particle/Fire/Fire.h"
 
 void Skeleton::Init()
 {
@@ -22,6 +23,7 @@ void Skeleton::Update()
 
 	if (m_aliveFlg)
 	{
+		StateTypeManager();
 		HPCoolTimeManager();
 	}
 
@@ -62,6 +64,15 @@ void Skeleton::Draw2D()
 			m_bullet[i]->Draw2D();
 		}
 
+
+		if (m_aliveFlg)
+		{
+			for (int i = 0; i < m_praticle.size(); i++)
+			{
+				m_praticle[i]->Draw();
+			}
+		}
+
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
@@ -72,6 +83,11 @@ void Skeleton::MatConfirmed(float scroll)
 	for (int i = 0; i < m_bullet.size(); i++)
 	{
 		m_bullet[i]->MatConfirmed(scroll);
+	}
+
+	for (int i = 0; i < m_praticle.size(); i++)
+	{
+		m_praticle[i]->Update(m_pos, scroll);
 	}
 
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);

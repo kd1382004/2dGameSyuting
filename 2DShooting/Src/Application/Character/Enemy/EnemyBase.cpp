@@ -59,7 +59,7 @@ void EnemyBase::StateTypeManager()
 
 
 
-void EnemyBase::StateTypeChange(StateType type, int Time)
+void EnemyBase::StateTypeChange(StateType type, int Time,int  dmg)
 {
 	for (int i = 0; i < m_praticle.size(); i++)
 	{
@@ -78,7 +78,7 @@ void EnemyBase::StateTypeChange(StateType type, int Time)
 		m_praticle.push_back(new Fire());
 		m_praticle.back()->Emit({ 0,0 }, { 0,0 }, 0, Math::Color{ 0,0,0,0 }, 0, true, -1);
 		m_praticle.back()->SetdefSiz({ 0.5,0.7 });
-
+		m_fireDmg = dmg;
 
 		break;
 	default:
@@ -98,7 +98,7 @@ void EnemyBase::StateTypeFire()
 	if (m_firemDMGCoolTim > m_firemDMGCoolTimMax)
 	{
 		m_firemDMGCoolTim = 0;
-		m_HP -= 5;
+		m_HP -= m_fireDmg;
 
 		if (m_HP <= 0)
 		{

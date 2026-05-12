@@ -92,6 +92,13 @@ private:
 	Math::Matrix m_PlyerHpHeelLVMat;
 	int m_PlyerHpHeel = 0;
 
+	KdTexture m_FireArrowIconTex;
+	Math::Vector2 m_FireArrowIconPos;
+	Math::Matrix m_FireArrowIconMat;
+	Math::Vector2 m_FireArrowLVPos;
+	Math::Matrix m_FireArrowLVMat;
+	int m_FireArrow = 0;
+
 	//ƒ{ƒ^ƒ“
 	std::shared_ptr<ButtonBase> m_button;
 	int m_slect;

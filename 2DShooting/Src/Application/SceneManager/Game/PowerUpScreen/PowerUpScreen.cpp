@@ -27,7 +27,7 @@ PowerUpScreen::PowerUpScreen()
 	m_selectSiz = 1.2f;
 }
 
-void PowerUpScreen::Init(CharacterInfo* playerInfo)
+void PowerUpScreen::Init(CharacterInfo* playerInfo, Game* game)
 {
 
 		if (m_powerUPSlect.size()>0)
@@ -93,7 +93,7 @@ void PowerUpScreen::Init(CharacterInfo* playerInfo)
 		num = dist(rand_engine);
 
 		m_powerUp[i] = m_powerUPSlect[num];
-		m_powerUp[i]->Init(m_powerUpPos[i]);
+		m_powerUp[i]->Init(m_powerUpPos[i], playerInfo, game->GetPlayer());
 
 		m_powerUPSlect.erase(m_powerUPSlect.begin() + num);
 	}

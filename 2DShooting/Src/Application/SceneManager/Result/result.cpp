@@ -24,32 +24,26 @@ void Result::Init()
 	m_stageClearTex.Load("Tex/Result/StageClear.png");
 	m_stageClearPos = { -350,180 };
 	m_stageClearMat = Math::Matrix::CreateScale(m_nameSiz, m_nameSiz, 0) * Math::Matrix::CreateTranslation(m_stageClearPos.x, m_stageClearPos.y, 0);
-	m_stageClearNum = GameResultInfoAPP.GetmStageClearNum();
-	if (m_stageClearNum > NumMax) { m_stageClearNum = NumMax; }
 	m_stageClearNumPos = { m_stageClearPos.x + m_numXGap,m_stageClearPos.y, 0 };
-
+	m_stageClearNumDigit = GetDigit(GameResultInfoAPP.GetmStageClearNum());
 
 	m_EnemyTex.Load("Tex/Result/Enemy.png");
 	m_EnemyPos = { m_stageClearPos.x,m_stageClearPos.y + m_yPosGap * m_nameSiz };
 	m_EnemyMat = Math::Matrix::CreateScale(m_nameSiz, m_nameSiz, 0) * Math::Matrix::CreateTranslation(m_EnemyPos.x, m_EnemyPos.y, 0);
-	m_EnemyNum = GameResultInfoAPP.GetEnemyDeath();
-	if (m_EnemyNum > NumMax) { m_EnemyNum = NumMax; }
 	m_EnemyNumPos = { m_EnemyPos.x + m_numXGap,m_EnemyPos.y, 0 };
+	m_EnemyNumDigit = GetDigit(GameResultInfoAPP.GetEnemyDeath());
 
 	m_PowerUpTex.Load("Tex/Result/PowerUp.png");
 	m_PowerUpPos = { m_stageClearPos.x,m_EnemyPos.y + m_yPosGap * m_nameSiz };
 	m_PowerUpMat = Math::Matrix::CreateScale(m_nameSiz, m_nameSiz, 0) * Math::Matrix::CreateTranslation(m_PowerUpPos.x, m_PowerUpPos.y, 0);
-	m_PowerUpNum = GameResultInfoAPP.GetPowerUpNum();
-	if (m_PowerUpNum > NumMax) { m_PowerUpNum = NumMax; }
 	m_PowerUpNumPos = { m_PowerUpPos.x + m_numXGap,m_PowerUpPos.y, 0 };
+	m_PowerUpNumDigit = GetDigit(GameResultInfoAPP.GetPowerUpNum());
 
 	m_ScoreTex.Load("Tex/Result/Score.png");
-	m_ScorePos = { m_stageClearPos.x,m_PowerUpPos.y + m_yPosGap * m_nameSiz * m_ScoreSiz - 50 };
+	m_ScorePos = { m_stageClearPos.x,m_PowerUpPos.y + m_yPosGap * m_nameSiz * m_ScoreSiz };
 	m_ScoreMat = Math::Matrix::CreateScale(m_ScoreSiz, m_ScoreSiz, 0) * Math::Matrix::CreateTranslation(m_ScorePos.x, m_ScorePos.y, 0);
-	m_ScoreNum = GameResultInfoAPP.GetScore();
-	if (m_ScoreNum > NumMax) { m_ScoreNum = NumMax; }
 	m_ScoreNumPos = { m_ScorePos.x + m_numXGap,m_ScorePos.y, 0 };
-
+	m_ScoreNumDigit = GetDigit(GameResultInfoAPP.GetScore());
 
 	////////////////
 	//ボタン
@@ -60,6 +54,7 @@ void Result::Init()
 	playButton->Init(Math::Vector2{ -300,-300 });
 	playButton->SetDefaultSiz(3);
 	playButton->SetSelectSiz(1.5);
+	playButton->SetSelectFlg(false);;
 	m_button.push_back(playButton);
 
 	std::shared_ptr<TitleButton> titleButton;
@@ -68,6 +63,7 @@ void Result::Init()
 	titleButton->Init(Math::Vector2{ 300,-300 });
 	titleButton->SetDefaultSiz(3);
 	titleButton->SetSelectSiz(1.5);
+	titleButton->SetSelectFlg(false);
 	m_button.push_back(titleButton);
 }
 
@@ -85,47 +81,54 @@ void Result::Update()
 		m_alphaPush *= -1;
 	}
 
-	//////////////////////////
-	//ボタン
-	if (InfoKeyAPP.KeyPush(VK_LEFT, true))
+	if (m_animeFlg)
 	{
-		m_slect--;
-
-		if (m_slect < 0)
-		{
-			m_slect = 0;
-		}
+		Anime();
 	}
-
-	if (InfoKeyAPP.KeyPush(VK_RIGHT, true))
+	else
 	{
-		m_slect++;
-
-		if (m_slect >= m_button.size())
+		//////////////////////////
+		//ボタン
+		if (InfoKeyAPP.KeyPush(VK_LEFT, true))
 		{
-			m_slect = m_button.size() - 1;
-		}
-	}
+			m_slect--;
 
-
-	for (int i = 0; i < m_button.size(); i++)
-	{
-		if (m_button[i])
-		{
-			if (i == m_slect)
+			if (m_slect < 0)
 			{
-				m_button[i]->SetSelectFlg(true);
-				if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+				m_slect = 0;
+			}
+		}
+
+		if (InfoKeyAPP.KeyPush(VK_RIGHT, true))
+		{
+			m_slect++;
+
+			if (m_slect >= m_button.size())
+			{
+				m_slect = m_button.size() - 1;
+			}
+		}
+
+
+		for (int i = 0; i < m_button.size(); i++)
+		{
+			if (m_button[i])
+			{
+				if (i == m_slect)
 				{
-					m_button[i]->Update();
+					m_button[i]->SetSelectFlg(true);
+					if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+					{
+						m_button[i]->Update();
+					}
+				}
+				else
+				{
+					m_button[i]->SetSelectFlg(false);
 				}
 			}
-			else
-			{
-				m_button[i]->SetSelectFlg(false);
-			}
 		}
-	}
+	}	
 }
 
 void Result::Draw2D()
@@ -182,4 +185,110 @@ void Result::Release()
 	m_stageClearTex.Release();
 	m_EnemyTex.Release();
 	m_PowerUpTex.Release();
+}
+
+void Result::Anime()
+{
+	std::random_device rand_dev{};
+	std::mt19937 rand_engine(rand_dev());
+	int siz = 1000 - 1;
+	m_animeCnt++;
+
+	if (m_stageClearNumRand)
+	{
+		std::uniform_int_distribution<int> dist(0, m_stageClearNumDigit);
+		m_stageClearNum = dist(rand_engine);
+	}
+
+	if (m_EnemyNumRand)
+	{
+		std::uniform_int_distribution<int> dist(0, m_EnemyNumDigit);
+		m_EnemyNum = dist(rand_engine);
+	}
+
+	if (m_PowerUpNumRand)
+	{
+		std::uniform_int_distribution<int> dist(0, m_PowerUpNumDigit);
+		m_PowerUpNum = dist(rand_engine);;
+	}
+
+	if (m_ScoreNumRand)
+	{
+		std::uniform_int_distribution<int> dist(0, m_ScoreNumDigit);
+		m_ScoreNum = dist(rand_engine);;
+	}
+
+	if (m_animeCnt > m_FlgChangeCnt)
+	{
+		if (m_stageClearNumRand)
+		{
+			m_stageClearNumRand = false;
+			m_stageClearNum = GameResultInfoAPP.GetmStageClearNum();
+		}
+	}
+
+	if (m_animeCnt > m_FlgChangeCnt * 2)
+	{
+		if (m_EnemyNumRand)
+		{
+			m_EnemyNumRand = false;
+			m_EnemyNum = GameResultInfoAPP.GetEnemyDeath();
+		}
+	}
+
+	if (m_animeCnt > m_FlgChangeCnt * 3)
+	{
+		if (m_PowerUpNumRand)
+		{
+			m_PowerUpNumRand = false;
+			m_PowerUpNum = GameResultInfoAPP.GetPowerUpNum();
+		}
+	}
+
+
+	if (m_animeCnt > m_FlgChangeCnt * 4)
+	{
+		if (m_ScoreNumRand)
+		{
+			m_ScoreNumRand = false;
+			m_ScoreNum = GameResultInfoAPP.GetScore();
+			m_animeFlg = false;
+		}
+	}
+
+	//アニメーションスキップ
+	if(InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+	{
+		m_stageClearNum = GameResultInfoAPP.GetmStageClearNum();
+		m_EnemyNum = GameResultInfoAPP.GetEnemyDeath();
+		m_PowerUpNum = GameResultInfoAPP.GetPowerUpNum();
+		m_ScoreNum = GameResultInfoAPP.GetScore();
+		m_animeFlg = false;
+	}
+}
+
+int Result::GetDigit(int num)
+{
+
+	//桁数を入れるワークspace
+	long w = 0;
+
+	//桁数を求める
+	for (long long i = 1; i <= num; i *= 10)
+	{
+		w++;
+	}
+
+	if (w == 0)
+	{
+		w = 1;
+	}
+
+	int Num = 1;
+	for (int i = 0; i < w; i++)
+	{
+		Num *= 10;
+	}
+	Num--;
+	return Num;
 }

@@ -73,6 +73,8 @@ private:
 	Math::Vector2 m_ScorePos;
 	Math::Matrix m_ScoreMat;
 	int m_ScoreNum;
+	int m_ScoreNumDigit = 0;//桁数
+	bool m_ScoreNumRand = true;//ランダムにするか
 	Math::Vector2 m_ScoreNumPos;
 
 	const float m_ScoreSiz = 1.5;
@@ -83,7 +85,9 @@ private:
 	KdTexture m_stageClearTex;
 	Math::Vector2 m_stageClearPos;
 	Math::Matrix m_stageClearMat;
-	int m_stageClearNum;
+	int m_stageClearNum = 0;
+	int m_stageClearNumDigit = 0;//桁数
+	bool m_stageClearNumRand = true;//ランダムにするか
 	Math::Vector2 m_stageClearNumPos;
 
 	////////////////
@@ -92,7 +96,9 @@ private:
 	KdTexture m_EnemyTex;
 	Math::Vector2 m_EnemyPos;
 	Math::Matrix m_EnemyMat;
-	int m_EnemyNum;
+	int m_EnemyNum = 0;
+	int m_EnemyNumDigit = 0;//桁数
+	bool m_EnemyNumRand = true;//ランダムにするか
 	Math::Vector2 m_EnemyNumPos;
 
 	/////////////
@@ -101,7 +107,9 @@ private:
 	KdTexture m_PowerUpTex;
 	Math::Vector2 m_PowerUpPos;
 	Math::Matrix m_PowerUpMat;
-	int m_PowerUpNum;
+	int m_PowerUpNum = 0;
+	int m_PowerUpNumDigit = 0;//桁数
+	bool m_PowerUpNumRand = true;//ランダムにするか
 	Math::Vector2 m_PowerUpNumPos;
 
 
@@ -113,4 +121,13 @@ private:
 	//ボタン
 	std::vector<std::shared_ptr<ButtonBase>> m_button;
 	int m_slect;
+
+	//リザルトアニメーション
+	void Anime();
+	bool m_animeFlg = true;;
+	int m_animeCnt = 0;
+	int m_FlgChangeCnt = 60;
+
+	//その桁の最大数を返す
+	int GetDigit(int num);
 };

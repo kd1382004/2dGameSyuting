@@ -315,7 +315,7 @@ void Game::Update()
 		if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
 		{
 			m_powerUpScreenFlg = true;
-			m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo());
+			m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo(),this);
 			m_powerUpScreenNum--;
 			m_powerUpNum++;
 		}
@@ -364,6 +364,7 @@ void Game::Update()
 			i--;
 			m_EnemyDeath++;
 		}
+		m_powerUpScreenNum++;
 	}
 
 	if (InfoKeyAPP.KeyPush('W', true, true))
@@ -474,6 +475,7 @@ void Game::NextScene()
 	HighScoreAPP.nowScre.clearNum = m_stageClearNum;
 	HighScoreAPP.nowScre.enemyNum = m_EnemyDeath;
 	HighScoreAPP.nowScre.powerUpNum = m_powerUpNum;
+	HighScoreAPP.nowScre.FireArrowUpLv = m_player->GetFireArrow();
 	if (m_player->GetCharaInfo()->Get3WShotFlg())
 	{
 		HighScoreAPP.nowScre._3wShotLv = 1;

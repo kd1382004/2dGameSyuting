@@ -16,17 +16,18 @@ public:
 
 	//’e‚ÌŠÑ’Ê‰ñ”
 	int GetBuletPeneNum() { return m_buletPeneNum; }
-	void SetBuletPeneNum(int i) { m_buletPeneNum += i; }//‘‚â‚·‰ñ”“ü‚ê‚é
+	void SetBuletPeneNum(int i) { m_buletPeneNum += i; if (m_buletPeneNum > 99) { m_buletPeneNum = 99; } }//‘‚â‚·‰ñ”“ü‚ê‚é
 
 	//’e‚Ì”½Ë‰ñ”
 	int GetBoundNum() { return m_boundNum; }
-	void SetBoundNum(int i) { m_boundNum += i; }//‘‚â‚·‰ñ”“ü‚ê‚é
+	void SetBoundNum(int i) { m_boundNum += i; if (m_boundNum > 99) { m_boundNum = 99; }}//‘‚â‚·‰ñ”“ü‚ê‚é
 
 	//UŒ‚—Í
 	int GetATK() { return m_atk; }
 	int GetATKLV() { return m_atkLV; }
 	void SetATKLV(int atk) {
 		m_atkLV += atk;
+		if (m_atkLV > 99) { m_atkLV = 99; }
 		m_atk = m_atkLV * 10 + 10;
 	}//‘‚â‚·—Ê‚ğ“ü‚ê‚é
 protected:

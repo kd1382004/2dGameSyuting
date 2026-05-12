@@ -12,6 +12,7 @@ struct scoreT
 	int bounLv = 0;
 	int hpHeelLv = 0;
 	int ATKUpLv = 0;
+	int FireArrowUpLv = 0;
 };
 
 

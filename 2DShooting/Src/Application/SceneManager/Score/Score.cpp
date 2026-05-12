@@ -89,7 +89,12 @@ void Score::Init()
 	m_ATKUPLVMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_ATKUPLVPos.x, m_ATKUPLVPos.y, 0);
 
 
+	m_FireArrowIconTex.Load("Tex/PowerUpScreen/PowerupFireArrow/PowerupFireArrowIcon.png");
+	m_FireArrowIconPos = { 500,0 };
+	m_FireArrowIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_FireArrowIconPos.x, m_FireArrowIconPos.y, 0);
 
+	m_FireArrowLVPos = { m_FireArrowIconPos.x + 35 * 2,m_FireArrowIconPos.y - 5 };
+	m_FireArrowLVMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_FireArrowLVPos.x, m_FireArrowLVPos.y, 0);
 
 	m_stageClearTex.Load("Tex/Result/StageClear.png");
 	m_stageClearPos = { 50,200 };
@@ -209,6 +214,7 @@ void Score::Release()
 	m_BoundNumIconTex.Release();
 	m_PlyerHpHeelIconTex.Release();
 	m_ATKUPIconTex.Release();
+	m_FireArrowIconTex.Release();
 	m_stageClearTex.Release();
 	m_EnemyTex.Release();
 
@@ -267,6 +273,13 @@ void Score::DrawScore(int i)
 	SHADER.m_spriteShader.SetMatrix(m_ATKUPLVMat);
 	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
 	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).ATKUpLv, LAligned, Math::Vector2{ m_ATKUPLVPos.x + 20 * 2,m_ATKUPLVPos.y }, &Math::Color{ 1,1,1,1 }, 2.5, false);
+
+	SHADER.m_spriteShader.SetMatrix(m_FireArrowIconMat);
+	SHADER.m_spriteShader.DrawTex(&m_FireArrowIconTex, Math::Rectangle{ 0,0,32,32 });
+
+	SHADER.m_spriteShader.SetMatrix(m_FireArrowLVMat);
+	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
+	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).FireArrowUpLv, LAligned, Math::Vector2{ m_FireArrowLVPos.x + 20 * 2,m_FireArrowLVPos.y }, &Math::Color{ 1,1,1,1 }, 2.5, false);
 
 	//stageClear
 	SHADER.m_spriteShader.SetMatrix(m_stageClearMat);

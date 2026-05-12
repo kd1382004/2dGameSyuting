@@ -1,7 +1,7 @@
 #include "PowerUp3WShot.h"
 #include"../../../../Character/Info/CharacterInfoBace.h"
 
-void Powerup3WShot::Init(Math::Vector2 pos)
+void Powerup3WShot::Init(Math::Vector2 pos, CharacterInfo* playerInfo, Player* player)
 {
 	m_tex.Load("Tex/PowerUpScreen/Powerup3WShot/Powerup3WShot.png");
 	m_EXBackTex.Load("Tex/PowerUpScreen/Powerup3WShot/Premade dialog box  big.png");

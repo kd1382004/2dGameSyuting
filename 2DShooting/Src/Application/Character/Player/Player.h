@@ -46,13 +46,13 @@ public:
 	int GetMaxHP() { return m_MaxHP; }
 
 	int GetEnemyDehHeelLv() { return m_enemyDehHeelLv; }
-	void SetEnemyDehHeelLv(int lv) { m_enemyDehHeelLv += lv; }
+	void SetEnemyDehHeelLv(int lv) { m_enemyDehHeelLv += lv; if (m_enemyDehHeelLv > 99) { m_enemyDehHeelLv = 99; }}
 
 	int EnemyDehHeelAmount();
 
 	void HPHeel(int heel);
 
-	void SetFireArrow(int lv) { m_fireArrowLv += lv; }
+	void SetFireArrow(int lv) { m_fireArrowLv += lv; if (m_fireArrowLv > 99) { m_fireArrowLv = 99; } }
 	int GetFireArrow() { return m_fireArrowLv; }
 private:
 

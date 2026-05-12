@@ -9,7 +9,7 @@ public:
 	virtual ~PowerUpBase() { Release(); };
 
 	//表示場所をセット
-	virtual void Init(Math::Vector2 pos) {};
+	virtual void Init(Math::Vector2 pos, CharacterInfo* playerInfo, Player* player) {};
 	virtual void Update(CharacterInfo* playerInfo) {};
 	virtual void Update(Player* player) {};
 	virtual void Draw2D() {};
@@ -42,4 +42,5 @@ protected:
 	Math::Rectangle m_EXBackRec = { 0,0,900,100 };
 	Math::Matrix m_EXBackMat;
 
+	bool m_LVMax = false;
 };

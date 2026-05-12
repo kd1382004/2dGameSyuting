@@ -1,7 +1,7 @@
 #include "HPHeel.h"
 #include"../../../../Character/Player/Player.h"
 
-void HPHeel::Init(Math::Vector2 pos)
+void HPHeel::Init(Math::Vector2 pos, CharacterInfo* playerInfo, Player* player)
 {
 	m_tex.Load("Tex/PowerUpScreen/HPHeel/HpHeel.png");
 	m_EXBackTex.Load("Tex/PowerUpScreen/HPHeel/Premade dialog box  big.png");

@@ -195,6 +195,7 @@
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot\PowerUp3WShot.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBase.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound\PowerUpBound.h" />
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow\PowerupFireArrow.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot\PowerupPeneShot.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot\PowerupRLShot.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpScreen.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUp3WShot\PowerUp3WShot.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBase.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpBound\PowerUpBound.cpp" />
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow\PowerupFireArrow.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupPeneShot\PowerupPeneShot.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupRLShot\PowerupRLShot.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUpScreen.cpp" />

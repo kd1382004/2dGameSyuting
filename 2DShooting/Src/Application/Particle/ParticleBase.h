@@ -20,7 +20,7 @@ public:
 	//color...色
 	//lifespan...有効期間(活動限界時間)
 	//RepeatFlg...繰り返しフラグ
-	void Emit(Math::Vector2 pos, Math::Vector2 move, float size, Math::Color color, int lifespan, bool RepeatFlg, int i);
+	void Emit(Math::Vector2 pos, Math::Vector2 move, float size, Math::Color color, int lifespan, bool RepeatFlg, int i, int deg = 0);
 
 	//表示位置を入れる
 	virtual void Update(Math::Vector2 pos, float scroll) {};
@@ -74,5 +74,7 @@ protected:
 
 	//切り取り範囲
 	Math::Rectangle m_srcRect = { };
+
+	float m_deg = 0;
 };
 

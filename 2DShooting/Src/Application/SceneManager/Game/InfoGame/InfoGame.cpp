@@ -2,6 +2,7 @@
 #include"../../../Info/NumDraw/NumDraw.h"
 #include"../../../Info/InfoKey/InfoKey.h"
 #include"../../../Character/Info/CharacterInfoBace.h"
+#include"../../../Character/Player/Player.h"
 
 void InfoGame::Init()
 {
@@ -10,7 +11,7 @@ void InfoGame::Init()
 	m_KeyArrowTex.Load("Tex/Key/26053154.png");
 	m_KeySpaceTex.Load("Tex/Key/27244530.png");
 
-	
+
 
 	m_backTex.Load("Tex/Game/GameInfo/GameInfoBack.png");
 	m_backPos = { 0,-307 };
@@ -63,16 +64,19 @@ void InfoGame::Init()
 	m_ATKUPLVMat = Math::Matrix::CreateTranslation(m_ATKUPLVPos.x, m_ATKUPLVPos.y, 0);
 
 
-
-
-
-
 	m_PWUPNumIconTex.Load("Tex/PowerUpScreen/PWUPNum/PWUPNum.png");
 	m_PWUPNumIconPos = { 400,-280 };
 	m_PWUPNumIconMat = Math::Matrix::CreateTranslation(m_PWUPNumIconPos.x, m_PWUPNumIconPos.y, 0);
 
 	m_PWUPNumLVPos = { m_PWUPNumIconPos.x + 35,m_PWUPNumIconPos.y - 5 };
 	m_PWUPNumLVMat = Math::Matrix::CreateTranslation(m_PWUPNumLVPos.x, m_PWUPNumLVPos.y, 0);
+
+	m_FireArrowIconTex.Load("Tex/PowerUpScreen/PowerupFireArrow/PowerupFireArrowIcon.png");
+	m_FireArrowIconPos = { -260,-280 };
+	m_FireArrowIconMat = Math::Matrix::CreateTranslation(m_FireArrowIconPos.x, m_FireArrowIconPos.y, 0);
+
+	m_FireArrowLVPos = { m_FireArrowIconPos.x + 35,m_FireArrowIconPos.y - 5 };
+	m_FireArrowLVMat = Math::Matrix::CreateTranslation(m_FireArrowLVPos.x, m_FireArrowLVPos.y, 0);
 
 	m_ENTERTex.Load("Tex/Key/ENTER.png");
 	m_ENTERTPos = { m_PWUPNumLVPos.x + 50,m_PWUPNumLVPos.y };
@@ -82,7 +86,7 @@ void InfoGame::Init()
 	//Key
 
 	//UP
-	m_keyPos[0] = { 0,-275 };
+	m_keyPos[0] = { 100,-275 };
 	m_keyMat[0] = Math::Matrix::CreateScale(0.1, 0.1, 0) * Math::Matrix::CreateTranslation(m_keyPos[0].x, m_keyPos[0].y, 0);
 
 	//LEFT
@@ -109,7 +113,7 @@ void InfoGame::Init()
 
 
 	m_scoreTex.Load("Tex/Result/Score.png");
-	m_scoreMat = Math::Matrix::CreateScale(0.5, 0.5, 0) * Math::Matrix::CreateTranslation(180, m_PeneNumLVPos.y - 50, 0);
+	m_scoreMat = Math::Matrix::CreateScale(0.5, 0.5, 0) * Math::Matrix::CreateTranslation(300, m_PeneNumLVPos.y - 50, 0);
 
 }
 
@@ -147,7 +151,7 @@ void InfoGame::KeyDraw()
 
 }
 
-void InfoGame::Update(CharacterInfo* info, int sc)
+void InfoGame::Update(CharacterInfo* info, Player *player,int sc)
 {
 	m_score = sc;
 
@@ -167,6 +171,7 @@ void InfoGame::Update(CharacterInfo* info, int sc)
 
 	m_ATKUP = info->GetATKLV();
 
+	m_FireArrow = player->GetFireArrow();
 
 	if (m_PWUPNum != 0)
 	{
@@ -304,6 +309,13 @@ void InfoGame::Drow2D()
 	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
 	NumDrawAPP.Drow(m_ATKUP, LAligned, Math::Vector2{ m_ATKUPLVPos.x + 20,m_ATKUPLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
 
+	SHADER.m_spriteShader.SetMatrix(m_FireArrowIconMat);
+	SHADER.m_spriteShader.DrawTex(&m_FireArrowIconTex, Math::Rectangle{ 0,0,32,32 });
+
+	SHADER.m_spriteShader.SetMatrix(m_FireArrowLVMat);
+	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
+	NumDrawAPP.Drow(m_FireArrow, LAligned, Math::Vector2{ m_FireArrowLVPos.x + 20,m_FireArrowLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
+
 
 	SHADER.m_spriteShader.SetMatrix(m_PWUPNumIconMat);
 	SHADER.m_spriteShader.DrawTex(&m_PWUPNumIconTex, Math::Rectangle{ 0,0,32,32 });
@@ -324,7 +336,7 @@ void InfoGame::Drow2D()
 
 	SHADER.m_spriteShader.SetMatrix(m_scoreMat);
 	SHADER.m_spriteShader.DrawTex(&m_scoreTex, Math::Rectangle{ 0,0,341,60 });
-	NumDrawAPP.Drow(m_score, RAligned, Math::Vector2{ 450,m_PeneNumLVPos.y - 50 }, &Math::Color{ 1,1,1,1 }, 2, false);
+	NumDrawAPP.Drow(m_score, RAligned, Math::Vector2{ m_scoreMat.Translation().x + 270,m_PeneNumLVPos.y - 50 }, &Math::Color{ 1,1,1,1 }, 2, false);
 
 }
 

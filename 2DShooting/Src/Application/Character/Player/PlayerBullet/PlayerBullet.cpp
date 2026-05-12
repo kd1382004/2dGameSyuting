@@ -2,7 +2,7 @@
 #include"../../Info/CharacterInfoBace.h"
 
 
-void PlayerBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
+void PlayerBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info, BulletType type)
 {
 	m_enemuNum = -1;
 	m_buletPeneNum = Info->GetBuletPeneNum();
@@ -15,9 +15,11 @@ void PlayerBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
 	m_aliveFlg = true;
 
 	//角度から移動量を求める
- 	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
+	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
 	m_move.y = sin(DirectX::XMConvertToRadians(deg)) * m_speed;
 	m_mat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0) * Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg)) * Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
+
+	m_bullettype = type;
 }
 
 void PlayerBullet::Update()
@@ -33,6 +35,25 @@ void PlayerBullet::Draw2D()
 {
 	if (m_aliveFlg)
 	{
+		switch (m_bullettype)
+		{
+		case NORMAL:
+			break;
+		case FIRE:
+			m_fierAnime = 0.1;
+			if (m_fierAnime > 7)
+			{
+				m_fierAnime = 0;
+			}
+
+			m_rec = { 16 * (int)m_fierAnime ,32,16,16 };
+			break;
+		default:
+			break;
+		}
+
+
+
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_bulletTex, m_rec, 1.0f);
 	}

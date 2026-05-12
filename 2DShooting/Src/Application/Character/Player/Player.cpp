@@ -5,7 +5,6 @@
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../Bullet/BulletBace.h"
 
-
 void Player::Init()
 {
 	m_pos = { -300,0 };
@@ -175,7 +174,6 @@ void Player::ReleseBuleet(int num)
 		{
 			delete m_bullet[i];
 			m_bullet.erase(m_bullet.begin() + i);
-
 			i--;
 		}
 	}
@@ -336,8 +334,17 @@ void Player::Shot()
 
 void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 {
+	int shotNum = 0;
+	BulletType bulletType = BulletType::NORMAL;
+
+	if (m_fireArrowLv != 0)
+	{
+		bulletType = BulletType::FIRE;
+	}
+
+
 	m_bullet.push_back(new PlayerBullet);
-	m_bullet.back()->Init(m_pos, m_deg, m_info);
+	m_bullet.back()->Init(m_pos, m_deg, m_info, bulletType);
 	m_bullet.back()->SetTex(&m_bulletTex);
 
 	if (_3WShotFlg)
@@ -347,8 +354,9 @@ void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 		for (int i = 0; i < 2; i++)
 		{
 			m_bullet.push_back(new PlayerBullet);
-			m_bullet.back()->Init(m_pos, deg, m_info);
+			m_bullet.back()->Init(m_pos, deg, m_info, bulletType);
 			m_bullet.back()->SetTex(&m_bulletTex);
+
 			deg += 90;
 		}
 	}
@@ -360,11 +368,16 @@ void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 		for (int i = 0; i < 2; i++)
 		{
 			m_bullet.push_back(new PlayerBullet);
-			m_bullet.back()->Init(m_pos, deg, m_info);
+			m_bullet.back()->Init(m_pos, deg, m_info, bulletType);
 			m_bullet.back()->SetTex(&m_bulletTex);
+	
 			deg += 180;
+
+
 		}
 	}
+
+
 
 }
 

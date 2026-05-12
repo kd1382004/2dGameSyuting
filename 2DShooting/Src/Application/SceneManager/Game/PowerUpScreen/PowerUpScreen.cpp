@@ -6,6 +6,7 @@
 #include"HPHeel/HPHeel.h"
 #include"ATKUP/ATKUP.h"
 #include"PlayerHeel/PlayerHeel.h"
+#include"PowerupFireArrow/PowerupFireArrow.h"
 
 #include"../../../Character/Info/CharacterInfoBace.h"
 #include"../../../Info/InfoKey/InfoKey.h"
@@ -75,6 +76,10 @@ void PowerUpScreen::Init(CharacterInfo* playerInfo)
 	std::shared_ptr<PlayerHeel> pPHH;
 	pPHH = std::make_shared<PlayerHeel>();
 	m_powerUPSlect.push_back(pPHH);
+
+	std::shared_ptr<PowerupFireArrow> pPFireA;
+	pPFireA = std::make_shared<PowerupFireArrow>();
+	m_powerUPSlect.push_back(pPFireA);
 
 	for (int i = 0; i < m_powerUpMax; i++)
 	{

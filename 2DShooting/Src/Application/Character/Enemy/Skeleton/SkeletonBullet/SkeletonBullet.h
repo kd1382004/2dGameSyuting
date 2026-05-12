@@ -13,7 +13,7 @@ public:
 	//pos...座標を入れる
 	//deg...角度を入れる
 	//Info...PlayerPowerUpInfonのアドレス
-	void Init(Math::Vector2 pos, float rad, CharacterInfo* Info)override;
+	void Init(Math::Vector2 pos, float rad, CharacterInfo* Info, BulletType type = NORMAL)override;
 
 
 	// 更新処理

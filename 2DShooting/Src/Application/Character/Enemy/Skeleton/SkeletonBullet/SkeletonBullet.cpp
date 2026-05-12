@@ -1,7 +1,7 @@
 #include "SkeletonBullet.h"
 #include"../../../Info/CharacterInfoBace.h"
 
-void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info)
+void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info, BulletType type)
 {
 	m_enemuNum = -999;
 	m_buletPeneNum = Info->GetBuletPeneNum();

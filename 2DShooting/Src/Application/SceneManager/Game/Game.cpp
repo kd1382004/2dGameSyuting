@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "../SceneManager.h"
 #include"../../Character/Player/Player.h"
+#include"../../Character/Player/PlayerBullet/PlayerBullet.h"
 #include"../../Character/Enemy/Slime/Slime.h"
 #include"../../Character/Enemy/Skeleton/Skeleton.h"
 #include"../../Character/Enemy/Orc/Orc.h"
@@ -204,7 +205,20 @@ void Game::Update()
 
 						//“G
 						m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
-						m_enemy[i]->StateTypeChange(StateType::TypeFIRE, 10);
+
+						switch (m_player->GetBullet(j)->GetBulletType())
+						{
+						case  BulletType::NORMAL:
+							break;
+
+						case  BulletType::FIRE:
+							m_enemy[i]->StateTypeChange(StateType::TypeFIRE, 10, m_player->GetFireArrow());
+							break;
+						default:
+							break;
+						}
+
+
 					}
 				}
 			}
@@ -330,7 +344,7 @@ void Game::Update()
 	//î•ñ‰æ–ÊXV
 	if (m_infoGame)
 	{
-		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo(),m_score);
+		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo(), m_player, m_score);
 		m_infoGame->SetPWUPNum(m_powerUpScreenNum);
 		m_infoGame->SetPlyerHpHeel(m_player->GetEnemyDehHeelLv());
 	}
@@ -615,7 +629,7 @@ void Game::InitStage(int StageNum)
 		m_enemy.push_back(new Orc());
 		m_enemy.back()->SetTex(&m_orcTex);
 		m_enemy.back()->Init();
-		m_enemy.back()->SetPos(Math::Vector2{0,0});
+		m_enemy.back()->SetPos(Math::Vector2{ 0,0 });
 	}
 
 	if (m_player)

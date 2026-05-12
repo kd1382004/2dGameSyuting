@@ -166,6 +166,9 @@
     <Filter Include="Src\Application\Particle\Fire">
       <UniqueIdentifier>{de7cd36f-c7d0-4b89-b679-aa10beae04ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow">
+      <UniqueIdentifier>{a6f1a12a-3f08-4304-841b-d2a17baba552}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -387,6 +390,9 @@
     <ClInclude Include="Src\Application\Particle\Fire\Fire.h">
       <Filter>Src\Application\Particle\Fire</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow\PowerupFireArrow.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -574,6 +580,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Particle\Fire\Fire.cpp">
       <Filter>Src\Application\Particle\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow\PowerupFireArrow.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

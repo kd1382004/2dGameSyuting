@@ -1,7 +1,9 @@
 #include "ParticleBase.h"
 
-void Praticle::Emit(Math::Vector2 pos, Math::Vector2 move, float size, Math::Color color, int lifespan, bool RepeatFlg, int i)
+void Praticle::Emit(Math::Vector2 pos, Math::Vector2 move, float size, Math::Color color, int lifespan, bool RepeatFlg, int i,int deg)
 {
+
+	m_deg = deg;
 
 	if (i < 0)
 	{

@@ -1,6 +1,7 @@
 #pragma once
 
 class CharacterInfo;
+class Player;
 
 class InfoGame
 {
@@ -9,7 +10,7 @@ public:
 	~InfoGame() { Release(); }
 
 	void Init();
-	void Update(CharacterInfo* info, int sc);
+	void Update(CharacterInfo* info, Player *player, int sc);
 	void Drow2D();
 
 
@@ -96,6 +97,12 @@ private:
 	Math::Matrix m_PlyerHpHeelLVMat;
 	int m_PlyerHpHeel = 0;
 
+	KdTexture m_FireArrowIconTex;
+	Math::Vector2 m_FireArrowIconPos;
+	Math::Matrix m_FireArrowIconMat;
+	Math::Vector2 m_FireArrowLVPos;
+	Math::Matrix m_FireArrowLVMat;
+	int m_FireArrow = 0;
 
 	KdTexture m_scoreTex;
 	Math::Matrix m_scoreMat;

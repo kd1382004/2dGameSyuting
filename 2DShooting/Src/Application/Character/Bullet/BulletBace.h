@@ -1,5 +1,13 @@
 #pragma once
 class CharacterInfo;
+class CharacterInfo;
+
+//弾のType
+enum BulletType
+{
+	NORMAL,
+	FIRE,
+};
 
 class BulletBace
 {
@@ -11,7 +19,7 @@ public:
 	//pos...プレイヤーの座標を入れる
 	//deg...プレイヤーの角度を入れる
 	//Info...PlayerPowerUpInfonのアドレス
-	virtual void Init(Math::Vector2 pos, float rad, CharacterInfo* Info) {};
+	virtual void Init(Math::Vector2 pos, float rad, CharacterInfo* Info, BulletType type = NORMAL) {};
 
 	// 更新処理
 	virtual	void Update() {};
@@ -56,6 +64,9 @@ public:
 	//v...壁の法線ベクトル
 	virtual void MapHit(Math::Vector2 v1) {};
 
+
+
+	BulletType GetBulletType() { return  m_bullettype; }
 protected:
 	KdTexture* m_bulletTex = nullptr;
 
@@ -89,4 +100,5 @@ protected:
 	//攻撃力
 	int m_atk = 0;
 
+	BulletType m_bullettype = BulletType::NORMAL;
 };

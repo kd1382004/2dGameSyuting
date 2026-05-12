@@ -5,7 +5,6 @@ class BulletBace;
 class  PlayerHpBer;
 class  CharacterInfo;
 
-
 class Player : public CharacterBase
 {
 public:
@@ -52,6 +51,9 @@ public:
 	int EnemyDehHeelAmount();
 
 	void HPHeel(int heel);
+
+	void SetFireArrow(int lv) { m_fireArrowLv += lv; }
+	int GetFireArrow() { return m_fireArrowLv; }
 private:
 
 	KdTexture* m_shadowTex;
@@ -87,6 +89,7 @@ private:
 	void Shot(bool _3WShotFlg, bool m_3LRShotFlg);
 	void BulletUpdata();
 	void BulletDraw();
+
 	//Œ‚‚Â‚©‚Ç‚¤‚©
 	bool m_shotFlg;
 
@@ -96,12 +99,16 @@ private:
 	float m_shotInterval = 0;			//’e‚Ì”­ËŠÔŠuŠÇ—
 	float m_shotIntervalMax = 0.5f * 60;	//’e‚Ì”­ËŠÔŠu(ƒCƒ“ƒ^[ƒoƒ‹•b~FPS(60))
 
-
+	////////////////////////////////
 	PlayerAniemMode m_animeMode = Nomar;
 
 	PlayerHpBer* m_hpBer;
 
 	//“G‚ğ“|‚·“x‰ñ•œLv
 	int m_enemyDehHeelLv = 0;
+
+
+	//‰Š‚Ì–î
+	int m_fireArrowLv = 0;
 };
 

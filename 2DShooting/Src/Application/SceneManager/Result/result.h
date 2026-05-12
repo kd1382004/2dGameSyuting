@@ -44,12 +44,13 @@ private:
 	//////////////////////////
 	const float m_yPosGap = -100.0f;
 
-	const float m_NumXGap = 800;
+	const float m_numXGap = 800;
 
-	const float m_NumSiz = 4.5f;
+	const float m_numSiz = 4.5f;
 
 	const int NumMax = 999999999;
 
+	const float m_nameSiz = 0.6;
 
 	float m_alpha = 0;
 	float m_alphaPush = 0.01;
@@ -73,6 +74,8 @@ private:
 	Math::Matrix m_ScoreMat;
 	int m_ScoreNum;
 	Math::Vector2 m_ScoreNumPos;
+
+	const float m_ScoreSiz = 1.5;
 
 	//////////////////
 	//ステージクリア//

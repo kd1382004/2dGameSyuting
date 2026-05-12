@@ -3,6 +3,7 @@
 #include"../../Character/Player/Player.h"
 #include"../../Character/Enemy/Slime/Slime.h"
 #include"../../Character/Enemy/Skeleton/Skeleton.h"
+#include"../../Character/Enemy/Orc/Orc.h"
 #include"../../Hit/CharaHit.h"
 #include"../../Map/Map.h"
 #include"PowerUpScreen/PowerUpScreen.h"
@@ -31,6 +32,7 @@ void Game::Init()
 	//“G(ƒx[ƒX)‰Šú‰»
 	m_skeletonTex.Load("Tex/Character/Enemy/Skeleton/Skeleton.png");
 	m_slimeTex.Load("Tex/Character/Enemy/Slime/Slime_Green.png");
+	m_orcTex.Load("Tex/Character/Enemy/Orc/Orc.png");
 
 	//“–‚½‚è”»’è
 	m_charaHit = new CharaHit();
@@ -362,6 +364,16 @@ void Game::Update()
 	}
 
 
+
+	if (InfoKeyAPP.KeyPush('E', true, true))
+	{
+		m_DEF = true;
+		m_defAnime = new DefAnime();
+		m_defAnime->Init();
+		GameResultInfoAPP.SetScroll(m_map->GetScroll());
+		GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
+	}
+
 	///////////////////////////////////////////////////////////////
 
 
@@ -498,7 +510,7 @@ void Game::PtrRelease()
 	}
 	m_skeletonTex.Release();
 	m_slimeTex.Release();
-
+	m_orcTex.Release();
 
 	if (m_player)
 	{
@@ -572,27 +584,35 @@ void Game::InitStage(int StageNum)
 		slimeNum = m_map->GetSlimeSpawnNum();
 	}
 
-	for (int i = 0; i < slimeNum; i++)
+	//for (int i = 0; i < slimeNum; i++)
+	//{
+	//	m_enemy.push_back(new Slime());
+	//	m_enemy.back()->SetTex(&m_slimeTex);
+	//	m_enemy.back()->Init();
+	//	m_enemy.back()->SetPos(m_map->SlimeSpawnPos());
+	//}
+
+
+	//int skeletonNum = m_map->GetConSkeletonSpawnNum() + m_stageNum;
+
+	//if (skeletonNum > m_map->GetSkeletonSpawnNum())
+	//{
+	//	skeletonNum = m_map->GetSkeletonSpawnNum();
+	//}
+	//for (int i = 0; i < skeletonNum; i++)
+	//{
+	//	m_enemy.push_back(new Skeleton());
+	//	m_enemy.back()->SetTex(&m_skeletonTex);
+	//	m_enemy.back()->Init();
+	//	m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
+	//}
+
+	for (int i = 0; i < 1; i++)
 	{
-		m_enemy.push_back(new Slime());
-		m_enemy.back()->SetTex(&m_slimeTex);
+		m_enemy.push_back(new Orc());
+		m_enemy.back()->SetTex(&m_orcTex);
 		m_enemy.back()->Init();
-		m_enemy.back()->SetPos(m_map->SlimeSpawnPos());
-	}
-
-
-	int skeletonNum = m_map->GetConSkeletonSpawnNum() + m_stageNum;
-
-	if (skeletonNum > m_map->GetSkeletonSpawnNum())
-	{
-		skeletonNum = m_map->GetSkeletonSpawnNum();
-	}
-	for (int i = 0; i < skeletonNum; i++)
-	{
-		m_enemy.push_back(new Skeleton());
-		m_enemy.back()->SetTex(&m_skeletonTex);
-		m_enemy.back()->Init();
-		m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
+		m_enemy.back()->SetPos(Math::Vector2{0,0});
 	}
 
 	if (m_player)

@@ -166,6 +166,7 @@
     <ClInclude Include="Src\Application\Character\Bullet\BulletBace.h" />
     <ClInclude Include="Src\Application\Character\CharacterBase.h" />
     <ClInclude Include="Src\Application\Character\Enemy\EnemyBase.h" />
+    <ClInclude Include="Src\Application\Character\Enemy\Orc\Orc.h" />
     <ClInclude Include="Src\Application\Character\Enemy\Skeleton\Skeleton.h" />
     <ClInclude Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet\SkeletonBullet.h" />
     <ClInclude Include="Src\Application\Character\Enemy\Slime\Slime.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="Src\Application\Character\Bullet\BulletBace.cpp" />
     <ClCompile Include="Src\Application\Character\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Src\Application\Character\Enemy\Orc\Orc.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\Skeleton\Skeleton.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\Skeleton\SkeletonBullet\SkeletonBullet.cpp" />
     <ClCompile Include="Src\Application\Character\Enemy\Slime\Slime.cpp" />

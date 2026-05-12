@@ -94,6 +94,9 @@ private:
 	//スケルトン画像
 	KdTexture m_skeletonTex;
 
+	//オーク画像
+	KdTexture m_orcTex;
+
 
 	//////////////
 	//当たり判定//

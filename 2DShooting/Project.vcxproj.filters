@@ -157,6 +157,9 @@
     <Filter Include="Src\Application\SceneManager\Score">
       <UniqueIdentifier>{86fbdefa-a203-499b-933d-103bc9077bf6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Character\Enemy\Orc">
+      <UniqueIdentifier>{c44eb107-2ec0-4f48-861e-32323cd355a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -369,6 +372,9 @@
     <ClInclude Include="Src\Application\SceneManager\Score\Score.h">
       <Filter>Src\Application\SceneManager\Score</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Character\Enemy\Orc\Orc.h">
+      <Filter>Src\Application\Character\Enemy\Orc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -547,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\SceneManager\Score\Score.cpp">
       <Filter>Src\Application\SceneManager\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Enemy\Orc\Orc.cpp">
+      <Filter>Src\Application\Character\Enemy\Orc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,7 +32,6 @@ void ButtonBase::SetSelectFlg(bool flg)
 	else
 	{
 		m_sMat = Math::Matrix::CreateScale(m_defaultSiz, m_defaultSiz, 0);
-		m_rec = { 0,0,96,32 };
 		m_alpha = 1;
 	}
 

@@ -35,7 +35,7 @@ private:
 	// ‰Šúİ’è
 	void Init();
 
-	SceneType m_nowSceneType = TITLE;
+	SceneType m_nowSceneType = RESULT;
 	SceneType m_nextSceneType = m_nowSceneType;
 
 	//Œ»İ‚ÌƒV[ƒ“

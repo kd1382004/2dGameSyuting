@@ -21,34 +21,35 @@ void Result::Init()
 	m_resultPos = { 0,300 };
 	m_resultMat = Math::Matrix::CreateScale(0.9, 0.9, 0) * Math::Matrix::CreateTranslation(m_resultPos.x, m_resultPos.y, 0);
 
-	m_ScoreTex.Load("Tex/Result/Score.png");
-	m_ScorePos = { -350,250 + m_yPosGap };
-	m_ScoreMat = Math::Matrix::CreateTranslation(m_ScorePos.x, m_ScorePos.y, 0);
-	m_ScoreNum = GameResultInfoAPP.GetScore();
-	if (m_ScoreNum > NumMax) { m_ScoreNum = NumMax; }
-	m_ScoreNumPos = { m_ScorePos.x + m_NumXGap,m_ScorePos.y, 0 };
-
 	m_stageClearTex.Load("Tex/Result/StageClear.png");
-	m_stageClearPos = { m_ScorePos.x,m_ScorePos.y + m_yPosGap };
-	m_stageClearMat = Math::Matrix::CreateTranslation(m_stageClearPos.x, m_stageClearPos.y, 0);
+	m_stageClearPos = { -350,180 };
+	m_stageClearMat = Math::Matrix::CreateScale(m_nameSiz, m_nameSiz, 0) * Math::Matrix::CreateTranslation(m_stageClearPos.x, m_stageClearPos.y, 0);
 	m_stageClearNum = GameResultInfoAPP.GetmStageClearNum();
 	if (m_stageClearNum > NumMax) { m_stageClearNum = NumMax; }
-	m_stageClearNumPos = { m_stageClearPos.x + m_NumXGap,m_stageClearPos.y, 0 };
+	m_stageClearNumPos = { m_stageClearPos.x + m_numXGap,m_stageClearPos.y, 0 };
 
 
 	m_EnemyTex.Load("Tex/Result/Enemy.png");
-	m_EnemyPos = { m_ScorePos.x,m_stageClearPos.y + m_yPosGap };
-	m_EnemyMat = Math::Matrix::CreateTranslation(m_EnemyPos.x, m_EnemyPos.y, 0);
+	m_EnemyPos = { m_stageClearPos.x,m_stageClearPos.y + m_yPosGap * m_nameSiz };
+	m_EnemyMat = Math::Matrix::CreateScale(m_nameSiz, m_nameSiz, 0) * Math::Matrix::CreateTranslation(m_EnemyPos.x, m_EnemyPos.y, 0);
 	m_EnemyNum = GameResultInfoAPP.GetEnemyDeath();
 	if (m_EnemyNum > NumMax) { m_EnemyNum = NumMax; }
-	m_EnemyNumPos = { m_EnemyPos.x + m_NumXGap,m_EnemyPos.y, 0 };
+	m_EnemyNumPos = { m_EnemyPos.x + m_numXGap,m_EnemyPos.y, 0 };
 
 	m_PowerUpTex.Load("Tex/Result/PowerUp.png");
-	m_PowerUpPos = { m_ScorePos.x,m_EnemyPos.y + m_yPosGap };
-	m_PowerUpMat = Math::Matrix::CreateTranslation(m_PowerUpPos.x, m_PowerUpPos.y, 0);
+	m_PowerUpPos = { m_stageClearPos.x,m_EnemyPos.y + m_yPosGap * m_nameSiz };
+	m_PowerUpMat = Math::Matrix::CreateScale(m_nameSiz, m_nameSiz, 0) * Math::Matrix::CreateTranslation(m_PowerUpPos.x, m_PowerUpPos.y, 0);
 	m_PowerUpNum = GameResultInfoAPP.GetPowerUpNum();
 	if (m_PowerUpNum > NumMax) { m_PowerUpNum = NumMax; }
-	m_PowerUpNumPos = { m_PowerUpPos.x + m_NumXGap,m_PowerUpPos.y, 0 };
+	m_PowerUpNumPos = { m_PowerUpPos.x + m_numXGap,m_PowerUpPos.y, 0 };
+
+	m_ScoreTex.Load("Tex/Result/Score.png");
+	m_ScorePos = { m_stageClearPos.x,m_PowerUpPos.y + m_yPosGap * m_nameSiz * m_ScoreSiz - 50 };
+	m_ScoreMat = Math::Matrix::CreateScale(m_ScoreSiz, m_ScoreSiz, 0) * Math::Matrix::CreateTranslation(m_ScorePos.x, m_ScorePos.y, 0);
+	m_ScoreNum = GameResultInfoAPP.GetScore();
+	if (m_ScoreNum > NumMax) { m_ScoreNum = NumMax; }
+	m_ScoreNumPos = { m_ScorePos.x + m_numXGap,m_ScorePos.y, 0 };
+
 
 	////////////////
 	//ボタン
@@ -143,25 +144,25 @@ void Result::Draw2D()
 	SHADER.m_spriteShader.SetMatrix(m_ScoreMat);
 	m_nameRec = { 0,0,341,60 };
 	SHADER.m_spriteShader.DrawTex(&m_ScoreTex, m_nameRec);
-	NumDrawAPP.Drow(m_ScoreNum, RAligned, m_ScoreNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
+	NumDrawAPP.Drow(m_ScoreNum, RAligned, m_ScoreNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_ScoreSiz, true);
 
 	//stageClear
 	SHADER.m_spriteShader.SetMatrix(m_stageClearMat);
-	m_nameRec = { 0,0,416,60 };
+	m_nameRec = { 0,0,511,60 };
 	SHADER.m_spriteShader.DrawTex(&m_stageClearTex, m_nameRec);
-	NumDrawAPP.Drow(m_stageClearNum, RAligned, m_stageClearNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
+	NumDrawAPP.Drow(m_stageClearNum, RAligned, m_stageClearNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true);
 
 	//Enemy
 	SHADER.m_spriteShader.SetMatrix(m_EnemyMat);
 	m_nameRec = { 0,0,376,60 };
 	SHADER.m_spriteShader.DrawTex(&m_EnemyTex, m_nameRec);
-	NumDrawAPP.Drow(m_EnemyNum, RAligned, m_EnemyNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
+	NumDrawAPP.Drow(m_EnemyNum, RAligned, m_EnemyNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true);
 
 	//PowerUp
 	SHADER.m_spriteShader.SetMatrix(m_PowerUpMat);
 	m_nameRec = { 0,0,475,60 };
 	SHADER.m_spriteShader.DrawTex(&m_PowerUpTex, m_nameRec);
-	NumDrawAPP.Drow(m_PowerUpNum, RAligned, m_PowerUpNumPos, &Math::Color{ 1,1,1,m_alpha }, m_NumSiz, true);
+	NumDrawAPP.Drow(m_PowerUpNum, RAligned, m_PowerUpNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true);
 
 	//ボタン
 	for (int i = 0; i < m_button.size(); i++)

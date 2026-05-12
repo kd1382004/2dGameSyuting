@@ -3,7 +3,7 @@
 class ButtonBase
 {
 public:
-	ButtonBase() {}
+	ButtonBase() { m_rec = { 0,32,96,32 }; }
 	virtual ~ButtonBase() { Release(); }
 
 	// ‰Šúİ’è

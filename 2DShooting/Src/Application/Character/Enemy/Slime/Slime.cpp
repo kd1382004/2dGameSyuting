@@ -1,5 +1,6 @@
 #include "Slime.h"
 #include"../../Info/CharacterInfoBace.h"
+#include"../../../Particle/Fire/Fire.h"
 
 void Slime::Init()
 {
@@ -11,30 +12,38 @@ void Slime::Init()
 	m_info = new CharacterInfo();
 
 	m_info->SetATKLV(0);
+	StateTypeChange(StateType::TypeFIRE, 10);
 }
 
 void Slime::Update()
 {
 	if (m_aliveFlg)
 	{
+		StateTypeManager();
 		HPCoolTimeManager();
-		PlayerTrackingMove();
+	
 	}
 
-
-	//アニメーション
-	m_anime += 0.3;
-	if (m_anime > 8)
+	switch (m_mode)
 	{
-		m_anime = 0;
-		if (!m_aliveFlg)
-		{
-			m_deleteFlg = true;
-		}
+	case MOVE:
+
+		MODEMove();
+
+		break;
+	case ATK:
+
+		MODEATK();
+
+		break;
+
+	case Def:
+
+		MODEDef();
+
+	default:
+		break;
 	}
-
-
-
 }
 
 void Slime::Draw2D()
@@ -51,6 +60,12 @@ void Slime::Draw2D()
 		}
 
 
+
+		for (int i = 0; i < m_praticle.size(); i++)
+		{
+			m_praticle[i]->Draw();
+		}
+
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
@@ -58,6 +73,11 @@ void Slime::Draw2D()
 
 void Slime::MatConfirmed(float scroll)
 {
+	for (int i = 0; i < m_praticle.size(); i++)
+	{
+		m_praticle[i]->Update(m_pos, scroll);
+	}
+
 	//行列作成
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
@@ -105,4 +125,32 @@ void Slime::PlayerTrackingMove()
 	}
 
 	m_pos += m_move;
+}
+
+void Slime::MODEMove()
+{
+	PlayerTrackingMove();
+
+	//アニメーション
+	m_anime += 0.3;
+	if (m_anime > 8)
+	{
+		m_anime = 0;
+		
+	}
+}
+
+void Slime::MODEATK()
+{
+}
+
+void Slime::MODEDef()
+{
+	//アニメーション
+	m_anime += 0.2;
+	if (m_anime > 8)
+	{
+		m_anime = 0;
+		m_deleteFlg = true;
+	}
 }

@@ -584,28 +584,30 @@ void Game::InitStage(int StageNum)
 		slimeNum = m_map->GetSlimeSpawnNum();
 	}
 
-	//for (int i = 0; i < slimeNum; i++)
-	//{
-	//	m_enemy.push_back(new Slime());
-	//	m_enemy.back()->SetTex(&m_slimeTex);
-	//	m_enemy.back()->Init();
-	//	m_enemy.back()->SetPos(m_map->SlimeSpawnPos());
-	//}
+	slimeNum = 1;
+	for (int i = 0; i < slimeNum; i++)
+	{
+		m_enemy.push_back(new Slime());
+		m_enemy.back()->SetTex(&m_slimeTex);
+		m_enemy.back()->Init();
+		m_enemy.back()->SetPos(m_map->SlimeSpawnPos());
+	}
 
 
-	//int skeletonNum = m_map->GetConSkeletonSpawnNum() + m_stageNum;
+	int skeletonNum = m_map->GetConSkeletonSpawnNum() + m_stageNum;
 
-	//if (skeletonNum > m_map->GetSkeletonSpawnNum())
-	//{
-	//	skeletonNum = m_map->GetSkeletonSpawnNum();
-	//}
-	//for (int i = 0; i < skeletonNum; i++)
-	//{
-	//	m_enemy.push_back(new Skeleton());
-	//	m_enemy.back()->SetTex(&m_skeletonTex);
-	//	m_enemy.back()->Init();
-	//	m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
-	//}
+	if (skeletonNum > m_map->GetSkeletonSpawnNum())
+	{
+		skeletonNum = m_map->GetSkeletonSpawnNum();
+	}
+	skeletonNum = 1;
+	for (int i = 0; i < skeletonNum; i++)
+	{
+		m_enemy.push_back(new Skeleton());
+		m_enemy.back()->SetTex(&m_skeletonTex);
+		m_enemy.back()->Init();
+		m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
+	}
 
 	for (int i = 0; i < 1; i++)
 	{

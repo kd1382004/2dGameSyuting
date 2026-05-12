@@ -37,7 +37,12 @@ private:
 
 	KdTexture m_bulletTex;
 
-	int m_shotInterval;
-	bool m_shotFlg;
-	float m_shotIntervalMax = 0.5f * 100;
+	int m_shotInterval = 0;
+	bool m_shotFlg=false;
+	float m_shotIntervalMax = 1.0f * 100;
+
+
+	void MODEMove()override;
+	void MODEATK()override;
+	void MODEDef()override;
 };

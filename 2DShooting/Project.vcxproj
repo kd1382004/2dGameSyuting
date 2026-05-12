@@ -182,6 +182,8 @@
     <ClInclude Include="Src\Application\Map\Map.h" />
     <ClInclude Include="Src\Application\Map\MapObject\MapObject.h" />
     <ClInclude Include="Src\Application\Map\MapObject\WarpObject\WarpObject.h" />
+    <ClInclude Include="Src\Application\Particle\Fire\Fire.h" />
+    <ClInclude Include="Src\Application\Particle\ParticleBase.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.h" />
@@ -246,6 +248,8 @@
     <ClCompile Include="Src\Application\Map\Map.cpp" />
     <ClCompile Include="Src\Application\Map\MapObject\MapObject.cpp" />
     <ClCompile Include="Src\Application\Map\MapObject\WarpObject\WarpObject.cpp" />
+    <ClCompile Include="Src\Application\Particle\Fire\Fire.cpp" />
+    <ClCompile Include="Src\Application\Particle\ParticleBase.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\SceneManager\Game\DefAnime\DefAnime.cpp" />

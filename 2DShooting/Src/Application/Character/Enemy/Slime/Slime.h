@@ -27,4 +27,8 @@ private:
 
 	//ƒvƒŒƒCƒ„[‚ğ’ÇÕ‚·‚é
 	void PlayerTrackingMove();
+
+	void MODEMove()override;
+	void MODEATK()override;
+	void MODEDef()override;
 };

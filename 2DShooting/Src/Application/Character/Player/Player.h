@@ -5,6 +5,7 @@ class BulletBace;
 class  PlayerHpBer;
 class  CharacterInfo;
 
+
 class Player : public CharacterBase
 {
 public:

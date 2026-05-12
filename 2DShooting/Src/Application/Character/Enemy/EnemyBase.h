@@ -3,6 +3,13 @@
 
 class BulletBace;
 
+enum Mode
+{
+	MOVE,
+	ATK,
+	Def,
+};
+
 class EnemyBase :public CharacterBase
 {
 public:
@@ -38,7 +45,17 @@ public:
 
 	void BulletHit(BulletBace* bullet);
 
-	virtual void EnemyHit(){}
+	virtual void EnemyHit() {}
+
+	void StateTypeManager();
+
+	//状態変化
+	//type...状態を入れる
+	//Time...時間を入れる
+	void StateTypeChange(StateType type, int Time = 0);
+
+
+	void ChangeMode(Mode mode);
 protected:
 
 	// 解放
@@ -48,7 +65,26 @@ protected:
 	Math::Vector2 m_plaeyrPos = { 0,0 };
 
 	std::vector< BulletBace*> m_bullet;
+
+	virtual void MODEMove() {};
+	virtual void MODEATK() {};
+	virtual void MODEDef() {};
+
+
+	Mode m_mode = MOVE;
+	
 private:
 
+
+	void StateTypeFire();
+
+	////////////////////////////////////////
+	//炎ドットダメージ
+
+	//クールタイムMax
+	static const int m_firemDMGCoolTimMax = 60;
+
+	//クールタイムM
+	int m_firemDMGCoolTim = 0;
 };
 

@@ -5,6 +5,7 @@
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../Bullet/BulletBace.h"
 
+
 void Player::Init()
 {
 	m_pos = { -300,0 };
@@ -37,6 +38,7 @@ void Player::Init()
 
 void Player::Update()
 {
+
 	HPCoolTimeManager();
 
 	////////////
@@ -64,9 +66,6 @@ void Player::Draw2D()
 {
 	if (m_aliveFlg)
 	{
-		//’e‚Ì•`‰æ
-		BulletDraw();
-
 		SHADER.m_spriteShader.SetMatrix(m_shadowMat);
 		SHADER.m_spriteShader.DrawTex(m_shadowTex, m_rec, 1.0);
 		//ƒvƒŒƒCƒ„[‚Ì•`‰æ
@@ -75,6 +74,10 @@ void Player::Draw2D()
 
 
 		m_hpBer->Drow2D();
+
+
+		//’e‚Ì•`‰æ
+		BulletDraw();
 	}
 }
 
@@ -138,7 +141,7 @@ void Player::AnimeRec()
 			m_anime = 0;
 			m_animeMode = Nomar;
 
-          Shot(m_info->Get3WShotFlg(), m_info->GetLRShotFlg());
+			Shot(m_info->Get3WShotFlg(), m_info->GetLRShotFlg());
 
 			m_shotInterval = m_shotIntervalMax;
 			m_shotFlg = false;
@@ -191,8 +194,8 @@ void Player::ReleseBuleet()
 int Player::EnemyDehHeelAmount()
 {
 	int heel;
-	
-   	heel = m_enemyDehHeelLv * 0.1 * 53;
+
+	heel = m_enemyDehHeelLv * 0.1 * 53;
 
 	return heel;
 }
@@ -242,6 +245,10 @@ void Player::Release()
 		delete m_hpBer;
 	}
 
+	if (m_info)
+	{
+		delete m_info;
+	}
 }
 
 void Player::Move()

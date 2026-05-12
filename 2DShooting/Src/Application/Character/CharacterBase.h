@@ -2,6 +2,13 @@
 
 
 class CharacterInfo;
+class  Praticle;
+
+enum StateType
+{
+	TypeNORMAL,
+	TypeFIRE
+};
 
 //キャラクターの親クラス
 class CharacterBase
@@ -111,6 +118,12 @@ protected:
 
 	float m_charaAlpha = 1;
 	float m_charaAlphaPush = 0.1;
+
+	std::vector< Praticle*> m_praticle;
+
+	StateType m_statetype = TypeNORMAL;
+	float m_stateTime = 0;
+	int m_stateTimeMax = 0;
 private:
 
 };

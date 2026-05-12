@@ -35,6 +35,11 @@ void Orc::Update()
 		MODEATK();
 
 		break;
+
+	case Def:
+
+		MODEDef();
+
 	default:
 		break;
 	}
@@ -164,21 +169,18 @@ void Orc::MODEATK()
 
 }
 
-void Orc::ChangeMode(Mode mode)
+void Orc::MODEDef()
 {
-	switch (mode)
-	{
-	case MOVE:
-		m_mode = MOVE;
-		break;
-	case ATK:
-		m_mode = ATK;
-		break;
-	default:
-		break;
-	}
+	//アニメーション
+	m_anime += 0.1;
 
-	m_anime = 0;
+	m_rec = { 100 * (int)m_anime,500 ,100,100 };
+
+	if (m_anime > 4)
+	{
+		m_deleteFlg = true;
+	}
 }
+
 
 

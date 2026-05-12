@@ -2,15 +2,6 @@
 
 #include"../EnemyBase.h"
 
-
-enum Mode
-{
-	MOVE,
-	ATK,
-
-};
-
-
 class Orc :public EnemyBase
 {
 public:
@@ -37,11 +28,10 @@ private:
 	//ÉvÉåÉCÉÑÅ[Çí«ê’Ç∑ÇÈ
 	void PlayerTrackingMove();
 
-	void MODEMove();
-	void MODEATK();
+	void MODEMove()override;
+	void MODEATK()override;
+	void MODEDef()override;
 
-	Mode m_mode = MOVE;
-	void ChangeMode(Mode mode);
 
 	float m_ATKWaitMax = 60;
 	float m_ATKWait = 0;

@@ -1,6 +1,6 @@
 #include"EnemyBase.h"
 #include"../Bullet/BulletBace.h"
-#include"../Bullet/BulletBace.h"
+#include"../../Particle/Fire/Fire.h"
 
 void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 {
@@ -13,6 +13,7 @@ void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 
 	if (m_HP <= 0)
 	{
+		ChangeMode(Mode::Def);
 		m_aliveFlg = false;
 		m_anime = 0;
 	}
@@ -28,3 +29,102 @@ void EnemyBase::BulletHit(BulletBace* bullet)
 	}
 }
 
+void EnemyBase::StateTypeManager()
+{
+	
+
+	if (m_statetype != TypeNORMAL)
+	{
+		m_stateTime += 1 / 60.0f;
+
+		if (m_stateTime > m_stateTimeMax)
+		{
+			StateTypeChange(StateType::TypeNORMAL);
+		}
+	}
+
+
+	switch (m_statetype)
+	{
+	case TypeNORMAL:
+		break;
+	case TypeFIRE:
+		StateTypeFire();
+		break;
+	default:
+		break;
+	}
+
+}
+
+
+
+void EnemyBase::StateTypeChange(StateType type, int Time)
+{
+	for (int i = 0; i < m_praticle.size(); i++)
+	{
+		delete m_praticle[i];
+		m_praticle.erase(m_praticle.begin() + i);
+		i--;
+	}
+
+	switch (type)
+	{
+	case TypeNORMAL:
+
+		break;
+	case TypeFIRE:
+
+		m_praticle.push_back(new Fire());
+		m_praticle.back()->Emit({ 0,0 }, { 0,0 }, 0, Math::Color{ 0,0,0,0 }, 0, true, -1);
+		m_praticle.back()->SetdefSiz({ 0.5,0.7 });
+
+
+		break;
+	default:
+		break;
+	}
+
+	m_stateTime = 0;
+	m_stateTimeMax = Time;
+	m_statetype = type;
+}
+
+void EnemyBase::StateTypeFire()
+{
+	m_firemDMGCoolTim++;
+
+
+	if (m_firemDMGCoolTim > m_firemDMGCoolTimMax)
+	{
+		m_firemDMGCoolTim = 0;
+		m_HP -= 5;
+
+		if (m_HP <= 0)
+		{
+			ChangeMode(Mode::Def);
+			m_aliveFlg = false;
+		}
+	}
+
+}
+
+void EnemyBase::ChangeMode(Mode mode)
+{
+	switch (mode)
+	{
+	case MOVE:
+		m_mode = MOVE;
+		break;
+	case ATK:
+		m_mode = ATK;
+		break;
+
+	case Def:
+		m_mode = Def;
+	default:
+		break;
+	}
+
+	m_anime = 0;
+}

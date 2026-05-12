@@ -4,6 +4,7 @@
 void PowerupBound::Init(Math::Vector2 pos)
 {
 	m_tex.Load("Tex/PowerUpScreen/PowerupBound/PowerupBound.png");
+	m_EXBackTex.Load("Tex/PowerUpScreen/PowerupBound/Premade dialog box  big.png");
 	m_pos = pos;
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 

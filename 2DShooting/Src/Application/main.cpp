@@ -247,7 +247,7 @@ void Application::Execute()
 		}
 
 		//ƒQ[ƒ€–¼‚Ì•ÏX‚Í‚±‚±
-		std::string titleBar = "'ƒQ[ƒ€–¼' FPS:" + std::to_string(m_fps);
+		std::string titleBar = "'Endless Archer' FPS:" + std::to_string(m_fps);
 		SetWindowTextA(m_window.GetWndHandle(), titleBar.c_str());
 
 	}

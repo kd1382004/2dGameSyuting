@@ -4,6 +4,7 @@
 void HPHeel::Init(Math::Vector2 pos)
 {
 	m_tex.Load("Tex/PowerUpScreen/HPHeel/HpHeel.png");
+	m_EXBackTex.Load("Tex/PowerUpScreen/HPHeel/Premade dialog box  big.png");
 	m_pos = pos;
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }

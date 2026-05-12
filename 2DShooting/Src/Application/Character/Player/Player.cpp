@@ -24,7 +24,7 @@ void Player::Init()
 
 	m_bulletTex.Load("Tex/Character/Player/Bullet/bullet.png");
 
-	m_MaxHP = 100;
+	m_MaxHP = 200;
 	m_HP = m_MaxHP;
 
 	m_hpBer = new PlayerHpBer();

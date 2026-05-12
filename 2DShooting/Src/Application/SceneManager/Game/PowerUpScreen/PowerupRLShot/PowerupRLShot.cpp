@@ -4,6 +4,7 @@
 void PowerupRLShot::Init(Math::Vector2 pos)
 {
 	m_tex.Load("Tex/PowerUpScreen/PowerupRLShot/PowerupRLShot.png");
+	m_EXBackTex.Load("Tex/PowerUpScreen/PowerupRLShot/Premade dialog box  big.png");
 	m_pos = pos;
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 

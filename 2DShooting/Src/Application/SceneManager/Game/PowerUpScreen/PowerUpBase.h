@@ -5,7 +5,7 @@ class Player;
 class PowerUpBase
 {
 public:
-	PowerUpBase() { m_EXBackTex.Load("Tex/PowerUpScreen/Premade dialog box  big.png"); };
+	PowerUpBase() {};
 	virtual ~PowerUpBase() { Release(); };
 
 	//表示場所をセット

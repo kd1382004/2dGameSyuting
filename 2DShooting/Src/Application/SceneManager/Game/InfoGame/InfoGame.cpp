@@ -10,6 +10,8 @@ void InfoGame::Init()
 	m_KeyArrowTex.Load("Tex/Key/26053154.png");
 	m_KeySpaceTex.Load("Tex/Key/27244530.png");
 
+	
+
 	m_backTex.Load("Tex/Game/GameInfo/GameInfoBack.png");
 	m_backPos = { 0,-307 };
 	m_backMat = Math::Matrix::CreateTranslation(m_backPos.x, m_backPos.y, 0);
@@ -103,10 +105,17 @@ void InfoGame::Init()
 	{
 		m_keyAlpha[i] = 1;
 	}
+
+
+
+	m_scoreTex.Load("Tex/Result/Score.png");
+	m_scoreMat = Math::Matrix::CreateScale(0.5, 0.5, 0) * Math::Matrix::CreateTranslation(180, m_PeneNumLVPos.y - 50, 0);
+
 }
 
 void InfoGame::Release()
 {
+	m_scoreTex.Release();
 	m_VLTex.Release();
 	m_Xmark.Release();
 	m_KeyArrowTex.Release();
@@ -138,8 +147,10 @@ void InfoGame::KeyDraw()
 
 }
 
-void InfoGame::Update(CharacterInfo* info)
+void InfoGame::Update(CharacterInfo* info, int sc)
 {
+	m_score = sc;
+
 	if (!m_3wShotFlg)
 	{
 		m_3wShotFlg = info->Get3WShotFlg();
@@ -199,7 +210,7 @@ void InfoGame::Update(CharacterInfo* info)
 	{
 		m_keyAlpha[1] = 1;
 	}
-	
+
 	if (InfoKeyAPP.GetKeyPush(VK_DOWN))
 	{
 		m_keyAlpha[2] = 0.5f;
@@ -208,7 +219,7 @@ void InfoGame::Update(CharacterInfo* info)
 	{
 		m_keyAlpha[2] = 1;
 	}
-	
+
 	if (InfoKeyAPP.GetKeyPush(VK_RIGHT))
 	{
 		m_keyAlpha[3] = 0.5f;
@@ -309,6 +320,12 @@ void InfoGame::Drow2D()
 
 
 	KeyDraw();
+
+
+	SHADER.m_spriteShader.SetMatrix(m_scoreMat);
+	SHADER.m_spriteShader.DrawTex(&m_scoreTex, Math::Rectangle{ 0,0,341,60 });
+	NumDrawAPP.Drow(m_score, RAligned, Math::Vector2{ 450,m_PeneNumLVPos.y - 50 }, &Math::Color{ 1,1,1,1 }, 2, false);
+
 }
 
 

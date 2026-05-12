@@ -14,7 +14,7 @@ void Scene::Update()
 
 void Scene::Init()
 {
-
+	ShowCursor(false);
 }
 
 void Scene::Release()

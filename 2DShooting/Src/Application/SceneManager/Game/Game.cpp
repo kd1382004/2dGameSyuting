@@ -160,7 +160,7 @@ void Game::Update()
 						if (m_charaHit->BulletHit(m_enemy[i]->GetBullet(j), m_player, -1))
 						{
 							m_enemy[i]->BulletHit(m_enemy[i]->GetBullet(j));
-   							m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
+							m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
 						}
 
 					}
@@ -193,7 +193,7 @@ void Game::Update()
 			{
 				for (int j = 0; j < m_player->GetBulletNum(); j++)
 				{
-  					if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
+					if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
 					{
 						//当たったときの処理
 
@@ -265,7 +265,7 @@ void Game::Update()
 	{
 		if (m_enemy[i]->GetDeleteFlg())
 		{
-			ScorePush(1);
+			ScorePush(m_stageNum);
 			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
 			i--;
@@ -279,7 +279,7 @@ void Game::Update()
 	}
 
 	m_player->ReleseBuleet(0);
-	
+
 
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -307,6 +307,13 @@ void Game::Update()
 
 	if (m_player)
 	{
+		//デバック/////////////
+		if (playerNOHit)
+		{
+			m_player->HPHeel(1000);
+		}
+		///////////////////////
+
 		if (m_player->GetHP() <= 0)
 		{
 			m_DEF = true;
@@ -320,13 +327,44 @@ void Game::Update()
 	//情報画面更新
 	if (m_infoGame)
 	{
-		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo());
+		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo(),m_score);
 		m_infoGame->SetPWUPNum(m_powerUpScreenNum);
 		m_infoGame->SetPlyerHpHeel(m_player->GetEnemyDehHeelLv());
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
+
+
+	////////////////////////////////////////////////////
+	//デバック
+	if (InfoKeyAPP.KeyPush('Q'))
+	{
+		for (int i = 0; i < m_enemy.size(); i++)
+		{
+			delete m_enemy[i];
+			m_enemy.erase(m_enemy.begin() + i);
+			i--;
+			m_EnemyDeath++;
+		}
+	}
+
+	if (InfoKeyAPP.KeyPush('W', true, true))
+	{
+		if (playerNOHit)
+		{
+			playerNOHit = false;
+		}
+		else
+		{
+			playerNOHit = true;
+		}
+	}
+
+
+	///////////////////////////////////////////////////////////////
+
+
 }
 
 void Game::Draw2D()
@@ -533,6 +571,7 @@ void Game::InitStage(int StageNum)
 	{
 		slimeNum = m_map->GetSlimeSpawnNum();
 	}
+
 	for (int i = 0; i < slimeNum; i++)
 	{
 		m_enemy.push_back(new Slime());

@@ -143,14 +143,21 @@ void Skeleton::BlockHit()
 void Skeleton::SetStatus(int stage)
 {
 	int HPUp = 0;
+	int bound = 0;
 	if (stage != 0)
 	{
 		HPUp = stage / 3 * 10;
+		bound = stage / 5;
 	}
 
 	m_HP = 20 + HPUp;
 
-	int atkLv = stage * 0.8;
+	int atkLv = 0;
+	atkLv = stage * 0.8;
+
+
+
+	m_info->SetBoundNum(bound);
 	m_info->SetATKLV(atkLv);
 }
 

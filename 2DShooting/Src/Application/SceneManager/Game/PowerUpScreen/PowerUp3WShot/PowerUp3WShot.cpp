@@ -4,6 +4,7 @@
 void Powerup3WShot::Init(Math::Vector2 pos)
 {
 	m_tex.Load("Tex/PowerUpScreen/Powerup3WShot/Powerup3WShot.png");
+	m_EXBackTex.Load("Tex/PowerUpScreen/Powerup3WShot/Premade dialog box  big.png");
 	m_pos = pos;
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }

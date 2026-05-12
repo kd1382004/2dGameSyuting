@@ -9,7 +9,7 @@ public:
 	~InfoGame() { Release(); }
 
 	void Init();
-	void Update(CharacterInfo* info);
+	void Update(CharacterInfo* info, int sc);
 	void Drow2D();
 
 
@@ -89,10 +89,15 @@ private:
 	Math::Matrix m_ATKUPLVMat;
 	int m_ATKUP = 0;
 
-		KdTexture m_PlyerHpHeelIconTex;
+	KdTexture m_PlyerHpHeelIconTex;
 	Math::Vector2 m_PlyerHpHeelIconPos;
 	Math::Matrix m_PlyerHpHeelIconMat;
 	Math::Vector2 m_PlyerHpHeelLVPos;
 	Math::Matrix m_PlyerHpHeelLVMat;
 	int m_PlyerHpHeel = 0;
+
+
+	KdTexture m_scoreTex;
+	Math::Matrix m_scoreMat;
+	int m_score = 0;
 };

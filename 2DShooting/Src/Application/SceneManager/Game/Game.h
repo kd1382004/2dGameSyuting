@@ -46,6 +46,8 @@ public:
 	void PowerUpScreenFlg() { m_powerUpScreenFlg = false; }
 
 	Player* GetPlayer() { return m_player; }
+
+	int GetScore() { return m_score; }
 private:
 
 	// 解放
@@ -155,4 +157,8 @@ private:
 	//スコアを増やす
 	//lv...敵のレベルを入れる
 	void ScorePush(int lv);
+
+
+	//デッバク
+	bool playerNOHit = false;;
 };

@@ -57,6 +57,18 @@ private:
 
 	void LodMapData(MapType mapType);
 
+	//マップ縦方高サイズ(固定)
+	static const int MapTopSiz = 10;
+	std::vector<int> m_mapS[MapTopSiz];
+
+	//マップ生成
+	void MapInit(int satgeNum);
+	void CellularAut(int satgeNum);//セルオート作成
+
+	bool MapVacancy(int satgeNum);//マップ空き率
+
+	void EnemySpawn(int satgeNum);
+
 	void LodMapData1();
 	void LodMapData2();
 	void LodMapData3();
@@ -82,7 +94,7 @@ private:
 
 	float m_scroll;
 
-	Game* m_owner=nullptr;
+	Game* m_owner = nullptr;
 
 	int m_scrollMin;
 	int m_scrollMax;
@@ -101,5 +113,5 @@ private:
 
 	//スケルトン出現可能位置
 	std::vector<Math::Vector2> m_SkeletonSawnPos;
-	
+
 };

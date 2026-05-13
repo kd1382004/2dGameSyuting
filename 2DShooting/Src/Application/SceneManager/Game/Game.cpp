@@ -390,6 +390,11 @@ void Game::Update()
 		GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
 	}
 
+	if (InfoKeyAPP.KeyPush('R', true, true))
+	{
+		m_nextStageAnimeFlg = true;
+	}
+
 	///////////////////////////////////////////////////////////////
 
 
@@ -601,7 +606,7 @@ void Game::InitStage(int StageNum)
 		slimeNum = m_map->GetSlimeSpawnNum();
 	}
 
-	slimeNum = 1;
+	slimeNum = 0;
 	for (int i = 0; i < slimeNum; i++)
 	{
 		m_enemy.push_back(new Slime());
@@ -617,7 +622,8 @@ void Game::InitStage(int StageNum)
 	{
 		skeletonNum = m_map->GetSkeletonSpawnNum();
 	}
-	skeletonNum = 1;
+
+	skeletonNum = 0;
 	for (int i = 0; i < skeletonNum; i++)
 	{
 		m_enemy.push_back(new Skeleton());
@@ -626,7 +632,7 @@ void Game::InitStage(int StageNum)
 		m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
 	}
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		m_enemy.push_back(new Orc());
 		m_enemy.back()->SetTex(&m_orcTex);

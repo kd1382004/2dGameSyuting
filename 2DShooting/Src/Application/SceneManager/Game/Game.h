@@ -5,10 +5,10 @@
 class Player;
 class EnemyBase;
 class CharaHit;
-class Map;
 class PowerUpScreen;
 class DefAnime;
 class InfoGame;
+class SoundBase;
 
 
 class Game :public SceneBase
@@ -16,7 +16,7 @@ class Game :public SceneBase
 public:
 
 	Game() {};
-	~Game() { Release(); };
+	~Game()override { Release(); };
 
 	// 初期設定
 	void Init()override;
@@ -74,7 +74,15 @@ private:
 	void InitStage(int StageNum);
 
 	//ステージ番号
-	int m_stageNum = 1;
+	int m_stageNum = 0;
+
+
+	static const int m_stageMax = 20;
+
+	//ゲームクリア
+	void GeameClearUpdata();
+	void GeameClearDraw2D();
+
 
 	//////////////
 	//プレイヤー//
@@ -103,20 +111,13 @@ private:
 	//////////////
 	CharaHit* m_charaHit = nullptr;
 
-	//////////
-	//マップ//
-	//////////
-	Map* m_map = nullptr;
-
-
-
 	//ステージクリアフラグ
 	bool m_stageClearFlg = false;
 
 	////////////
 	//強化画面//
 	////////////
-	PowerUpScreen* m_powerUpScreen;
+	PowerUpScreen* m_powerUpScreen=nullptr;
 	bool m_powerUpScreenFlg = false;
 	int m_powerUpScreenNum = 0;
 
@@ -134,12 +135,12 @@ private:
 	//敗北//
 	////////
 	bool m_DEF = false;
-	DefAnime* m_defAnime;
+	DefAnime* m_defAnime = nullptr;
 
 	////////////////////////
 	//ゲーム中に見せる情報//
 	////////////////////////
-	InfoGame* m_infoGame;
+	InfoGame* m_infoGame = nullptr;
 
 
 	//////////////////////////
@@ -161,7 +162,10 @@ private:
 	//lv...敵のレベルを入れる
 	void ScorePush(int lv);
 
+	//敵が死んだ一
+	Math::Vector2 m_EnemydefPos = {};
 
-	//デッバク
-	bool playerNOHit = false;;
+
+	//音
+	SoundBase* m_gameeBgm;
 };

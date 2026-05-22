@@ -25,7 +25,7 @@ void Fire::Update(Math::Vector2 pos, float scroll)
 			if (!m_RepeatFlg) { return; }
 
 			//リピート処理
-			Emit({ pos.x,pos.y }, { Rnd() * 2 - 1,Rnd() * 2 }, Rnd() * 7 - 3, Math::Color{ 1,Rnd(),0.3f,0.3f }, Rnd() * 30 + 10, true, i, m_deg);
+			Emit({ pos.x,pos.y }, { Rnd() * 2 - 1,Rnd() * 2 }, Rnd() * 7 - 3, Math::Color{ 1,Rnd(),0.3f,0.1f }, Rnd() * 30 + 10, true, i, m_deg);
 		}
 
 		//サイズ変更(徐々に小さく)

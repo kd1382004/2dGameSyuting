@@ -1,6 +1,7 @@
 #pragma once
 
 class Game;
+class SoundBase;
 
 class DefAnime
 {
@@ -9,7 +10,7 @@ public:
 	~DefAnime() { Release(); }
 
 	void Init();
-	void Update(Game*m_owner);
+	void Update(Game*m_owner, bool flg);
 	void Draw2D();
 
 private:
@@ -28,6 +29,7 @@ private:
 	Math::Matrix m_backTexMat;
 
 	KdTexture m_fnishTex;
+	KdTexture m_defTex;
 	Math::Matrix m_fnishTexMat;
 	Math::Vector2 m_fnishTexPos;
 	float m_fnishSiz;
@@ -39,4 +41,9 @@ private:
 	float m_EntToresAlphaPush=0.01f;
 
 	void Release();
+
+	bool m_playerFlg = false;
+
+	//‰¹
+	SoundBase* m_defAnimeBgm;
 };

@@ -1,6 +1,6 @@
 #include "NumDraw.h"
 
-void NumDraw::Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* color, float siz, bool Separator, float scroll)
+void NumDraw::Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* color, float siz, bool Separator, float scroll, int digit)
 {
 	//数字直径横
 	recX = 9;
@@ -8,32 +8,58 @@ void NumDraw::Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* co
 	recY = 14;
 
 	//10以上なら桁数を求める
-	if (Num >= 10)
 	{
 		//桁数を入れるワークspace
 		long w = 0;
 
-		//桁数を求める
-		for (long long i = 1; i <= Num; i *= 10)
+		if (Num >= 10)
 		{
-			w++;
+			//桁数を求める
+			for (long long i = 1; i <= Num; i *= 10)
+			{
+				w++;
+			}
+		}
+		else
+		{
+			w = 1;
 		}
 
+		
 		//分解した一桁が入る
 		std::vector<int>w_Num;
 
-		for (int i = 0; i < w; i++)
+		if (digit - w > 0)
 		{
-			int a = 1;
+			int dig = digit - w;
 
-			for (int j = i; j < w - 1; j++)
+			for (int i = 0; i < dig; i++)
 			{
-				a *= 10;
+				w_Num.push_back(0);
 			}
-
-			w_Num.push_back(Num / a);
-			Num %= a;
 		}
+
+		if (Num < 10)
+		{
+			w_Num.push_back(Num);
+		}
+		else
+		{
+			for (int i = 0; i < w; i++)
+			{
+				int a = 1;
+
+				for (int j = i; j < w - 1; j++)
+				{
+					a *= 10;
+				}
+
+				w_Num.push_back(Num / a);
+				Num %= a;
+			}
+		}
+
+		
 
 		//スタート位置がどっちかを選別
 		switch (aligned)
@@ -110,17 +136,6 @@ void NumDraw::Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* co
 				break;
 			}
 		}
-	}
-	else
-	{
-
-		Math::Matrix Smat = Math::Matrix::CreateScale(siz, siz, 0);
-		Math::Matrix Tmat;
-		Tmat = Math::Matrix::CreateTranslation(pos.x - scroll, pos.y, 0);
-		Math::Matrix mat = Smat * Tmat;
-
-		SHADER.m_spriteShader.SetMatrix(mat);
-		SHADER.m_spriteShader.DrawColorTex(&m_tex, Math::Rectangle{ recX * Num ,0,recX ,recY }, color);
 	}
 }
 

@@ -60,6 +60,19 @@ void Slime::Draw2D()
 
 
 
+	
+		SHADER.m_spriteShader.SetMatrix(m_mat);
+	
+		
+		if (m_charaAlpha != 1)
+		{
+			SHADER.m_spriteShader.DrawColorTex(m_charaTex, m_rec, &Math::Color{1,0,0,m_charaAlpha });
+		}
+		else
+		{
+			SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
+		}
+	
 		if (m_aliveFlg)
 		{
 			for (int i = 0; i < m_praticle.size(); i++)
@@ -68,9 +81,6 @@ void Slime::Draw2D()
 			}
 
 		}
-		SHADER.m_spriteShader.SetMatrix(m_mat);
-		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
-
 
 	}
 }
@@ -96,11 +106,9 @@ void Slime::SetStatus(int stage)
 		HPUp = stage / 3 * 20;
 	}
 
+	m_HP = 15 + HPUp;
 
-	m_speed += Math::Vector2{ (float)stage * 0.1f, (float)stage * 0.1f };
-	m_HP = 30 + HPUp;
-
-	int atkLv = stage * 0.5;
+	int atkLv = stage * 0.1;
 	m_info->SetATKLV(atkLv);
 }
 

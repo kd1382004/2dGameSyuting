@@ -1,6 +1,7 @@
 #pragma once
 
 class SceneBase;
+class SoundBase;
 
 //シーンの種類
 enum SceneType
@@ -35,12 +36,14 @@ private:
 	// 初期設定
 	void Init();
 
-	SceneType m_nowSceneType = RESULT;
+	SceneType m_nowSceneType = TITLE;
 	SceneType m_nextSceneType = m_nowSceneType;
 
 	//現在のシーン
 	SceneBase* m_nowScene = nullptr;
 
+
+	SoundBase* m_titleBgm;
 private:
 
 	SceneManager() { Init(); }

@@ -2,6 +2,7 @@
 #include "../CharacterBase.h"
 
 class BulletBace;
+class SoundBase;
 
 enum Mode
 {
@@ -13,7 +14,7 @@ enum Mode
 class EnemyBase :public CharacterBase
 {
 public:
-	EnemyBase() { m_speed = { 1, 1 }; }
+	EnemyBase() { BaseInit(); }
 	~EnemyBase() override { Release(); }
 
 	// 初期設定
@@ -57,10 +58,15 @@ public:
 
 
 	void ChangeMode(Mode mode);
+
+	//生きてる敵の数
+	void SetEnemyNum(int num) { m_enemyNum = num; }
 protected:
 
+	int m_enemyNum =-1;
+
 	// 解放
-	virtual void Release() {}
+	virtual void Release();
 
 	//追跡用等のプレイヤー座標
 	Math::Vector2 m_plaeyrPos = { 0,0 };
@@ -77,6 +83,8 @@ protected:
 private:
 
 
+	void BaseInit();
+
 	void StateTypeFire();
 
 	////////////////////////////////////////
@@ -90,5 +98,8 @@ private:
 
 	//一回当たりのダメージ
 	int m_fireDmg = 0;
+
+	//音
+	SoundBase* m_fireSE;
 };
 

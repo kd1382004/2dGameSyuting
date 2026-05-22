@@ -45,4 +45,6 @@ private:
 	void MODEMove()override;
 	void MODEATK()override;
 	void MODEDef()override;
+
+	bool m_drawFlg = true;
 };

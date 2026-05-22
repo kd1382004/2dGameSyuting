@@ -3,14 +3,14 @@
 
 class ButtonBase;
 class Map;
-class Player;
+class SoundBase;
 
 class Title :public SceneBase
 {
 public:
 
 	Title() {};
-	~Title() { Release(); };
+	~Title()override { Release(); };
 
 	// ‰Šúİ’è
 	void Init()override;
@@ -35,9 +35,12 @@ private:
 	std::vector<std::shared_ptr<ButtonBase>> m_button;
 	int m_slect;
 
-	Map* m_back;
-
+	//ƒvƒŒƒCƒ„[
 	KdTexture m_playerTex;
-	KdTexture m_playerShadowTex;
-	Player* m_player = nullptr;
+	Math::Vector2 m_playerPos;
+	Math::Matrix m_playerMat;
+	bool m_aliveFlg = false;
+	float m_playerAnime = 0;
+
+	SoundBase *m_buttonSelectionSE;
 };

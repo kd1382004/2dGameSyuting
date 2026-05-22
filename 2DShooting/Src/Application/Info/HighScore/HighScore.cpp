@@ -46,6 +46,7 @@ void HighScore::Init()
 	int hpHeelLv = 0;
 	int ATKUpLv = 0;
 	int FireArrowUpLv = 0;
+	int ScoreUpLv = 0;
 	int i = 0;
 	if (fopen_s(&fp, "Data/HighScore/Score/Score.csv", "r") == 0)
 	{
@@ -66,7 +67,8 @@ void HighScore::Init()
 			fscanf_s(fp, "%d,", &bounLv);
 			fscanf_s(fp, "%d,", &hpHeelLv);
 			fscanf_s(fp, "%d,", &ATKUpLv);
-			fscanf_s(fp, "%d", &FireArrowUpLv);
+			fscanf_s(fp, "%d,", &FireArrowUpLv);
+			fscanf_s(fp, "%d", &ScoreUpLv);
 
 			if (i < m_scoreSavemax)
 			{
@@ -81,6 +83,7 @@ void HighScore::Init()
 				nowScore.hpHeelLv = hpHeelLv;
 				nowScore.ATKUpLv = ATKUpLv;
 				nowScore.FireArrowUpLv = FireArrowUpLv;
+				nowScore.ScoreUpLv = ScoreUpLv;
 				m_scoreSave.push_back(nowScore);
 			}
 			else
@@ -101,16 +104,16 @@ void HighScore::Save()
 	FILE* fp;
 	if (fopen_s(&fp, "Data/HighScore/Score/Score.csv", "w") == 0)
 	{
-		fprintf(fp, "スコア,ステージクリア,敵,パワーアップ,3方向ショット,左右弾,貫通,バウンド,HP吸収,攻撃力上昇,炎の矢\n");
+		fprintf(fp, "スコア,ステージクリア,敵,パワーアップ,3方向ショット,左右弾,貫通,バウンド,HP吸収,攻撃力上昇,炎の矢,スコアアップ量\n");
 		for (int i = 0; i < m_scoreSavemax; i++)
 		{
-			fprintf(fp, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
+			fprintf(fp, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
 				m_scoreSave[i].score, m_scoreSave[i].clearNum,
 				m_scoreSave[i].enemyNum, m_scoreSave[i].powerUpNum,
 				m_scoreSave[i]._3wShotLv, m_scoreSave[i]._LRShotLv,
 				m_scoreSave[i].peneLv, m_scoreSave[i].bounLv,
 				m_scoreSave[i].hpHeelLv, m_scoreSave[i].ATKUpLv,
-				m_scoreSave[i].FireArrowUpLv
+				m_scoreSave[i].FireArrowUpLv,m_scoreSave[i].ScoreUpLv
 			);
 
 		}

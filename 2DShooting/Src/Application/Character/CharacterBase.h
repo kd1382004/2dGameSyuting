@@ -105,7 +105,7 @@ protected:
 	float HitDetection;
 
 	//HP
-	int m_HP = 0;
+	float m_HP = 0;
 
 	int m_MaxHP = 0;
 

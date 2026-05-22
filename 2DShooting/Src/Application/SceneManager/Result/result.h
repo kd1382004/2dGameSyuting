@@ -2,14 +2,14 @@
 #include"../SceneBase.h"
 
 class ButtonBase;
-class Map;
+class SoundBase;
 
 class Result :public SceneBase
 {
 public:
 
 	Result() {};
-	~Result() { Release(); }
+	~Result() override { Release(); }
 
 	// 初期設定
 	void Init()override;
@@ -22,15 +22,12 @@ public:
 
 private:
 
-	/////////
-	//背景//
-	////////
-	Map* m_back;
-
 	//プレイヤー
 	KdTexture m_playerTex;
 	Math::Vector2 m_playerPos;
 	Math::Matrix m_playerMat;
+	bool m_aliveFlg = false;
+	float m_playerAnime = 0;
 
 
 
@@ -42,11 +39,11 @@ private:
 	//////////////////////////
 	//それぞれの画像同士の差//
 	//////////////////////////
-	const float m_yPosGap = -100.0f;
+	const float m_yPosGap = -120.0f;
 
 	const float m_numXGap = 800;
 
-	const float m_numSiz = 4.5f;
+	const float m_numSiz =5.5f;
 
 	const int NumMax = 999999999;
 
@@ -77,7 +74,15 @@ private:
 	bool m_ScoreNumRand = true;//ランダムにするか
 	Math::Vector2 m_ScoreNumPos;
 
-	const float m_ScoreSiz = 1.5;
+	const float m_ScoreSiz = 1.1;
+
+	static const int m_ClearBonus = 1000;
+	bool  m_ClearBonusFlg = false;
+	bool  m_ClearBonusPushFlg = false;
+
+	KdTexture m_ClearBonusTex;
+	Math::Vector2 m_ClearBonusPos;
+	Math::Matrix m_ClearBonusMat;
 
 	//////////////////
 	//ステージクリア//
@@ -112,6 +117,8 @@ private:
 	bool m_PowerUpNumRand = true;//ランダムにするか
 	Math::Vector2 m_PowerUpNumPos;
 
+	Math::Matrix m_rodMat;
+	KdTexture m_rodTex;
 
 	// 解放
 	void Release()override;
@@ -126,8 +133,15 @@ private:
 	void Anime();
 	bool m_animeFlg = true;;
 	int m_animeCnt = 0;
-	int m_FlgChangeCnt = 60;
+	int m_FlgChangeCnt = 55;
 
 	//その桁の最大数を返す
 	int GetDigit(int num);
+	int m_digit = 0;
+
+
+	//サウンド
+	SoundBase* m_buttonSelectionSE;
+	SoundBase* m_drumRollSE;
+	SoundBase* m_resultBGM;
 };

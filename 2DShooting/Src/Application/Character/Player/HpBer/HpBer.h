@@ -14,10 +14,13 @@ public:
 
 	void SetHPPercent(float Percent);
 
-	//プレイヤー座標セッター
-	void SetPlayerPos(Math::Vector2 playerPos) { m_playerPos = playerPos; }
-
 	void MatConfirmed(float scllor);
+
+	void SetPlayerTex(KdTexture* tex) { m_playerTex = tex; }
+
+	void SetPlayerAlpha(float alpha) { m_playerAlpha = alpha; }
+
+	void SetPlayerRectangle(Math::Rectangle rec) { m_playerRec = rec; }
 private:
 
 	KdTexture m_tex;
@@ -34,13 +37,16 @@ private:
 	//最大HPに対する現在HPの割合
 	float m_HPPercent;
 
-	//プレイヤー座標
-	Math::Vector2 m_playerPos;
-
 	//HPBer
 	Math::Color m_HpBerColor = { 0,1,0,1 };
 	float m_alpha = 1.0f;
 	float m_alphaPus = 0.05f;
+
+
+	float m_playerAlpha = 1.0f;
+	Math::Matrix m_playerMat;
+	Math::Rectangle  m_playerRec;
+	KdTexture* m_playerTex;
 };
 
 

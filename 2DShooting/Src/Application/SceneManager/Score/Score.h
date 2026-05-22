@@ -4,13 +4,14 @@
 class ButtonBase;
 class Map;
 class Player;
+class SoundBase;
 
 class Score :public SceneBase
 {
 public:
 
 	Score() {};
-	~Score() { Release(); };
+	~Score()override { Release(); };
 
 	// 初期設定
 	void Init()override;
@@ -26,11 +27,12 @@ private:
 	// 解放
 	void Release()override;
 
-	Map* m_back;
-
+	//プレイヤー
 	KdTexture m_playerTex;
-	KdTexture m_playerShadowTex;
-	Player* m_player = nullptr;
+	Math::Vector2 m_playerPos;
+	Math::Matrix m_playerMat;
+	bool m_aliveFlg = false;
+	float m_playerAnime = 0;
 
 	static const int m_NoBackMax = 3;
 
@@ -99,6 +101,13 @@ private:
 	Math::Matrix m_FireArrowLVMat;
 	int m_FireArrow = 0;
 
+	KdTexture m_PowerUPScoreIconTex;
+	Math::Vector2 m_PowerUPScoreIconPos;
+	Math::Matrix m_PowerUPScoreIconMat;
+	Math::Vector2 m_PowerUPScoreLVPos;
+	Math::Matrix m_PowerUPScoreLVMat;
+	int m_PowerUPScore = 0;
+
 	//ボタン
 	std::shared_ptr<ButtonBase> m_button;
 	int m_slect;
@@ -128,6 +137,20 @@ private:
 	Math::Vector2 m_EnemyNumPos;
 
 
+
+	/////////
+	//SCORE//
+	/////////
+	KdTexture m_ScoreTex;
+	Math::Vector2 m_ScorePos;
+	Math::Matrix m_ScoreMat;
+	int m_ScoreNum;
+	Math::Vector2 m_ScoreNumPos;
+
 	const float m_yPosGap = -100.0f;
-	const float m_NumXGap = 500;
+	const float m_NumXGap = 550;
+
+
+	//音
+	SoundBase* m_buttonSelectionSE;
 };

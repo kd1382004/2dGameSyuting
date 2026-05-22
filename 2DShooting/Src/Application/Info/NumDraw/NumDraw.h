@@ -21,7 +21,8 @@ public:
 	//float alph...アルファ値
 	//bool Separator..3桁区入りを入れるかどうか
 	//float scroll...scroll値を入れる
-	void Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* color = &Math::Color(1, 1, 1, 1), float siz = 1, bool Separator = false, float scroll = 0);
+	//digit..表示させる桁数(-1の場合そのままの桁) 
+	void Drow(long Num, Aligned aligned, Math::Vector2 pos, Math::Color* color = &Math::Color(1, 1, 1, 1), float siz = 1, bool Separator = false, float scroll = 0, int digit = -1);
 
 private:
 

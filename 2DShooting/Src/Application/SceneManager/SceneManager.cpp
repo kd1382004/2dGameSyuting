@@ -3,6 +3,8 @@
 #include"Game/Game.h"
 #include"Result/result.h"
 #include"Score/Score.h"
+#include"../Map/Map.h"
+#include"../Sound/Titel/TitelBGM.h"
 
 SceneManager::~SceneManager()
 {
@@ -11,11 +13,20 @@ SceneManager::~SceneManager()
 		delete m_nowScene;
 		m_nowScene = nullptr;
 	}
+
+
+	m_titleBgm->Stop();
+	delete m_titleBgm;
 }
 
 void SceneManager::Init()
 {
+	MAPAPP.Init(0);
 	ChangeScene(TITLE);	
+
+	//‰¹
+	m_titleBgm = new TitelBGM();
+	m_titleBgm->Play();
 }
 
 void SceneManager::Draw2D()
@@ -66,9 +77,22 @@ void SceneManager::ChangeScene(SceneType type)
 		switch (type)
 		{
 		case TITLE:
+
+			if (m_nowSceneType == RESULT)
+			{
+				MAPAPP.Init(0);
+				m_titleBgm->Play();
+			}
+
 			m_nowScene = new Title();
 			break;
 		case GAME:
+			m_titleBgm->Stop();
+			if (m_nowSceneType == RESULT)
+			{
+				MAPAPP.Init(0);
+			}
+
 			m_nowScene = new Game();
 			break;
 		case RESULT:

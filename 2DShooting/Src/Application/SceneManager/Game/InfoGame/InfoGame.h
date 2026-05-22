@@ -13,8 +13,6 @@ public:
 	void Update(CharacterInfo* info, Player *player, int sc);
 	void Drow2D();
 
-
-	void SetPWUPNum(int num) { m_PWUPNum = num; }
 	void SetPlyerHpHeel(int num) { m_PlyerHpHeel = num; }
 private:
 
@@ -68,21 +66,6 @@ private:
 	int m_BoundNum = 0;
 
 
-	KdTexture m_ENTERTex;
-	Math::Vector2 m_ENTERTPos;
-	Math::Matrix m_ENTERTMat;
-	bool m_ENTERTexFlg = false;
-	float m_ENTERAlf = 1;
-	float m_ENTERAlfPush = 0.01;
-
-
-	KdTexture m_PWUPNumIconTex;
-	Math::Vector2 m_PWUPNumIconPos;
-	Math::Matrix m_PWUPNumIconMat;
-	Math::Vector2 m_PWUPNumLVPos;
-	Math::Matrix m_PWUPNumLVMat;
-	int m_PWUPNum = 0;
-
 	KdTexture m_ATKUPIconTex;
 	Math::Vector2 m_ATKUPIconPos;
 	Math::Matrix m_ATKUPIconMat;
@@ -103,6 +86,13 @@ private:
 	Math::Vector2 m_FireArrowLVPos;
 	Math::Matrix m_FireArrowLVMat;
 	int m_FireArrow = 0;
+
+	KdTexture m_PowerUPScoreIconTex;
+	Math::Vector2 m_PowerUPScoreIconPos;
+	Math::Matrix m_PowerUPScoreIconMat;
+	Math::Vector2 m_PowerUPScoreLVPos;
+	Math::Matrix m_PowerUPScoreLVMat;
+	int m_PowerUPScore = 0;
 
 	KdTexture m_scoreTex;
 	Math::Matrix m_scoreMat;

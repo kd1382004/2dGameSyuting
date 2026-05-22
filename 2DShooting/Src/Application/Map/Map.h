@@ -18,12 +18,11 @@ public:
 		Map3
 	};
 
-	Map();
 	~Map();
 
 
 	//マップデータまでのパス
-	void Init(MapType mapType);
+	void Init(int stageNum);
 
 	void Updata();
 
@@ -36,7 +35,7 @@ public:
 	//マップデートをリセット
 	void Reset();
 
-	void setOwner(Game* owner) { m_owner = owner; }
+	void setOwner(Game* owner);
 
 	float GetScroll() { return m_scroll; }
 
@@ -44,18 +43,21 @@ public:
 
 	Math::Vector2 SlimeSpawnPos();
 	Math::Vector2 SkeletonSpawnPos();
+	Math::Vector2 OrcSpawnPos();
 
-	int GetSlimeSpawnNum() { return m_conSlimeSawnPos.size() + m_SlimeSawnPos.size(); }
 	int GetConSlimeSpawnNum() { return m_conSlimeSawnPos.size(); }
 
-
-	int GetSkeletonSpawnNum() { return m_conSkeletonSawnPos.size() + m_SkeletonSawnPos.size(); }
 	int GetConSkeletonSpawnNum() { return m_conSkeletonSawnPos.size(); }
 
+	int GetConOrcSpawnNum() { return m_conOrcSawnPos.size(); }
+
 	void ResultUpdata(float scroll);
+
+
+	void SetWarpHallPos(Math::Vector2 pos);
 private:
 
-	void LodMapData(MapType mapType);
+	void LodMapData(int stageNum);
 
 	//マップ縦方高サイズ(固定)
 	static const int MapTopSiz = 10;
@@ -68,10 +70,6 @@ private:
 	bool MapVacancy(int satgeNum);//マップ空き率
 
 	void EnemySpawn(int satgeNum);
-
-	void LodMapData1();
-	void LodMapData2();
-	void LodMapData3();
 
 	//オブジェクトのポインター
 	std::vector<MapObject*> m_mapObj;
@@ -105,13 +103,23 @@ private:
 	//スライム確定スポーン位置
 	std::vector<Math::Vector2> m_conSlimeSawnPos;
 
-	//スライム出現可能位置
-	std::vector<Math::Vector2> m_SlimeSawnPos;
-
 	//スケルトン確定スポーン位置
 	std::vector<Math::Vector2> m_conSkeletonSawnPos;
 
-	//スケルトン出現可能位置
-	std::vector<Math::Vector2> m_SkeletonSawnPos;
+	//\オーク確定スポーン位置
+	std::vector<Math::Vector2> m_conOrcSawnPos;
 
+
+private:
+	Map();
+
+
+public:
+	static Map& GetInstance()
+	{
+		static Map instance;
+		return instance;
+	}
 };
+
+#define MAPAPP Map::GetInstance()

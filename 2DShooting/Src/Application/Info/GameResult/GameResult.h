@@ -29,6 +29,9 @@ public:
 
 	void SetplayerDefPos(Math::Vector2 Pos) { m_playerDefPos = Pos; }
 	Math::Vector2 GetplayerDefPos() { return m_playerDefPos; }
+
+	bool GetAliveFlg() { return m_aliveFlg; }
+	void SetAliveFlg(bool flg) { m_aliveFlg = flg; }
 private:
 
 
@@ -51,6 +54,8 @@ private:
 	//
 	float m_scroll = 0;
 	void Init() {};
+
+	bool m_aliveFlg = false;
 private:
 
 	GameResultInfo() { Init(); }

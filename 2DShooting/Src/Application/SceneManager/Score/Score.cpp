@@ -6,21 +6,19 @@
 #include"../../Info/NumDraw/NumDraw.h"
 #include"../../Map/Map.h"
 #include"../../Character/Player/Player.h"
+#include"../../Sound/Button/ButtonSelectionSE.h"
 
 void Score::Init()
 {
-	//”wŒi
-	m_back = new Map();
-	m_back->Init(Map::MapType::Map1);
-	m_back->Updata();
+	//‰¹
+	m_buttonSelectionSE = new ButtonSelectionSE();
 
-	m_player = new Player();
-	m_playerTex.Load("Tex/Character/Player/player.png");
-	m_playerShadowTex.Load("Tex/Character/Player/playerr-Shadow.png");
-	m_player->SetTex(&m_playerTex);
-	m_player->SetShadowTex(&m_playerShadowTex);
-	m_player->Init();
-	m_player->SetPos(m_back->PlayerSpawnPos());
+	//”wŒi
+	MAPAPP.Updata();
+
+	m_playerTex.Load("Tex/Character/Player/Soldier.png");
+	m_playerPos = MAPAPP.PlayerSpawnPos();
+	m_playerMat = Math::Matrix::CreateScale(3, 3, 0) * Math::Matrix::CreateTranslation(m_playerPos.x, m_playerPos.y, 0);
 
 	////////////////
 	//ƒ{ƒ^ƒ“
@@ -44,7 +42,7 @@ void Score::Init()
 
 	m_VLTex.Load("Tex/Game/GameInfo/LV.png");
 	m_3WShotIconTex.Load("Tex/PowerUpScreen/Powerup3WShot/Powerup3WShotIcon.png");
-	m_3WShotIconPos = { -100,0 };
+	m_3WShotIconPos = { -100,0 - 70 };
 	m_3WShotIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_3WShotIconPos.x, m_3WShotIconPos.y, 0);
 
 	m_3WShotLVPos = { m_3WShotIconPos.x + 35 * 2,m_3WShotIconPos.y - 5 };
@@ -52,7 +50,7 @@ void Score::Init()
 
 
 	m_LRShotIconTex.Load("Tex/PowerUpScreen/PowerupRLShot/PowerupRLShotIcon.png");
-	m_LRShotIconPos = { -100,-120 };
+	m_LRShotIconPos = { -100,-120 - 70 };
 	m_LRShotIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_LRShotIconPos.x, m_LRShotIconPos.y, 0);
 
 	m_LRShotLVPos = { m_LRShotIconPos.x + 35 * 2,m_LRShotIconPos.y - 5 };
@@ -60,14 +58,14 @@ void Score::Init()
 
 
 	m_PeneNumIconTex.Load("Tex/PowerUpScreen/PowerupPeneShot/PowerupPeneShotIcon.png");
-	m_PeneNumIconPos = { 100,0 };
+	m_PeneNumIconPos = { 100,0 - 70 };
 	m_PeneNumIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_PeneNumIconPos.x, m_PeneNumIconPos.y, 0);
 
 	m_PeneNumLVPos = { m_PeneNumIconPos.x + 35 * 2,m_PeneNumIconPos.y - 5 };
 	m_PeneNumLVMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_PeneNumLVPos.x, m_PeneNumLVPos.y, 0);
 
 	m_BoundNumIconTex.Load("Tex/PowerUpScreen/PowerupBound/PowerupBoundIcon.png");
-	m_BoundNumIconPos = { 100,-120 };
+	m_BoundNumIconPos = { 100,-120 - 70 };
 	m_BoundNumIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_BoundNumIconPos.x, m_BoundNumIconPos.y, 0);
 
 	m_BoundNumLVPos = { m_BoundNumIconPos.x + 35 * 2,m_BoundNumIconPos.y - 5 };
@@ -75,14 +73,14 @@ void Score::Init()
 
 
 	m_PlyerHpHeelIconTex.Load("Tex/PowerUpScreen/PlayerHeel/PlayerHeelIcon.png");
-	m_PlyerHpHeelIconPos = { 300,0 };
+	m_PlyerHpHeelIconPos = { 300,0 - 70 };
 	m_PlyerHpHeelIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_PlyerHpHeelIconPos.x, m_PlyerHpHeelIconPos.y, 0);
 
 	m_PlyerHpHeelLVPos = { m_PlyerHpHeelIconPos.x + 35 * 2,m_PlyerHpHeelIconPos.y - 5 };
 	m_PlyerHpHeelLVMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_PlyerHpHeelLVPos.x, m_PlyerHpHeelLVPos.y, 0);
 
 	m_ATKUPIconTex.Load("Tex/PowerUpScreen/ATKUP/ATKUPIcon.png");
-	m_ATKUPIconPos = { 300,-120 };
+	m_ATKUPIconPos = { 300,-120 - 70 };
 	m_ATKUPIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_ATKUPIconPos.x, m_ATKUPIconPos.y, 0);
 
 	m_ATKUPLVPos = { m_ATKUPIconPos.x + 35 * 2,m_ATKUPIconPos.y - 5 };
@@ -90,14 +88,22 @@ void Score::Init()
 
 
 	m_FireArrowIconTex.Load("Tex/PowerUpScreen/PowerupFireArrow/PowerupFireArrowIcon.png");
-	m_FireArrowIconPos = { 500,0 };
+	m_FireArrowIconPos = { 500,0 - 70 };
 	m_FireArrowIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_FireArrowIconPos.x, m_FireArrowIconPos.y, 0);
 
 	m_FireArrowLVPos = { m_FireArrowIconPos.x + 35 * 2,m_FireArrowIconPos.y - 5 };
 	m_FireArrowLVMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_FireArrowLVPos.x, m_FireArrowLVPos.y, 0);
 
+	m_PowerUPScoreIconTex.Load("Tex/PowerUpScreen/PowerUPScore/PowerUPScoreIcon.png");
+	m_PowerUPScoreIconPos = { 500,-120 - 70 };
+	m_PowerUPScoreIconMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_PowerUPScoreIconPos.x, m_PowerUPScoreIconPos.y, 0);
+
+	m_PowerUPScoreLVPos = { m_PowerUPScoreIconPos.x + 35 * 2,m_PowerUPScoreIconPos.y - 5 };
+	m_PowerUPScoreLVMat = Math::Matrix::CreateScale(2, 2, 0) * Math::Matrix::CreateTranslation(m_PowerUPScoreLVPos.x, m_PowerUPScoreLVPos.y, 0);
+
+
 	m_stageClearTex.Load("Tex/Result/StageClear.png");
-	m_stageClearPos = { 50,200 };
+	m_stageClearPos = { 50,200 - 70 };
 	m_stageClearMat = Math::Matrix::CreateTranslation(m_stageClearPos.x, m_stageClearPos.y, 0);
 	m_stageClearNumPos = { m_stageClearPos.x + m_NumXGap,m_stageClearPos.y, 0 };
 
@@ -106,6 +112,12 @@ void Score::Init()
 	m_EnemyPos = { m_stageClearPos.x,m_stageClearPos.y + m_yPosGap };
 	m_EnemyMat = Math::Matrix::CreateTranslation(m_EnemyPos.x, m_EnemyPos.y, 0);
 	m_EnemyNumPos = { m_EnemyPos.x + m_NumXGap,m_EnemyPos.y, 0 };
+
+
+	m_ScoreTex.Load("Tex/Result/Score.png");
+	m_ScorePos = { m_stageClearPos.x,m_stageClearPos.y - m_yPosGap };
+	m_ScoreMat = Math::Matrix::CreateScale(1.2, 1.2, 0) * Math::Matrix::CreateTranslation(m_ScorePos.x, m_ScorePos.y, 0);
+	m_ScoreNumPos = { m_ScorePos.x + m_NumXGap,m_ScorePos.y, 0 };
 }
 
 void Score::Update()
@@ -121,7 +133,8 @@ void Score::Update()
 		{
 			m_slect = 3;
 		}
-
+		m_buttonSelectionSE->Stop();
+		m_buttonSelectionSE->Play();
 	}
 
 	if (InfoKeyAPP.KeyPush(VK_UP, true))
@@ -132,7 +145,8 @@ void Score::Update()
 		{
 			m_slect = 0;
 		}
-
+		m_buttonSelectionSE->Stop();
+		m_buttonSelectionSE->Play();
 
 	}
 
@@ -149,9 +163,6 @@ void Score::Update()
 		m_alpha = 0.3;
 	}
 
-	m_player->AnimeRec();
-	m_player->MatConfirmed(0);
-
 	if (m_slect == 3)
 	{
 		m_button->SetSelectFlg(true);
@@ -164,11 +175,17 @@ void Score::Update()
 	{
 		m_button->SetSelectFlg(false);
 	}
+
+	m_playerAnime += 0.1;
+	if (m_playerAnime > 8)
+	{
+		m_playerAnime = 0;
+	}
 }
 
 void Score::Draw2D()
 {
-	m_back->Draw2D();
+	MAPAPP.Draw2D();
 
 
 	for (int i = 0; i < m_NoBackMax; i++)
@@ -177,8 +194,8 @@ void Score::Draw2D()
 		{
 			SHADER.m_spriteShader.SetMatrix(m_NoBackMat[i]);
 			SHADER.m_spriteShader.DrawTex(&m_NoBackTex, Math::Rectangle{ 0,0,327,100 }, m_alpha);
-			NumDrawAPP.Drow(i + 1, LAligned, Math::Vector2{ m_NoBackPos[i].x - 115,m_NoBackPos[i].y }, &Math::Color(1, 1, 1, m_alpha), 2.5);
-			NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).score, RAligned, Math::Vector2{ m_NoBackPos[i].x + 122,m_NoBackPos[i].y - 10 }, &Math::Color(1, 1, 1, m_alpha), 2, true);
+			NumDrawAPP.Drow(i + 1, LAligned, Math::Vector2{ m_NoBackPos[i].x - 115,m_NoBackPos[i].y }, &Math::Color(1, 1, 1, 1), 2.5);
+			NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).score, RAligned, Math::Vector2{ m_NoBackPos[i].x + 122,m_NoBackPos[i].y - 10 }, &Math::Color(1, 1, 1, 1), 2, true);
 			DrawScore(i);
 		}
 		else
@@ -188,11 +205,11 @@ void Score::Draw2D()
 			NumDrawAPP.Drow(i + 1, LAligned, Math::Vector2{ m_NoBackPos[i].x - 115,m_NoBackPos[i].y }, &Math::Color(1, 1, 1, 1), 2.5);
 			NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).score, RAligned, Math::Vector2{ m_NoBackPos[i].x + 122,m_NoBackPos[i].y - 10 }, &Math::Color(1, 1, 1, 1), 2, true);
 		}
-		if (m_slect == 3)
-		{
-			DrawScore(2);
-		}
+	}
 
+	if (m_slect == 3)
+	{
+		DrawScore(2);
 	}
 
 	//ƒ{ƒ^ƒ“
@@ -201,7 +218,9 @@ void Score::Draw2D()
 		m_button->Draw2D();
 	}
 
-	m_player->Draw2D();
+	Math::Rectangle m_rec = { 100 * (int)m_playerAnime,100 * 1,100,100 };
+	SHADER.m_spriteShader.SetMatrix(m_playerMat);
+	SHADER.m_spriteShader.DrawTex(&m_playerTex, m_rec);
 }
 
 void Score::Release()
@@ -217,11 +236,8 @@ void Score::Release()
 	m_FireArrowIconTex.Release();
 	m_stageClearTex.Release();
 	m_EnemyTex.Release();
-
-	if (m_back)
-	{
-		delete m_back;
-	}
+	m_ScoreTex.Release();
+	delete m_buttonSelectionSE;
 }
 
 void Score::DrawScore(int i)
@@ -281,15 +297,29 @@ void Score::DrawScore(int i)
 	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
 	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).FireArrowUpLv, LAligned, Math::Vector2{ m_FireArrowLVPos.x + 20 * 2,m_FireArrowLVPos.y }, &Math::Color{ 1,1,1,1 }, 2.5, false);
 
+	SHADER.m_spriteShader.SetMatrix(m_PowerUPScoreIconMat);
+	SHADER.m_spriteShader.DrawTex(&m_PowerUPScoreIconTex, Math::Rectangle{ 0,0,32,32 });
+
+	SHADER.m_spriteShader.SetMatrix(m_PowerUPScoreLVMat);
+	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
+	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).ScoreUpLv, LAligned, Math::Vector2{ m_PowerUPScoreLVPos.x + 20 * 2,m_PowerUPScoreLVPos.y }, &Math::Color{ 1,1,1,1 }, 2.5, false);
+
+
 	//stageClear
 	SHADER.m_spriteShader.SetMatrix(m_stageClearMat);
-	m_nameRec = { 0,0,416,60 };
+	m_nameRec = { 0,0,483,60 };
 	SHADER.m_spriteShader.DrawTex(&m_stageClearTex, m_nameRec);
 	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).clearNum, RAligned, m_stageClearNumPos, &Math::Color{ 1,1,1,1 }, 2.5, true);
 
 	//Enemy
 	SHADER.m_spriteShader.SetMatrix(m_EnemyMat);
-	m_nameRec = { 0,0,376,60 };
+	m_nameRec = { 0,0,394,60 };
 	SHADER.m_spriteShader.DrawTex(&m_EnemyTex, m_nameRec);
-	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).enemyNum, RAligned, m_EnemyNumPos, &Math::Color{1,1,1,1}, 2.5, true);
+	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).enemyNum, RAligned, m_EnemyNumPos, &Math::Color{ 1,1,1,1 }, 2.5, true);
+
+	//Score
+	SHADER.m_spriteShader.SetMatrix(m_ScoreMat);
+	m_nameRec = { 0,0,284,60 };
+	SHADER.m_spriteShader.DrawTex(&m_ScoreTex, m_nameRec);
+	NumDrawAPP.Drow(HighScoreAPP.GetScoreSave(i).score, RAligned, { m_ScoreNumPos.x,m_ScoreNumPos.y }, &Math::Color{ 1,1,1,1 }, 4, true);
 }

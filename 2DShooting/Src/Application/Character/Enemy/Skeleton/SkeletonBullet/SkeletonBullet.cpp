@@ -3,6 +3,9 @@
 
 void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info, BulletType type)
 {
+
+
+
 	m_enemuNum = -999;
 	m_buletPeneNum = Info->GetBuletPeneNum();
 	m_boundNum = Info->GetBoundNum();
@@ -14,6 +17,7 @@ void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info, Bul
 	m_aliveFlg = true;
 	m_rec = { 0,0,21,15 };
 	m_speed = 1.0f;
+	aliveTime += m_atk;
 
 	//角度から移動量を求める
 	m_move.x = cos(DirectX::XMConvertToRadians(deg)) * m_speed;
@@ -24,7 +28,18 @@ void SkeletonBullet::Init(Math::Vector2 pos, float deg, CharacterInfo* Info, Bul
 void SkeletonBullet::Update()
 {
 	if (!m_aliveFlg) { return; }
+	aliveTime--;
 
+
+	if (aliveTime < 100)
+	{
+		m_siz *= 0.9;
+	}
+
+	if (m_siz.x < 0.5)
+	{
+		m_aliveFlg = false;
+	}
 
 	//座標更新
 	m_pos += m_move;

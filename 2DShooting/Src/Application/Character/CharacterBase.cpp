@@ -6,6 +6,11 @@ void CharacterBase::HPDown(int dmg)
 	{
 		m_HPDownCoolTime = 0;
 		m_HP -= dmg;
+
+		if (m_HP <= 0)
+		{
+			m_aliveFlg = false;
+		}
 	}
 
 }

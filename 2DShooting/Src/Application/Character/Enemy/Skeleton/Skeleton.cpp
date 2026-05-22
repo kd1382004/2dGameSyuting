@@ -20,6 +20,14 @@ void Skeleton::Init()
 
 void Skeleton::Update()
 {
+	if (!m_drawFlg)
+	{
+		if (m_bullet.size() == 0 || m_enemyNum == 0)
+		{
+			m_deleteFlg = true;
+		}
+	}
+
 
 	if (m_aliveFlg)
 	{
@@ -51,7 +59,18 @@ void Skeleton::Update()
 
 	for (int i = 0; i < m_bullet.size(); i++)
 	{
-		m_bullet[i]->Update();
+
+		if (m_bullet[i]->GetAliveFlg())
+		{
+			m_bullet[i]->Update();
+		}
+		else
+		{
+			delete m_bullet[i];
+			m_bullet.erase(m_bullet.begin() + i);
+			i--;
+		}
+
 	}
 }
 
@@ -64,17 +83,26 @@ void Skeleton::Draw2D()
 			m_bullet[i]->Draw2D();
 		}
 
-
-		if (m_aliveFlg)
+		if (m_drawFlg)
 		{
-			for (int i = 0; i < m_praticle.size(); i++)
+			SHADER.m_spriteShader.SetMatrix(m_mat);
+			if (m_charaAlpha != 1)
 			{
-				m_praticle[i]->Draw();
+				SHADER.m_spriteShader.DrawColorTex(m_charaTex, m_rec, &Math::Color{ 1,0,0,m_charaAlpha });
+			}
+			else
+			{
+				SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
+			}
+
+			if (m_aliveFlg)
+			{
+				for (int i = 0; i < m_praticle.size(); i++)
+				{
+					m_praticle[i]->Draw();
+				}
 			}
 		}
-
-		SHADER.m_spriteShader.SetMatrix(m_mat);
-		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
 }
 
@@ -111,13 +139,19 @@ void Skeleton::SetStatus(int stage)
 		bound = stage / 5;
 	}
 
-	m_HP = 20 + HPUp;
+	m_HP = 5 + HPUp;
 
-	int atkLv = 0;
-	atkLv = stage * 0.8;
-
+	int atkLv = stage * 0.1;
 
 
+	int num;
+	std::random_device rand_dev{};
+	std::mt19937 rand_engine(rand_dev());
+	int siz = 100 - stage;
+	std::uniform_int_distribution<int> dist(60, 60 + siz);
+	num = dist(rand_engine);
+
+	m_shotIntervalMax = 1.0f * num;
 	m_info->SetBoundNum(bound);
 	m_info->SetATKLV(atkLv);
 }
@@ -253,7 +287,7 @@ void Skeleton::MODEDef()
 		m_anime = 0;
 		if (!m_aliveFlg)
 		{
-			m_deleteFlg = true;
+			m_drawFlg = false;
 		}
 	}
 

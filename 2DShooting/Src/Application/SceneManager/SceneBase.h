@@ -8,7 +8,7 @@ class SceneBase
 public:
 
 	SceneBase(){}
-	~SceneBase() {}
+	virtual ~SceneBase() {}
 
 	// ‰Šúİ’è
 	virtual void Init() = 0;

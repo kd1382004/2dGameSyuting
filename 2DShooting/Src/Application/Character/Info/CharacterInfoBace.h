@@ -28,7 +28,7 @@ public:
 	void SetATKLV(int atk) {
 		m_atkLV += atk;
 		if (m_atkLV > 99) { m_atkLV = 99; }
-		m_atk = m_atkLV * 10 + 10;
+		m_atk = m_atkLV * 5 + 10;
 	}//‘‚â‚·—Ê‚ğ“ü‚ê‚é
 protected:
 

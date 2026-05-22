@@ -5,8 +5,16 @@
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../Bullet/BulletBace.h"
 
+#include"../../Sound/Game/Player/Bow/BowSE.h"
+#include"../../Sound/Game/Player/Bow/FireSE.h"
+
 void Player::Init()
 {
+	//音
+	m_bowSE = new BowSE();
+	m_fireSE = new FireSE();
+
+
 	m_pos = { -300,0 };
 	m_speed = { 5.0,5.0 };
 	m_aliveFlg = true;
@@ -29,6 +37,7 @@ void Player::Init()
 
 	m_hpBer = new PlayerHpBer();
 	m_hpBer->Init();
+	m_hpBer->SetPlayerTex(m_charaTex);
 
 	m_info = new CharacterInfo();
 
@@ -39,6 +48,8 @@ void Player::Update()
 {
 
 	HPCoolTimeManager();
+
+	m_hpBer->SetPlayerAlpha(m_charaAlpha);
 
 	////////////
 	//移動処理//
@@ -58,7 +69,7 @@ void Player::Update()
 	//アニメーション
 	AnimeRec();
 
-
+	m_hpBer->SetPlayerRectangle(m_rec);
 }
 
 void Player::Draw2D()
@@ -92,20 +103,19 @@ void Player::MatConfirmed(float scroll)
 
 	if (m_hpBer)
 	{
-		m_hpBer->SetPlayerPos(m_pos);
-		m_hpBer->SetHPPercent((float)m_HP / m_MaxHP);
+		m_hpBer->SetHPPercent((float)m_HP / (float)m_MaxHP);
 		m_hpBer->MatConfirmed(scroll);
 	}
 
 	//行列合成
 	//行列作成
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
-	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
+	//m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
 	m_mat = m_scaleMat * m_rotationMat * m_transMat;
 
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
-	m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
+	//m_rotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_deg));
 	m_scaleMat = Math::Matrix::CreateScale(m_siz.x, m_siz.y, 0);
 	m_shadowMat = m_scaleMat * m_rotationMat * m_transMat;
 }
@@ -189,16 +199,16 @@ void Player::ReleseBuleet()
 	}
 }
 
-int Player::EnemyDehHeelAmount()
+float Player::EnemyDehHeelAmount()
 {
-	int heel;
+	float heel;
 
-	heel = m_enemyDehHeelLv * 0.1 * 53;
+	heel = m_enemyDehHeelLv * 0.1 + 0.5;
 
 	return heel;
 }
 
-void Player::HPHeel(int heel)
+void Player::HPHeel(float heel)
 {
 	m_HP += heel;
 
@@ -247,6 +257,9 @@ void Player::Release()
 	{
 		delete m_info;
 	}
+
+	delete m_bowSE;
+	delete m_fireSE;
 }
 
 void Player::Move()
@@ -261,7 +274,7 @@ void Player::Move()
 		m_animeMode = MoveMode;
 		if (m_siz.y < 0)
 		{
-			m_siz.y *= -1;
+			//m_siz.y *= -1;
 		}
 	}
 
@@ -272,7 +285,7 @@ void Player::Move()
 		m_animeMode = MoveMode;
 		if (m_siz.y > 0)
 		{
-			m_siz.y *= -1;
+			//m_siz.y *= -1;
 		}
 	}
 
@@ -281,9 +294,9 @@ void Player::Move()
 	{
 		m_move.x++;
 		m_animeMode = MoveMode;
-		if (m_siz.y < 0)
+		if (m_siz.x < 0)
 		{
-			m_siz.y *= -1;
+			m_siz.x *= -1;
 		}
 	}
 
@@ -291,13 +304,13 @@ void Player::Move()
 	{
 		m_move.x--;
 		m_animeMode = MoveMode;
-		if (m_siz.y > 0)
+		if (m_siz.x > 0)
 		{
-			m_siz.y *= -1;
+			m_siz.x *= -1;
 		}
 	}
 
-	if (m_move.x != 0 || m_move.y != 0)
+	/*if (m_move.x != 0 || m_move.y != 0)
 	{
 		Math::Vector2 FuturePos = m_pos + m_move;
 		float moveX = FuturePos.x - m_pos.x;
@@ -309,7 +322,7 @@ void Player::Move()
 		{
 			m_deg += 360;
 		}
-	}
+	}*/
 
 	m_move.Normalize();
 	m_move *= m_speed;
@@ -337,11 +350,24 @@ void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 	int shotNum = 0;
 	BulletType bulletType = BulletType::NORMAL;
 
+
+	if (m_siz.x < 0)
+	{
+		m_deg = 180;
+	}
+	else
+	{
+		m_deg = 0;
+	}
+
 	if (m_fireArrowLv != 0)
 	{
 		bulletType = BulletType::FIRE;
+		m_fireSE->Stop();
+		m_fireSE->Play();
 	}
 
+	m_bowSE->Play();
 
 	m_bullet.push_back(new PlayerBullet);
 	m_bullet.back()->Init(m_pos, m_deg, m_info, bulletType);
@@ -370,7 +396,7 @@ void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 			m_bullet.push_back(new PlayerBullet);
 			m_bullet.back()->Init(m_pos, deg, m_info, bulletType);
 			m_bullet.back()->SetTex(&m_bulletTex);
-	
+
 			deg += 180;
 
 

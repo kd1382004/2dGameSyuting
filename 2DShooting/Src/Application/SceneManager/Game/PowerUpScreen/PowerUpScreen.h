@@ -3,6 +3,7 @@
 class PowerUpBase;
 class CharacterInfo;
 class Game;
+class SoundBase;
 
 class PowerUpScreen
 {
@@ -32,4 +33,7 @@ private:
 	Math::Matrix m_selectMat;
 
 	int m_selectNum = 0;
+
+	SoundBase* m_buttonSelectionSE;
+	SoundBase* m_powerUpSE;
 };

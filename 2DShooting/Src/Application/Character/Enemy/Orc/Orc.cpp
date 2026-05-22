@@ -15,6 +15,7 @@ void Orc::Init()
 
 	m_speed = { 0.5f,0.5f };
 	m_siz.x *= -1;
+	m_rec = { 0,200 ,100,100 };
 }
 
 void Orc::Update()
@@ -55,6 +56,16 @@ void Orc::Draw2D()
 {
 	if (!m_deleteFlg)
 	{
+		SHADER.m_spriteShader.SetMatrix(m_mat);
+		if (m_charaAlpha != 1)
+		{
+			SHADER.m_spriteShader.DrawColorTex(m_charaTex, m_rec, &Math::Color{ 1,0,0,m_charaAlpha });
+		}
+		else
+		{
+			SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
+		}
+	
 		if (m_aliveFlg)
 		{
 			for (int i = 0; i < m_praticle.size(); i++)
@@ -63,9 +74,6 @@ void Orc::Draw2D()
 			}
 		}
 
-
-		SHADER.m_spriteShader.SetMatrix(m_mat);
-		SHADER.m_spriteShader.DrawTex(m_charaTex, m_rec, m_charaAlpha);
 	}
 }
 
@@ -87,13 +95,21 @@ void Orc::SetStatus(int stage)
 	int HPUp = 0;
 	if (stage != 0)
 	{
-		HPUp = stage / 3 * 20;
+		HPUp = stage / 2 * 10;
 	}
 
+	int num;
+	std::random_device rand_dev{};
+	std::mt19937 rand_engine(rand_dev());
+	int siz = 100 - stage;
+	std::uniform_int_distribution<int> dist(60, 60 + siz);
+	num = dist(rand_engine);
 
-	m_HP = 40 + HPUp;
+	m_ATKWaitMax = 1.0f * num;
 
-	int atkLv = stage * 0.5;
+	m_HP = 10 + HPUp;
+
+	int atkLv = stage * 0.1;
 	m_info->SetATKLV(atkLv);
 }
 

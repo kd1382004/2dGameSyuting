@@ -31,4 +31,6 @@ public:
 	void MapHit(Math::Vector2 v1)override;
 
 
+private:
+	int aliveTime = 500;
 };

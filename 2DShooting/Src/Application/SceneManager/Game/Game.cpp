@@ -15,10 +15,14 @@
 #include"InfoGame/InfoGame.h"
 #include "../../Info/GameResult/GameResult.h"
 #include"../../Info/HighScore/HighScore.h"
-
+#include"../../Sound/Game/GameBGM.h"
 
 void Game::Init()
 {
+	//サウンド
+	m_gameeBgm = new GameBGM();
+	m_gameeBgm->Play();
+
 	m_stageNum = 0;
 	m_DEF = false;
 	//プレイヤー初期化
@@ -61,7 +65,15 @@ void Game::Update()
 
 	if (m_nextStageAnimeFlg)
 	{
-		NextStagenimeUpdate();
+		if (m_stageClearNum < m_stageMax)
+		{
+			NextStagenimeUpdate();
+		}
+		else
+		{
+			GeameClearUpdata();
+		}
+
 		return;
 	}
 
@@ -75,7 +87,10 @@ void Game::Update()
 	{
 		if (m_defAnime)
 		{
-			m_defAnime->Update(this);
+			if (m_player)
+			{
+				m_defAnime->Update(this, m_player->GetAliveFlg());
+			}
 		}
 
 		return;
@@ -105,6 +120,7 @@ void Game::Update()
 		//////
 		//敵//
 		//////
+		int enemyNum = 0;
 		for (int i = 0; i < m_enemy.size(); i++)
 		{
 			if (m_enemy[i])
@@ -122,9 +138,20 @@ void Game::Update()
 				//敵　更新//
 				////////////
 				m_enemy[i]->Update();
+
+				if (m_enemy[i]->GetAliveFlg())
+				{
+					enemyNum++;
+				}
 			}
 		}
-
+		for (int i = 0; i < m_enemy.size(); i++)
+		{
+			if (m_enemy[i])
+			{
+				m_enemy[i]->SetEnemyNum(enemyNum);
+			}
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////
@@ -224,27 +251,27 @@ void Game::Update()
 			}
 		}
 
-		if (m_map)
+
+		MAPAPP.MapHit(m_player);
+		for (int i = 0; i < m_enemy.size(); i++)
 		{
-			m_map->MapHit(m_player);
-			for (int i = 0; i < m_enemy.size(); i++)
+			MAPAPP.MapHit(m_enemy[i]);
+			if (m_enemy[i]->GetBulletNum() > 0)
 			{
-				m_map->MapHit(m_enemy[i]);
-				if (m_enemy[i]->GetBulletNum() > 0)
+				for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
 				{
-					for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
-					{
-						m_map->MapHit(m_enemy[i]->GetBullet(j));
-					}
+					MAPAPP.MapHit(m_enemy[i]->GetBullet(j));
 				}
-
 			}
 
-			for (int j = 0; j < m_player->GetBulletNum(); j++)
-			{
-				m_map->MapHit(m_player->GetBullet(j));
-			}
 		}
+
+		for (int j = 0; j < m_player->GetBulletNum(); j++)
+		{
+			MAPAPP.MapHit(m_player->GetBullet(j));
+		}
+
+
 
 
 	}
@@ -255,33 +282,31 @@ void Game::Update()
 
 	//////////////////////////////////////////////////////////////////////////////
 	//マップ更新
-	if (m_map)
-	{
-		m_map->Updata();
-	}
+	MAPAPP.Updata();
+
 
 	//////////////////////////////////////////////////////////////////////////////
 
 	if (m_player)
 	{
-		m_player->MatConfirmed(m_map->GetScroll());
+		m_player->MatConfirmed(MAPAPP.GetScroll());
 	}
 
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
-		m_enemy[i]->MatConfirmed(m_map->GetScroll());
+		m_enemy[i]->MatConfirmed(MAPAPP.GetScroll());
 	}
 
 
 
 	//////////////////////////////////////////////////////////////////////////////
 	//削除処理
-
 	//敵
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
 		if (m_enemy[i]->GetDeleteFlg())
 		{
+			m_EnemydefPos = m_enemy[i]->GetPos();
 			ScorePush(m_stageNum);
 			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
@@ -306,38 +331,30 @@ void Game::Update()
 		m_stageClearFlg = true;
 		m_stageClearNum++;
 		m_powerUpScreenNum++;
+		MAPAPP.SetWarpHallPos(m_EnemydefPos);
 	}
 
 
 	//強化が可能なら
 	if (!m_powerUpScreenFlg && m_powerUpScreenNum > 0)
 	{
-		if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
-		{
-			m_powerUpScreenFlg = true;
-			m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo(),this);
-			m_powerUpScreenNum--;
-			m_powerUpNum++;
-		}
+		m_powerUpScreenFlg = true;
+		m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo(), this);
+		m_powerUpScreenNum--;
+		m_powerUpNum++;
 	}
 
 
 	if (m_player)
 	{
-		//デバック/////////////
-		if (playerNOHit)
-		{
-			m_player->HPHeel(1000);
-		}
-		///////////////////////
-
-		if (m_player->GetHP() <= 0)
+		if  (!m_player->GetAliveFlg())
 		{
 			m_DEF = true;
 			m_defAnime = new DefAnime();
 			m_defAnime->Init();
-			GameResultInfoAPP.SetScroll(m_map->GetScroll());
+			GameResultInfoAPP.SetScroll(MAPAPP.GetScroll());
 			GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
+			m_gameeBgm->Stop();
 		}
 	}
 
@@ -345,7 +362,6 @@ void Game::Update()
 	if (m_infoGame)
 	{
 		m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo(), m_player, m_score);
-		m_infoGame->SetPWUPNum(m_powerUpScreenNum);
 		m_infoGame->SetPlyerHpHeel(m_player->GetEnemyDehHeelLv());
 	}
 
@@ -367,32 +383,28 @@ void Game::Update()
 		m_powerUpScreenNum++;
 	}
 
-	if (InfoKeyAPP.KeyPush('W', true, true))
-	{
-		if (playerNOHit)
-		{
-			playerNOHit = false;
-		}
-		else
-		{
-			playerNOHit = true;
-		}
-	}
-
-
 
 	if (InfoKeyAPP.KeyPush('E', true, true))
 	{
 		m_DEF = true;
 		m_defAnime = new DefAnime();
 		m_defAnime->Init();
-		GameResultInfoAPP.SetScroll(m_map->GetScroll());
+		GameResultInfoAPP.SetScroll(MAPAPP.GetScroll());
 		GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
+		m_gameeBgm->Stop();
 	}
 
-	if (InfoKeyAPP.KeyPush('R', true, true))
+	if (InfoKeyAPP.KeyPush('R'))
 	{
 		m_nextStageAnimeFlg = true;
+		for (int i = 0; i < m_enemy.size(); i++)
+		{
+			delete m_enemy[i];
+			m_enemy.erase(m_enemy.begin() + i);
+			i--;
+			m_EnemyDeath++;
+		}
+		m_stageClearNum++;
 	}
 
 	///////////////////////////////////////////////////////////////
@@ -414,7 +426,7 @@ void Game::Draw2D()
 
 
 	//マップ描画
-	m_map->Draw2D();
+	MAPAPP.Draw2D();
 
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
@@ -424,16 +436,17 @@ void Game::Draw2D()
 		}
 	}
 
+	if (m_infoGame)
+	{
+		m_infoGame->Drow2D();
+	}
 
 	if (m_player)
 	{
 		m_player->Draw2D();
 	}
 
-	if (m_infoGame)
-	{
-		m_infoGame->Drow2D();
-	}
+	
 
 	if (m_powerUpScreenFlg)
 	{
@@ -476,11 +489,20 @@ Math::Vector2 Game::GetPlayerPos()
 
 void Game::NextScene()
 {
+
+	if (m_player->GetAliveFlg())
+	{
+		m_score += 1000;
+	}
+
+
 	HighScoreAPP.nowScre.score = m_score;
+
 	HighScoreAPP.nowScre.clearNum = m_stageClearNum;
 	HighScoreAPP.nowScre.enemyNum = m_EnemyDeath;
 	HighScoreAPP.nowScre.powerUpNum = m_powerUpNum;
 	HighScoreAPP.nowScre.FireArrowUpLv = m_player->GetFireArrow();
+	HighScoreAPP.nowScre.ScoreUpLv = m_player->GetScoreUpLV();
 	if (m_player->GetCharaInfo()->Get3WShotFlg())
 	{
 		HighScoreAPP.nowScre._3wShotLv = 1;
@@ -510,7 +532,10 @@ void Game::NextScene()
 	GameResultInfoAPP.SetScore(m_score);
 	GameResultInfoAPP.SetmStageClearNum(m_stageClearNum);
 	GameResultInfoAPP.SetPowerUpNum(m_powerUpNum);
+	GameResultInfoAPP.SetAliveFlg(m_player->GetAliveFlg());
+	GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
 	m_owner->SetNextSceneType(RESULT);
+	MAPAPP.setOwner(nullptr);
 }
 
 void Game::Release()
@@ -539,16 +564,13 @@ void Game::PtrRelease()
 		delete m_player;
 		m_playerTex.Release();
 		m_playerShadowTex.Release();
+		m_player = nullptr;
 	}
 
 	if (m_charaHit)
 	{
 		delete m_charaHit;
-	}
-
-	if (m_map)
-	{
-		delete m_map;
+		m_charaHit = nullptr;
 	}
 
 	m_nextStageTex.Release();
@@ -556,7 +578,11 @@ void Game::PtrRelease()
 	if (m_defAnime)
 	{
 		delete m_defAnime;
+		m_defAnime = nullptr;
 	}
+
+	m_gameeBgm->Stop();
+	delete m_gameeBgm;
 }
 
 void Game::StageStartAnimeUpdate()
@@ -583,78 +609,83 @@ void Game::StageStartAnimeDraw2D()
 void Game::InitStage(int StageNum)
 {
 	//マップ
-	if (m_map)
+
+	if (StageNum != 0)
 	{
-		delete m_map;
+		MAPAPP.Init(StageNum);
 	}
 
-	m_map = new Map();
-	m_map->setOwner(this);
-	m_map->Init((Map::MapType)(StageNum % 3));
-	GameResultInfoAPP.SetMapNum((StageNum % 3));
+	MAPAPP.setOwner(this);
+
+	GameResultInfoAPP.SetMapNum((StageNum));
 	m_stageClearFlg = false;
+
 	if (m_player)
 	{
-		m_player->SetPos(m_map->PlayerSpawnPos());
-	}
-	m_map->Updata();
-
-	int slimeNum = m_map->GetConSlimeSpawnNum() + m_stageNum;
-
-	if (slimeNum > m_map->GetSlimeSpawnNum())
-	{
-		slimeNum = m_map->GetSlimeSpawnNum();
+		m_player->SetPos(MAPAPP.PlayerSpawnPos());
 	}
 
-	slimeNum = 0;
+	MAPAPP.Updata();
+
+	int slimeNum = MAPAPP.GetConSlimeSpawnNum();
+
 	for (int i = 0; i < slimeNum; i++)
 	{
 		m_enemy.push_back(new Slime());
 		m_enemy.back()->SetTex(&m_slimeTex);
 		m_enemy.back()->Init();
-		m_enemy.back()->SetPos(m_map->SlimeSpawnPos());
+		m_enemy.back()->SetPos(MAPAPP.SlimeSpawnPos());
 	}
 
 
-	int skeletonNum = m_map->GetConSkeletonSpawnNum() + m_stageNum;
+	int skeletonNum = MAPAPP.GetConSkeletonSpawnNum();
 
-	if (skeletonNum > m_map->GetSkeletonSpawnNum())
-	{
-		skeletonNum = m_map->GetSkeletonSpawnNum();
-	}
 
-	skeletonNum = 0;
 	for (int i = 0; i < skeletonNum; i++)
 	{
 		m_enemy.push_back(new Skeleton());
 		m_enemy.back()->SetTex(&m_skeletonTex);
 		m_enemy.back()->Init();
-		m_enemy.back()->SetPos(m_map->SkeletonSpawnPos());
+		m_enemy.back()->SetPos(MAPAPP.SkeletonSpawnPos());
 	}
 
-	for (int i = 0; i < 0; i++)
+	int orcNum = MAPAPP.GetConOrcSpawnNum();
+
+	for (int i = 0; i < orcNum; i++)
 	{
 		m_enemy.push_back(new Orc());
 		m_enemy.back()->SetTex(&m_orcTex);
 		m_enemy.back()->Init();
-		m_enemy.back()->SetPos(Math::Vector2{ 0,0 });
+		m_enemy.back()->SetPos(MAPAPP.OrcSpawnPos());
 	}
 
 	if (m_player)
 	{
 		m_player->ReleseBuleet();
-		m_player->MatConfirmed(m_map->GetScroll());
+		m_player->MatConfirmed(MAPAPP.GetScroll());
 	}
 
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
-		m_enemy[i]->MatConfirmed(m_map->GetScroll());
+		m_enemy[i]->MatConfirmed(MAPAPP.GetScroll());
 		m_enemy[i]->SetStatus(StageNum);
 	}
 
 
 	m_stageStartAnimeCnt = 4;
 	m_stageStartAnimeFlg = true;
+}
+
+void Game::GeameClearUpdata()
+{
+	NextScene();
+}
+
+void Game::GeameClearDraw2D()
+{
+
+
+
 }
 
 void Game::NextStagenimeUpdate()
@@ -686,6 +717,6 @@ void Game::NextStagenimeDraw2D()
 void Game::ScorePush(int lv)
 {
 	int scorePush;
-	scorePush = 100 + 10 * lv + 5 * m_powerUpScreenNum;
+	scorePush = 100 + 10 * lv + 5 * m_player->GetScoreUpLV();
 	m_score += scorePush;
 }

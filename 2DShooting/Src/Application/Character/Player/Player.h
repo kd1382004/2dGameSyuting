@@ -4,6 +4,7 @@
 class BulletBace;
 class  PlayerHpBer;
 class  CharacterInfo;
+class  SoundBase;
 
 class Player : public CharacterBase
 {
@@ -48,12 +49,15 @@ public:
 	int GetEnemyDehHeelLv() { return m_enemyDehHeelLv; }
 	void SetEnemyDehHeelLv(int lv) { m_enemyDehHeelLv += lv; if (m_enemyDehHeelLv > 99) { m_enemyDehHeelLv = 99; }}
 
-	int EnemyDehHeelAmount();
+	float EnemyDehHeelAmount();
 
-	void HPHeel(int heel);
+	void HPHeel(float heel);
 
 	void SetFireArrow(int lv) { m_fireArrowLv += lv; if (m_fireArrowLv > 99) { m_fireArrowLv = 99; } }
 	int GetFireArrow() { return m_fireArrowLv; }
+
+	void SetScoreUpLV(int lv) { m_scoreUpLV += lv; if (m_scoreUpLV > 99) { m_scoreUpLV = 99; } }
+	int GetScoreUpLV() { return m_scoreUpLV; }
 private:
 
 	KdTexture* m_shadowTex;
@@ -110,5 +114,12 @@ private:
 
 	//‰Š‚Ì–î
 	int m_fireArrowLv = 0;
+
+	//scoreƒAƒbƒv—Ê
+	int m_scoreUpLV = 0;
+
+	//‰¹
+	SoundBase* m_bowSE;
+	SoundBase* m_fireSE;
 };
 

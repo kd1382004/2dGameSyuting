@@ -5,15 +5,15 @@
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../../Map/Map.h"
 #include"../../Character/Player/Player.h"
+#include"../../Sound/Button/ButtonSelectionSE.h"
 
 void Title::Init()
 {
-
+	m_buttonSelectionSE = new ButtonSelectionSE();
 
 	//”wŒi
-	m_back = new Map();
-	m_back->Init(Map::MapType::Map1);
-	m_back->Updata();
+	MAPAPP.Updata();
+	MAPAPP.setOwner(nullptr);
 
 	//ƒQ[ƒ€–¼
 	m_titleTex.Load("Tex/Title/Title.png");
@@ -21,13 +21,10 @@ void Title::Init()
 	m_titleMat = Math::Matrix::CreateTranslation(m_titlePos.x, m_titlePos.y, 0);
 
 
-	m_player = new Player();
-	m_playerTex.Load("Tex/Character/Player/player.png");
-	m_playerShadowTex.Load("Tex/Character/Player/playerr-Shadow.png");
-	m_player->SetTex(&m_playerTex);
-	m_player->SetShadowTex(&m_playerShadowTex);
-	m_player->Init();
-	m_player->SetPos(m_back->PlayerSpawnPos());
+	m_playerTex.Load("Tex/Character/Player/Soldier.png");
+	m_playerPos = MAPAPP.PlayerSpawnPos();
+	m_playerMat = Math::Matrix::CreateScale(3, 3, 0) * Math::Matrix::CreateTranslation(m_playerPos.x, m_playerPos.y, 0);
+
 
 	////////////////
 	//ƒ{ƒ^ƒ“
@@ -62,6 +59,9 @@ void Title::Update()
 		{
 			m_slect = 0;
 		}
+		m_buttonSelectionSE->Stop();
+		m_buttonSelectionSE->Play();
+
 	}
 
 	if (InfoKeyAPP.KeyPush(VK_RIGHT, true))
@@ -72,6 +72,8 @@ void Title::Update()
 		{
 			m_slect = m_button.size() - 1;
 		}
+		m_buttonSelectionSE->Stop();
+		m_buttonSelectionSE->Play();
 	}
 
 
@@ -95,19 +97,25 @@ void Title::Update()
 	}
 
 
-	m_player->AnimeRec();
-	m_player->MatConfirmed(0);
+	m_playerAnime += 0.1;
+	if (m_playerAnime > 8)
+	{
+		m_playerAnime = 0;
+	}
 }
 
 void Title::Draw2D()
 {
-	m_back->Draw2D();
+	MAPAPP.Draw2D();
 
 	SHADER.m_spriteShader.SetMatrix(m_titleMat);
 	SHADER.m_spriteShader.DrawTex(&m_titleTex, Math::Rectangle{ 0,0,600,260 });
 
 
-	m_player->Draw2D();
+	Math::Rectangle m_rec = { 100 * (int)m_playerAnime,100 * 1,100,100 };
+	SHADER.m_spriteShader.SetMatrix(m_playerMat);
+	SHADER.m_spriteShader.DrawTex(&m_playerTex, m_rec);
+
 
 	//ƒ{ƒ^ƒ“
 	for (int i = 0; i < m_button.size(); i++)
@@ -123,8 +131,7 @@ void Title::Release()
 {
 	m_titleTex.Release();
 
-	if (m_back)
-	{
-		delete m_back;
-	}
+	delete m_buttonSelectionSE;
+
+	m_playerTex.Release();
 }

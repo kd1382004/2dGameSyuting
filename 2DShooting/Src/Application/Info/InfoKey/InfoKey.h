@@ -48,7 +48,7 @@ private:
 	//エンターキー
 	Key KeyEnter;
 
-	static const int m_pushSMax = 10;
+	static const int m_pushSMax = 20;
 
 
 private:

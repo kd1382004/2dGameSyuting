@@ -7,37 +7,41 @@ void  WarpObject::Init(Math::Vector2 pos)
 	m_animeMax = 5;
 	m_rec = { 64 * (int)m_animeC,0,64,50 };
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-	m_R = 0;
 }
 
 void WarpObject::Updata(float scroll)
 {
-	m_mat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_R)) * Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 
-	if (m_owner)
+	if (m_owner != nullptr)
 	{
 		if (!m_owner->GetStageClearFlg())
 		{
 			return;
 		}
 
-		m_R += 5;
+		m_siz -= m_sizPush;
 
-		if (m_R >= 360)
+		if (m_siz < 0.3)
 		{
-			m_R = 0;
+			m_siz = 0.3;
+			m_sizPush *= -1;
 		}
 
-
+		if (m_siz > 1)
+		{
+			m_siz = 1;
+			m_sizPush *= -1;
+		}
 
 		Math::Vector2 v = m_pos - m_owner->GetPlayerPos();
-		if (v.Length() < 64)
+		if (v.Length() < 32)
 		{
 			m_owner->SetNextStageFlg(true);
 		}
 	}
 
 
+	m_mat = Math::Matrix::CreateScale(m_siz, m_siz, 0) * Math::Matrix::CreateTranslation(m_pos.x - scroll, m_pos.y, 0);
 
 }
 

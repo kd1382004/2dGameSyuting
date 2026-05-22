@@ -65,7 +65,7 @@ public:
 	virtual void MapHit(Math::Vector2 v1) {};
 
 
-
+	Math::Vector2 GetMove() { return m_move; }
 	BulletType GetBulletType() { return  m_bullettype; }
 protected:
 	KdTexture* m_bulletTex = nullptr;

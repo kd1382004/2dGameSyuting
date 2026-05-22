@@ -7,14 +7,21 @@
 #include"ATKUP/ATKUP.h"
 #include"PlayerHeel/PlayerHeel.h"
 #include"PowerupFireArrow/PowerupFireArrow.h"
+#include"PowerUPScore/PowerUPScore.h"
 
 #include"../../../Character/Info/CharacterInfoBace.h"
 #include"../../../Info/InfoKey/InfoKey.h"
 #include"../Game.h"
 
+#include"../../../Sound/Button/ButtonSelectionSE.h"
+#include"../../../Sound/Game/PowerUp/PowerUpSE.h"
 
 PowerUpScreen::PowerUpScreen()
 {
+	//‰¹
+	m_buttonSelectionSE = new ButtonSelectionSE();
+	m_powerUpSE = new PowerUpSE();
+
 	m_backTex.Load("Tex/PowerUpScreen/PowerUpScreen.png");
 	m_selectTex.Load("Tex/PowerUpScreen/Select.png");
 	m_backMat = Math::Matrix::CreateTranslation(0, 0, 0);
@@ -30,14 +37,14 @@ PowerUpScreen::PowerUpScreen()
 void PowerUpScreen::Init(CharacterInfo* playerInfo, Game* game)
 {
 
-		if (m_powerUPSlect.size()>0)
-		{
-			m_powerUPSlect.clear();
+	if (m_powerUPSlect.size() > 0)
+	{
+		m_powerUPSlect.clear();
 
-		}
-	
+	}
 
-	
+
+
 	if (!playerInfo->Get3WShotFlg())
 	{
 		std::shared_ptr<Powerup3WShot> p3WS;
@@ -71,7 +78,7 @@ void PowerUpScreen::Init(CharacterInfo* playerInfo, Game* game)
 	std::shared_ptr<ATKUP> pATKUP;
 	pATKUP = std::make_shared<ATKUP>();
 	m_powerUPSlect.push_back(pATKUP);
-	
+
 
 	std::shared_ptr<PlayerHeel> pPHH;
 	pPHH = std::make_shared<PlayerHeel>();
@@ -81,7 +88,7 @@ void PowerUpScreen::Init(CharacterInfo* playerInfo, Game* game)
 	pPFireA = std::make_shared<PowerupFireArrow>();
 	m_powerUPSlect.push_back(pPFireA);
 
-	for (int i = 0; i < m_powerUpMax; i++)
+	for (int i = 0; i < m_powerUpMax - 1; i++)
 	{
 		int num;
 
@@ -97,6 +104,12 @@ void PowerUpScreen::Init(CharacterInfo* playerInfo, Game* game)
 
 		m_powerUPSlect.erase(m_powerUPSlect.begin() + num);
 	}
+
+
+	std::shared_ptr<PowerUPScore> pPSC;
+	pPSC = std::make_shared<PowerUPScore>();
+	m_powerUp[m_powerUpMax - 1] = pPSC;
+	m_powerUp[m_powerUpMax - 1]->Init(m_powerUpPos[m_powerUpMax - 1], playerInfo, game->GetPlayer());
 }
 
 void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
@@ -108,6 +121,8 @@ void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
 		{
 			m_selectNum = 0;
 		}
+		m_buttonSelectionSE->Stop();
+		m_buttonSelectionSE->Play();
 	}
 
 
@@ -118,6 +133,8 @@ void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
 		{
 			m_selectNum = m_powerUpMax - 1;
 		}
+		m_buttonSelectionSE->Stop();
+		m_buttonSelectionSE->Play();
 	}
 
 	for (int i = 0; i < m_powerUpMax; i++)
@@ -137,11 +154,12 @@ void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
 						m_powerUp[i]->Update(game->GetPlayer());
 						m_powerUp[i]->SetSelectFlg(true);
 						game->PowerUpScreenFlg();
+						m_powerUpSE->Play();
 					}
 
 				}
 			}
-			
+
 		}
 		else
 		{
@@ -174,4 +192,6 @@ void PowerUpScreen::Release()
 {
 	m_selectTex.Release();
 	m_backTex.Release();
+	delete m_buttonSelectionSE;
+	delete m_powerUpSE;
 }

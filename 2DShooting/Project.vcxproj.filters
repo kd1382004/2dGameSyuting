@@ -169,6 +169,39 @@
     <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow">
       <UniqueIdentifier>{a6f1a12a-3f08-4304-841b-d2a17baba552}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Sound">
+      <UniqueIdentifier>{3d2d6204-8d7f-4cbc-8aee-c65954e5abaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Titel">
+      <UniqueIdentifier>{b0ecf8f7-6894-4486-a5a9-9aaa36fb6a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game">
+      <UniqueIdentifier>{5ffca6c4-8541-491d-93c3-522087cebbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Button">
+      <UniqueIdentifier>{bc0aa9c2-3378-4284-a590-386ec93624f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Result">
+      <UniqueIdentifier>{ddfc10c1-7724-4bb5-b3bb-05b929f67442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Result\DrumRoll">
+      <UniqueIdentifier>{5390d62c-dba5-4857-badd-8e23ea615526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\Player">
+      <UniqueIdentifier>{6430d319-bb1d-486e-be72-98a275926b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\Player\Bow">
+      <UniqueIdentifier>{44ae7784-e113-4e7f-b68f-2423dd4985e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\PowerUp">
+      <UniqueIdentifier>{171c2beb-66ea-4b41-b24a-c5b7826f5ab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\DefAnime">
+      <UniqueIdentifier>{1022e5eb-820b-4f8e-82a9-e3f65923f774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore">
+      <UniqueIdentifier>{ed891205-b2fc-439a-9346-8c9183211018}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -393,6 +426,39 @@
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow\PowerupFireArrow.h">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Sound\SoundBase.h">
+      <Filter>Src\Application\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Titel\TitelBGM.h">
+      <Filter>Src\Application\Sound\Titel</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\GameBGM.h">
+      <Filter>Src\Application\Sound\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Button\ButtonSelectionSE.h">
+      <Filter>Src\Application\Sound\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Result\DrumRoll\DrumRollSE.h">
+      <Filter>Src\Application\Sound\Result\DrumRoll</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Player\Bow\BowSE.h">
+      <Filter>Src\Application\Sound\Game\Player\Bow</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Player\Bow\FireSE.h">
+      <Filter>Src\Application\Sound\Game\Player\Bow</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\PowerUp\PowerUpSE.h">
+      <Filter>Src\Application\Sound\Game\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Result\ResultBGM.h">
+      <Filter>Src\Application\Sound\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\DefAnime\DefAnimeBGM.h">
+      <Filter>Src\Application\Sound\Game\DefAnime</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore\PowerUPScore.h">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -583,6 +649,39 @@
     </ClCompile>
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow\PowerupFireArrow.cpp">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerupFireArrow</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\SoundBase.cpp">
+      <Filter>Src\Application\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Titel\TitelBGM.cpp">
+      <Filter>Src\Application\Sound\Titel</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\GameBGM.cpp">
+      <Filter>Src\Application\Sound\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Button\ButtonSelectionSE.cpp">
+      <Filter>Src\Application\Sound\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Result\DrumRoll\DrumRollSE.cpp">
+      <Filter>Src\Application\Sound\Result\DrumRoll</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Player\Bow\BowSE.cpp">
+      <Filter>Src\Application\Sound\Game\Player\Bow</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Player\Bow\FireSE.cpp">
+      <Filter>Src\Application\Sound\Game\Player\Bow</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\PowerUp\PowerUpSE.cpp">
+      <Filter>Src\Application\Sound\Game\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Result\ResultBGM.cpp">
+      <Filter>Src\Application\Sound\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\DefAnime\DefAnimeBGM.cpp">
+      <Filter>Src\Application\Sound\Game\DefAnime</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore\PowerUPScore.cpp">
+      <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

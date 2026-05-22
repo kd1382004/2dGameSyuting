@@ -64,13 +64,6 @@ void InfoGame::Init()
 	m_ATKUPLVMat = Math::Matrix::CreateTranslation(m_ATKUPLVPos.x, m_ATKUPLVPos.y, 0);
 
 
-	m_PWUPNumIconTex.Load("Tex/PowerUpScreen/PWUPNum/PWUPNum.png");
-	m_PWUPNumIconPos = { 400,-280 };
-	m_PWUPNumIconMat = Math::Matrix::CreateTranslation(m_PWUPNumIconPos.x, m_PWUPNumIconPos.y, 0);
-
-	m_PWUPNumLVPos = { m_PWUPNumIconPos.x + 35,m_PWUPNumIconPos.y - 5 };
-	m_PWUPNumLVMat = Math::Matrix::CreateTranslation(m_PWUPNumLVPos.x, m_PWUPNumLVPos.y, 0);
-
 	m_FireArrowIconTex.Load("Tex/PowerUpScreen/PowerupFireArrow/PowerupFireArrowIcon.png");
 	m_FireArrowIconPos = { -260,-280 };
 	m_FireArrowIconMat = Math::Matrix::CreateTranslation(m_FireArrowIconPos.x, m_FireArrowIconPos.y, 0);
@@ -78,10 +71,12 @@ void InfoGame::Init()
 	m_FireArrowLVPos = { m_FireArrowIconPos.x + 35,m_FireArrowIconPos.y - 5 };
 	m_FireArrowLVMat = Math::Matrix::CreateTranslation(m_FireArrowLVPos.x, m_FireArrowLVPos.y, 0);
 
-	m_ENTERTex.Load("Tex/Key/ENTER.png");
-	m_ENTERTPos = { m_PWUPNumLVPos.x + 50,m_PWUPNumLVPos.y };
-	m_ENTERTMat = Math::Matrix::CreateTranslation(m_ENTERTPos.x, m_ENTERTPos.y, 0);
+	m_PowerUPScoreIconTex.Load("Tex/PowerUpScreen/PowerUPScore/PowerUPScoreIcon.png");
+	m_PowerUPScoreIconPos = { -260,-340 };
+	m_PowerUPScoreIconMat = Math::Matrix::CreateTranslation(m_PowerUPScoreIconPos.x, m_PowerUPScoreIconPos.y, 0);
 
+	m_PowerUPScoreLVPos = { m_PowerUPScoreIconPos.x + 35,m_PowerUPScoreIconPos.y - 5 };
+	m_PowerUPScoreLVMat = Math::Matrix::CreateTranslation(m_PowerUPScoreLVPos.x, m_PowerUPScoreLVPos.y, 0);
 
 	//Key
 
@@ -128,8 +123,6 @@ void InfoGame::Release()
 	m_LRShotIconTex.Release();
 	m_PeneNumIconTex.Release();
 	m_BoundNumIconTex.Release();
-	m_PWUPNumIconTex.Release();
-	m_ENTERTex.Release();
 }
 
 void InfoGame::KeyDraw()
@@ -173,30 +166,7 @@ void InfoGame::Update(CharacterInfo* info, Player *player,int sc)
 
 	m_FireArrow = player->GetFireArrow();
 
-	if (m_PWUPNum != 0)
-	{
-		m_ENTERTexFlg = true;
-		m_ENTERAlf += m_ENTERAlfPush;
-		if (m_ENTERAlf > 1)
-		{
-			m_ENTERAlf = 1;
-			m_ENTERAlfPush *= -1;
-		}
-		else if (m_ENTERAlf < 0)
-		{
-			m_ENTERAlf = 0;
-			m_ENTERAlfPush *= -1;
-		}
-
-	}
-	else
-	{
-		m_ENTERTexFlg = false;
-	}
-
-
-
-
+	m_PowerUPScore = player->GetScoreUpLV();
 
 	if (InfoKeyAPP.GetKeyPush(VK_UP))
 	{
@@ -316,26 +286,19 @@ void InfoGame::Drow2D()
 	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
 	NumDrawAPP.Drow(m_FireArrow, LAligned, Math::Vector2{ m_FireArrowLVPos.x + 20,m_FireArrowLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
 
+	SHADER.m_spriteShader.SetMatrix(m_PowerUPScoreIconMat);
+	SHADER.m_spriteShader.DrawTex(&m_PowerUPScoreIconTex, Math::Rectangle{ 0,0,32,32 });
 
-	SHADER.m_spriteShader.SetMatrix(m_PWUPNumIconMat);
-	SHADER.m_spriteShader.DrawTex(&m_PWUPNumIconTex, Math::Rectangle{ 0,0,32,32 });
-
-	SHADER.m_spriteShader.SetMatrix(m_PWUPNumLVMat);
-	SHADER.m_spriteShader.DrawTex(&m_Xmark, Math::Rectangle{ 0,0,21,21 });
-	NumDrawAPP.Drow(m_PWUPNum, LAligned, Math::Vector2{ m_PWUPNumLVPos.x + 20,m_PWUPNumLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
-
-	if (m_ENTERTexFlg)
-	{
-		SHADER.m_spriteShader.SetMatrix(m_ENTERTMat);
-		SHADER.m_spriteShader.DrawTex(&m_ENTERTex, Math::Rectangle{ 0,0,64,64 }, m_ENTERAlf);
-	}
+	SHADER.m_spriteShader.SetMatrix(m_PowerUPScoreLVMat);
+	SHADER.m_spriteShader.DrawTex(&m_VLTex, Math::Rectangle{ 0,0,21,17 });
+	NumDrawAPP.Drow(m_PowerUPScore, LAligned, Math::Vector2{ m_PowerUPScoreLVPos.x + 20,m_PowerUPScoreLVPos.y }, &Math::Color{ 1,1,1,1 }, 1.5, false);
 
 
 	KeyDraw();
 
 
 	SHADER.m_spriteShader.SetMatrix(m_scoreMat);
-	SHADER.m_spriteShader.DrawTex(&m_scoreTex, Math::Rectangle{ 0,0,341,60 });
+	SHADER.m_spriteShader.DrawTex(&m_scoreTex, Math::Rectangle{ 0,0,284,60 });
 	NumDrawAPP.Drow(m_score, RAligned, Math::Vector2{ m_scoreMat.Translation().x + 270,m_PeneNumLVPos.y - 50 }, &Math::Color{ 1,1,1,1 }, 2, false);
 
 }

@@ -18,6 +18,7 @@ private:
 void Release()override;
 
 
-float m_R;
+float m_siz = 1;
+float m_sizPush = 0.01;
 };
 

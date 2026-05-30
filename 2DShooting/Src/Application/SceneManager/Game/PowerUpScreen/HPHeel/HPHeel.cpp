@@ -35,3 +35,4 @@ void HPHeel::Release()
 	m_tex.Release();
 }
 
+

@@ -13,6 +13,7 @@ void ScoreButton::Update()
 	if (m_owner)
 	{
 		m_owner->SetNextSceneType(SceneType::SCORE);
+		SoundPlay();
 	}
 }
 

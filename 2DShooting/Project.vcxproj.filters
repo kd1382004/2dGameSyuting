@@ -202,6 +202,21 @@
     <Filter Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore">
       <UniqueIdentifier>{ed891205-b2fc-439a-9346-8c9183211018}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Sound\Game\Hit">
+      <UniqueIdentifier>{31a31ec2-4ca2-4dcb-a438-40d3ee88a08a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\Down">
+      <UniqueIdentifier>{eb3925ec-5e0a-46a9-983e-668ed76bb80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Character\Player\HpHeel">
+      <UniqueIdentifier>{791833fb-95c0-41fe-88e5-fdab7ecd8c46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\Player\Heel">
+      <UniqueIdentifier>{5bf55560-14dc-4f8c-b06e-96cf17780d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Sound\Game\Warp">
+      <UniqueIdentifier>{4ff0640b-4dbd-48f1-9bc1-727ce70b59be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -459,6 +474,30 @@
     <ClInclude Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore\PowerUPScore.h">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Hit\HitSE.h">
+      <Filter>Src\Application\Sound\Game\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Down\DownSE.h">
+      <Filter>Src\Application\Sound\Game\Down</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Character\Player\HPHeel\PLayerHpHeel.h">
+      <Filter>Src\Application\Character\Player\HpHeel</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Player\Heel\HeelSE.h">
+      <Filter>Src\Application\Sound\Game\Player\Heel</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\PowerUp\PowerUpWindoSE.h">
+      <Filter>Src\Application\Sound\Game\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Hit\PlayerHitSE.h">
+      <Filter>Src\Application\Sound\Game\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Button\ButtonDECSE.h">
+      <Filter>Src\Application\Sound\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Sound\Game\Warp\WarpSE.h">
+      <Filter>Src\Application\Sound\Game\Warp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -682,6 +721,30 @@
     </ClCompile>
     <ClCompile Include="Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore\PowerUPScore.cpp">
       <Filter>Src\Application\SceneManager\Game\PowerUpScreen\PowerUPScore</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Hit\HitSE.cpp">
+      <Filter>Src\Application\Sound\Game\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Down\DownSE.cpp">
+      <Filter>Src\Application\Sound\Game\Down</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Character\Player\HPHeel\PLayerHpHeel.cpp">
+      <Filter>Src\Application\Character\Player\HpHeel</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Player\Heel\HeelSE.cpp">
+      <Filter>Src\Application\Sound\Game\Player\Heel</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\PowerUp\PowerUpWindoSE.cpp">
+      <Filter>Src\Application\Sound\Game\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Hit\PlayerHitSE.cpp">
+      <Filter>Src\Application\Sound\Game\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Button\ButtonDECSE.cpp">
+      <Filter>Src\Application\Sound\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Sound\Game\Warp\WarpSE.cpp">
+      <Filter>Src\Application\Sound\Game\Warp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

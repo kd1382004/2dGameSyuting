@@ -166,7 +166,7 @@ void Score::Update()
 	if (m_slect == 3)
 	{
 		m_button->SetSelectFlg(true);
-		if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+		if (InfoKeyAPP.KeyPush(VK_SPACE, true, true))
 		{
 			m_button->Update();
 		}

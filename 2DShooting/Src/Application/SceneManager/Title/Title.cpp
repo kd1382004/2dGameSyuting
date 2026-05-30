@@ -84,7 +84,7 @@ void Title::Update()
 			if (i == m_slect)
 			{
 				m_button[i]->SetSelectFlg(true);
-				if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+				if (InfoKeyAPP.KeyPush(VK_SPACE, true, true))
 				{
 					m_button[i]->Update();
 				}

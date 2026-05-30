@@ -146,7 +146,7 @@ void PowerUpScreen::Update(CharacterInfo* playerInfo, Game* game)
 				m_selectPos = m_powerUpPos[m_selectNum];
 				m_powerUp[i]->SetSelectSiz(m_selectSiz);
 
-				if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+				if (InfoKeyAPP.KeyPush(VK_SPACE, true, true))
 				{
 					if (!m_powerUp[i]->GetSelectFlg())
 					{

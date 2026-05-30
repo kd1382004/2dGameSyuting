@@ -146,7 +146,7 @@ void Result::Update()
 				if (i == m_slect)
 				{
 					m_button[i]->SetSelectFlg(true);
-					if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+					if (InfoKeyAPP.KeyPush(VK_SPACE, true, true))
 					{
 						m_button[i]->Update();
 					}
@@ -193,7 +193,7 @@ void Result::Draw2D()
 	SHADER.m_spriteShader.SetMatrix(m_ScoreMat);
 	m_nameRec = { 0,0,284,60 };
 	SHADER.m_spriteShader.DrawTex(&m_ScoreTex, m_nameRec);
-	NumDrawAPP.Drow(m_ScoreNum, RAligned, m_ScoreNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_ScoreSiz, true, 0, m_digit);
+	NumDrawAPP.Drow(m_ScoreNum, RAligned, m_ScoreNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_ScoreSiz, true,0, m_digit);
 	m_rodMat = Math::Matrix::CreateTranslation(-10, m_ScoreNumPos.y-50, 0);
 	SHADER.m_spriteShader.SetMatrix(m_rodMat);
 	SHADER.m_spriteShader.DrawTex(&m_rodTex, Math::Rectangle{ 0,0,1000,5 });
@@ -213,7 +213,7 @@ void Result::Draw2D()
 	SHADER.m_spriteShader.SetMatrix(m_stageClearMat);
 	m_nameRec = { 0,0,483,60 };
 	SHADER.m_spriteShader.DrawTex(&m_stageClearTex, m_nameRec);
-	NumDrawAPP.Drow(m_stageClearNum, RAligned, m_stageClearNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true, 0, m_digit);
+	NumDrawAPP.Drow(m_stageClearNum, RAligned, m_stageClearNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true, 0, m_stageClearNumDigit);
 
 	m_rodMat = Math::Matrix::CreateTranslation(-10, m_stageClearNumPos.y - 30, 0);
 	SHADER.m_spriteShader.SetMatrix(m_rodMat);
@@ -223,7 +223,7 @@ void Result::Draw2D()
 	SHADER.m_spriteShader.SetMatrix(m_EnemyMat);
 	m_nameRec = { 0,0,394,60 };
 	SHADER.m_spriteShader.DrawTex(&m_EnemyTex, m_nameRec);
-	NumDrawAPP.Drow(m_EnemyNum, RAligned, m_EnemyNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true, 0, m_digit);
+	NumDrawAPP.Drow(m_EnemyNum, RAligned, m_EnemyNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true, 0, m_EnemyNumDigit);
 
 	m_rodMat = Math::Matrix::CreateTranslation(-10, m_EnemyNumPos.y - 30, 0);
 	SHADER.m_spriteShader.SetMatrix(m_rodMat);
@@ -233,7 +233,7 @@ void Result::Draw2D()
 	SHADER.m_spriteShader.SetMatrix(m_PowerUpMat);
 	m_nameRec = { 0,0,397,60 };
 	SHADER.m_spriteShader.DrawTex(&m_PowerUpTex, m_nameRec);
-	NumDrawAPP.Drow(m_PowerUpNum, RAligned, m_PowerUpNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz, true, 0, m_digit);
+	NumDrawAPP.Drow(m_PowerUpNum, RAligned, m_PowerUpNumPos, &Math::Color{ 1,1,1,m_alpha }, m_numSiz * m_nameSiz,true,0, m_PowerUpNumDigit);
 
 	m_rodMat = Math::Matrix::CreateTranslation(-10, m_PowerUpNumPos.y - 30, 0);
 	SHADER.m_spriteShader.SetMatrix(m_rodMat);
@@ -274,25 +274,25 @@ void Result::Anime()
 
 	if (m_stageClearNumRand)
 	{
-		std::uniform_int_distribution<int> dist(0, NumMax);
+		std::uniform_int_distribution<int> dist(0, GetMaxNUm(m_stageClearNumDigit));
 		m_stageClearNum = dist(rand_engine);
 	}
 
 	if (m_EnemyNumRand)
 	{
-		std::uniform_int_distribution<int> dist(0, NumMax);
+		std::uniform_int_distribution<int> dist(0, GetMaxNUm(m_EnemyNumDigit));
 		m_EnemyNum = dist(rand_engine);
 	}
 
 	if (m_PowerUpNumRand)
 	{
-		std::uniform_int_distribution<int> dist(0, NumMax);
+		std::uniform_int_distribution<int> dist(0, GetMaxNUm(m_PowerUpNumDigit));
 		m_PowerUpNum = dist(rand_engine);;
 	}
 
 	if (m_ScoreNumRand)
 	{
-		std::uniform_int_distribution<int> dist(0, NumMax);
+		std::uniform_int_distribution<int> dist(0, GetMaxNUm(m_ScoreNumDigit));
 		m_ScoreNum = dist(rand_engine);;
 	}
 
@@ -366,7 +366,7 @@ void Result::Anime()
 	if (m_animeCnt < m_FlgChangeCnt * 5)
 	{
 		//アニメーションスキップ
-		if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+		if (InfoKeyAPP.KeyPush(VK_SPACE, true, true))
 		{
 			m_stageClearNum = GameResultInfoAPP.GetmStageClearNum();
 			m_EnemyNum = GameResultInfoAPP.GetEnemyDeath();
@@ -401,4 +401,22 @@ int Result::GetDigit(int num)
 	}
 
 	return w;
+}
+
+int Result::GetMaxNUm(int digit)
+{
+	int rNum = 9;
+
+	if (digit != 1)
+	{
+		for (int i = 0; i < digit; i++)
+		{
+			rNum *= 10;
+			rNum += 9;
+		}
+	}
+
+	
+
+	return rNum;
 }

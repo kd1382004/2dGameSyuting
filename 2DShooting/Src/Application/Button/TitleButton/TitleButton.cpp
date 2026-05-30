@@ -13,6 +13,7 @@ void TitleButton::Update()
 	if (m_owner)
 	{
 		m_owner->SetNextSceneType(SceneType::TITLE);
+		SoundPlay();
 	}
 }
 

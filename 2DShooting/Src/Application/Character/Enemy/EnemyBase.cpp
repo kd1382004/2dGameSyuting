@@ -2,9 +2,17 @@
 #include"../Bullet/BulletBace.h"
 #include"../../Particle/Fire/Fire.h"
 #include"../../Sound/Game/Player/Bow/FireSE.h"
+#include"../../Sound/Game/Hit/HitSE.h"
+#include"../../Sound/Game/Down/DownSE.h"
+#include"../Player/Player.h"
 
 void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 {
+
+	if (!m_aliveFlg)
+	{
+		return;
+	}
 
 	if (m_HPDownCoolTime == m_HPDownCoolTimeMax)
 	{
@@ -17,6 +25,7 @@ void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 			Math::Vector2 enemyiPos = m_pos;
 			enemyiPos += bullet->GetMove() * 1.5;
 			m_pos = enemyiPos;
+			m_HitSE->Play();
 		}
 	}
 
@@ -25,11 +34,8 @@ void EnemyBase::PlayerBulletHit(BulletBace* bullet)
 		ChangeMode(Mode::Def);
 		m_aliveFlg = false;
 		m_anime = 0;
+		m_DownSE->Play();
 	}
-
-
-
-
 }
 
 void EnemyBase::BulletHit(BulletBace* bullet)
@@ -108,6 +114,8 @@ void EnemyBase::BaseInit()
 {
 	m_speed = { 1, 1 };
 	m_fireSE = new FireSE();
+	m_HitSE = new HitSE();
+	m_DownSE = new DownSE();
 }
 
 void EnemyBase::StateTypeFire()
@@ -152,4 +160,6 @@ void EnemyBase::ChangeMode(Mode mode)
 void EnemyBase::Release()
 {
 	delete m_fireSE;
+	delete m_HitSE;
+	delete m_DownSE;
 }

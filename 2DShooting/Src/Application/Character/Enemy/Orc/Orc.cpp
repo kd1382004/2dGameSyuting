@@ -211,6 +211,7 @@ void Orc::MODEDef()
 	if (m_anime > 4)
 	{
 		m_deleteFlg = true;
+		m_defAnimeFinshFlg = true;
 	}
 }
 

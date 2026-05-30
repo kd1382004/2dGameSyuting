@@ -16,12 +16,17 @@
 #include "../../Info/GameResult/GameResult.h"
 #include"../../Info/HighScore/HighScore.h"
 #include"../../Sound/Game/GameBGM.h"
+#include"../../Sound/Game/PowerUp/PowerUpWindoSE.h"
+#include"../../Sound/Game/Warp/WarpSE.h"
 
 void Game::Init()
 {
 	//サウンド
 	m_gameeBgm = new GameBGM();
 	m_gameeBgm->Play();
+
+	m_powerUpwindoSe = new PowerUpWindoSE();
+	m_warpSe = new WarpSE();
 
 	m_stageNum = 0;
 	m_DEF = false;
@@ -63,6 +68,28 @@ void Game::Init()
 void Game::Update()
 {
 
+	//強化が可能なら
+	if (!m_powerUpScreenFlg && m_powerUpScreenNum > 0)
+	{
+		m_powerUpScreenFlg = true;
+		m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo(), this);
+		m_powerUpScreenNum--;
+		m_powerUpNum++;
+		m_powerUpwindoSe->Play();
+	}
+
+	if (m_powerUpScreenFlg)
+	{
+		m_powerUpScreen->Update(m_player->GetPlayerPlayerPowerUpInfo(), this);
+		//情報画面更新
+		if (m_infoGame)
+		{
+			m_infoGame->Update(m_player->GetPlayerPlayerPowerUpInfo(), m_player, m_score);
+			m_infoGame->SetPlyerHpHeel(m_player->GetEnemyDehHeelLv());
+		}
+		return;
+	}
+
 	if (m_nextStageAnimeFlg)
 	{
 		if (m_stageClearNum < m_stageMax)
@@ -77,9 +104,27 @@ void Game::Update()
 		return;
 	}
 
+
 	if (m_stageStartAnimeFlg)
 	{
 		StageStartAnimeUpdate();
+		m_player->Move();
+		m_player->AnimeRec();
+		MAPAPP.MapHit(m_player);
+
+		//マップ更新
+		MAPAPP.Updata();
+
+		if (m_player)
+		{
+			m_player->MatConfirmed(MAPAPP.GetScroll());
+		}
+
+		for (int i = 0; i < m_enemy.size(); i++)
+		{
+			m_enemy[i]->MatConfirmed(MAPAPP.GetScroll());
+		}
+
 		return;
 	}
 
@@ -98,186 +143,173 @@ void Game::Update()
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
-	//強化画面じゃなかったら
-	if (!m_powerUpScreenFlg)
-	{
 		//////////////
 		//プレイヤー//
 		//////////////
-		if (m_player)
+	if (m_player)
+	{
+		/////////////////////
+		//プレイヤー　更新//
+		////////////////////
+		m_player->Update();
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+
+
+	//////
+	//敵//
+	//////
+	int enemyNum = 0;
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		if (m_enemy[i])
 		{
-			/////////////////////
-			//プレイヤー　更新//
-			////////////////////
-			m_player->Update();
+			if (m_player)
+			{
+				////////////////////////////
+				//敵にプレイヤー座標セット//
+				////////////////////////////
+				m_enemy[i]->SetPlayerPos(m_player->GetPos());
+			}
+
+
+			////////////
+			//敵　更新//
+			////////////
+			m_enemy[i]->Update();
+
+			if (m_enemy[i]->GetAliveFlg())
+			{
+				enemyNum++;
+			}
 		}
+	}
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		if (m_enemy[i])
+		{
+			m_enemy[i]->SetEnemyNum(enemyNum);
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
 
 
-		//////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////
-
-
-		//////
-		//敵//
-		//////
-		int enemyNum = 0;
+	//////////////
+	//当たり判定//
+	//////////////
+	if (m_charaHit)
+	{
 		for (int i = 0; i < m_enemy.size(); i++)
 		{
-			if (m_enemy[i])
+			//////////////////
+			//敵とプレイヤー//
+			//////////////////
+			if (m_charaHit->CharacterHit(m_enemy[i], m_player))
 			{
-				if (m_player)
-				{
-					////////////////////////////
-					//敵にプレイヤー座標セット//
-					////////////////////////////
-					m_enemy[i]->SetPlayerPos(m_player->GetPos());
-				}
+				//当たったときの処理
+
+				//プレイヤー
+				m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
 
 
-				////////////
-				//敵　更新//
-				////////////
-				m_enemy[i]->Update();
+				//重ならないように座標補正				
+				//m_charaHit->Pushback(m_enemy[i], m_player);
 
-				if (m_enemy[i]->GetAliveFlg())
-				{
-					enemyNum++;
-				}
-			}
-		}
-		for (int i = 0; i < m_enemy.size(); i++)
-		{
-			if (m_enemy[i])
-			{
-				m_enemy[i]->SetEnemyNum(enemyNum);
-			}
-		}
-
-		//////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////
-
-
-		//////////////
-		//当たり判定//
-		//////////////
-		if (m_charaHit)
-		{
-			for (int i = 0; i < m_enemy.size(); i++)
-			{
-				//////////////////
-				//敵とプレイヤー//
-				//////////////////
-				if (m_charaHit->CharacterHit(m_enemy[i], m_player))
-				{
-					//当たったときの処理
-
-					//プレイヤー
-					m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
-
-
-					//重ならないように座標補正				
-					//m_charaHit->Pushback(m_enemy[i], m_player);
-
-				}
-
-				//////////////////////
-				//敵の弾とプレイヤー//
-				//////////////////////
-				if (m_enemy[i]->GetBulletNum() > 0)
-				{
-					for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
-					{
-						if (m_charaHit->BulletHit(m_enemy[i]->GetBullet(j), m_player, -1))
-						{
-							m_enemy[i]->BulletHit(m_enemy[i]->GetBullet(j));
-							m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
-						}
-
-					}
-				}
-
-				//////////
-				//敵同士//
-				/////////
-				for (int j = i; j < m_enemy.size(); j++)
-				{
-					if (j == i)
-					{
-						continue;
-					}
-
-					if (m_charaHit->CharacterHit(m_enemy[i], m_enemy[j]))
-					{
-						//重ならないように座標補正				
-						m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
-						m_enemy[i]->EnemyHit();
-						m_enemy[j]->EnemyHit();
-					}
-				}
 			}
 
-			//////////
-			//敵と弾//
-			//////////
-			for (int i = 0; i < m_enemy.size(); i++)
-			{
-				for (int j = 0; j < m_player->GetBulletNum(); j++)
-				{
-					if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
-					{
-						//当たったときの処理
-
-						//弾
-						m_player->PlayerBulletHit(j);
-
-						//敵
-						m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
-
-						switch (m_player->GetBullet(j)->GetBulletType())
-						{
-						case  BulletType::NORMAL:
-							break;
-
-						case  BulletType::FIRE:
-							m_enemy[i]->StateTypeChange(StateType::TypeFIRE, 10, m_player->GetFireArrow());
-							break;
-						default:
-							break;
-						}
-
-
-					}
-				}
-			}
-		}
-
-
-		MAPAPP.MapHit(m_player);
-		for (int i = 0; i < m_enemy.size(); i++)
-		{
-			MAPAPP.MapHit(m_enemy[i]);
+			//////////////////////
+			//敵の弾とプレイヤー//
+			//////////////////////
 			if (m_enemy[i]->GetBulletNum() > 0)
 			{
 				for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
 				{
-					MAPAPP.MapHit(m_enemy[i]->GetBullet(j));
+					if (m_charaHit->BulletHit(m_enemy[i]->GetBullet(j), m_player, -1))
+					{
+						m_enemy[i]->BulletHit(m_enemy[i]->GetBullet(j));
+						m_player->HPDown(m_enemy[i]->GetCharaInfo()->GetATK());
+					}
+
 				}
 			}
 
+			//////////
+			//敵同士//
+			/////////
+			for (int j = i; j < m_enemy.size(); j++)
+			{
+				if (j == i)
+				{
+					continue;
+				}
+
+				if (m_charaHit->CharacterHit(m_enemy[i], m_enemy[j]))
+				{
+					//重ならないように座標補正				
+					m_charaHit->Pushback(m_enemy[i], m_enemy[j]);
+					m_enemy[i]->EnemyHit();
+					m_enemy[j]->EnemyHit();
+				}
+			}
 		}
 
-		for (int j = 0; j < m_player->GetBulletNum(); j++)
+		//////////
+		//敵と弾//
+		//////////
+		for (int i = 0; i < m_enemy.size(); i++)
 		{
-			MAPAPP.MapHit(m_player->GetBullet(j));
+			for (int j = 0; j < m_player->GetBulletNum(); j++)
+			{
+				if (m_charaHit->BulletHit(m_player->GetBullet(j), m_enemy[i], i))
+				{
+					//当たったときの処理
+
+					//弾
+					m_player->PlayerBulletHit(j);
+
+					//敵
+					m_enemy[i]->PlayerBulletHit(m_player->GetBullet(j));
+
+					switch (m_player->GetBullet(j)->GetBulletType())
+					{
+					case  BulletType::NORMAL:
+						break;
+
+					case  BulletType::FIRE:
+						m_enemy[i]->StateTypeChange(StateType::TypeFIRE, 10, m_player->GetFireArrow());
+						break;
+					default:
+						break;
+					}
+
+
+				}
+			}
 		}
+	}
 
 
-
+	MAPAPP.MapHit(m_player);
+	for (int i = 0; i < m_enemy.size(); i++)
+	{
+		MAPAPP.MapHit(m_enemy[i]);
+		if (m_enemy[i]->GetBulletNum() > 0)
+		{
+			for (int j = 0; j < m_enemy[i]->GetBulletNum(); j++)
+			{
+				MAPAPP.MapHit(m_enemy[i]->GetBullet(j));
+			}
+		}
 
 	}
-	else
+
+	for (int j = 0; j < m_player->GetBulletNum(); j++)
 	{
-		m_powerUpScreen->Update(m_player->GetPlayerPlayerPowerUpInfo(), this);
+		MAPAPP.MapHit(m_player->GetBullet(j));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -304,6 +336,15 @@ void Game::Update()
 	//敵
 	for (int i = 0; i < m_enemy.size(); i++)
 	{
+		//
+		if (m_enemy[i]->GetDefAnimeFinshFlg())
+		{
+				m_player->SetHPHeel(m_enemy[i]->GetPos());
+				m_enemy[i]->SetDefAnimeFinshFlg(false);
+		}
+
+
+
 		if (m_enemy[i]->GetDeleteFlg())
 		{
 			m_EnemydefPos = m_enemy[i]->GetPos();
@@ -312,11 +353,6 @@ void Game::Update()
 			m_enemy.erase(m_enemy.begin() + i);
 			i--;
 			m_EnemyDeath++;
-
-			if (m_player)
-			{
-				m_player->HPHeel(m_player->EnemyDehHeelAmount());
-			}
 		}
 	}
 
@@ -330,24 +366,13 @@ void Game::Update()
 	{
 		m_stageClearFlg = true;
 		m_stageClearNum++;
-		m_powerUpScreenNum++;
 		MAPAPP.SetWarpHallPos(m_EnemydefPos);
+		m_warpSe->Play();
 	}
-
-
-	//強化が可能なら
-	if (!m_powerUpScreenFlg && m_powerUpScreenNum > 0)
-	{
-		m_powerUpScreenFlg = true;
-		m_powerUpScreen->Init(m_player->GetPlayerPlayerPowerUpInfo(), this);
-		m_powerUpScreenNum--;
-		m_powerUpNum++;
-	}
-
 
 	if (m_player)
 	{
-		if  (!m_player->GetAliveFlg())
+		if (!m_player->GetAliveFlg())
 		{
 			m_DEF = true;
 			m_defAnime = new DefAnime();
@@ -370,42 +395,41 @@ void Game::Update()
 
 
 	////////////////////////////////////////////////////
-	//デバック
-	if (InfoKeyAPP.KeyPush('Q'))
-	{
-		for (int i = 0; i < m_enemy.size(); i++)
-		{
-			delete m_enemy[i];
-			m_enemy.erase(m_enemy.begin() + i);
-			i--;
-			m_EnemyDeath++;
-		}
-		m_powerUpScreenNum++;
-	}
+	////デバック
+	//if (InfoKeyAPP.KeyPush('Q'))
+	//{
+	//	for (int i = 0; i < m_enemy.size(); i++)
+	//	{
+	//		delete m_enemy[i];
+	//		m_enemy.erase(m_enemy.begin() + i);
+	//		i--;
+	//		m_EnemyDeath++;
+	//	}
+	//}
 
 
-	if (InfoKeyAPP.KeyPush('E', true, true))
-	{
-		m_DEF = true;
-		m_defAnime = new DefAnime();
-		m_defAnime->Init();
-		GameResultInfoAPP.SetScroll(MAPAPP.GetScroll());
-		GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
-		m_gameeBgm->Stop();
-	}
+	//if (InfoKeyAPP.KeyPush('E', true, true))
+	//{
+	//	m_DEF = true;
+	//	m_defAnime = new DefAnime();
+	//	m_defAnime->Init();
+	//	GameResultInfoAPP.SetScroll(MAPAPP.GetScroll());
+	//	GameResultInfoAPP.SetplayerDefPos(m_player->GetPos());
+	//	m_gameeBgm->Stop();
+	//}
 
-	if (InfoKeyAPP.KeyPush('R'))
-	{
-		m_nextStageAnimeFlg = true;
-		for (int i = 0; i < m_enemy.size(); i++)
-		{
-			delete m_enemy[i];
-			m_enemy.erase(m_enemy.begin() + i);
-			i--;
-			m_EnemyDeath++;
-		}
-		m_stageClearNum++;
-	}
+	//if (InfoKeyAPP.KeyPush('R'))
+	//{
+	//	m_nextStageAnimeFlg = true;
+	//	for (int i = 0; i < m_enemy.size(); i++)
+	//	{
+	//		delete m_enemy[i];
+	//		m_enemy.erase(m_enemy.begin() + i);
+	//		i--;
+	//		m_EnemyDeath++;
+	//	}
+	//	m_stageClearNum++;
+	//}
 
 	///////////////////////////////////////////////////////////////
 
@@ -446,14 +470,6 @@ void Game::Draw2D()
 		m_player->Draw2D();
 	}
 
-	
-
-	if (m_powerUpScreenFlg)
-	{
-		m_powerUpScreen->Draw2D();
-	}
-
-
 	if (m_stageStartAnimeFlg)
 	{
 		StageStartAnimeDraw2D();
@@ -463,6 +479,12 @@ void Game::Draw2D()
 	{
 		NextStagenimeDraw2D();
 	}
+
+	if (m_powerUpScreenFlg)
+	{
+		m_powerUpScreen->Draw2D();
+	}
+
 }
 
 
@@ -492,7 +514,7 @@ void Game::NextScene()
 
 	if (m_player->GetAliveFlg())
 	{
-		m_score += 1000;
+		m_score += 9999;
 	}
 
 
@@ -583,6 +605,8 @@ void Game::PtrRelease()
 
 	m_gameeBgm->Stop();
 	delete m_gameeBgm;
+	delete m_powerUpwindoSe;
+	delete m_warpSe;
 }
 
 void Game::StageStartAnimeUpdate()
@@ -663,6 +687,8 @@ void Game::InitStage(int StageNum)
 	{
 		m_player->ReleseBuleet();
 		m_player->MatConfirmed(MAPAPP.GetScroll());
+		m_player->ResetDeg();
+		m_player->ResetSiz();
 	}
 
 	for (int i = 0; i < m_enemy.size(); i++)
@@ -697,6 +723,7 @@ void Game::NextStagenimeUpdate()
 		m_stageNum++;
 		m_nextStageAlhPu *= -1;
 		InitStage(m_stageNum);
+		m_powerUpScreenNum++;
 	}
 
 	if (m_nextStageAlh < 0)

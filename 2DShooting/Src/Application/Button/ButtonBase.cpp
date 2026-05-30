@@ -1,5 +1,13 @@
 #include "ButtonBase.h"
 
+#include"../Sound/Button/ButtonDECSE.h"
+
+void ButtonBase::BaseInit()
+{
+	m_DECSE = new ButtonDECSE();
+	m_rec = { 0,32,96,32 };
+}
+
 void ButtonBase::Draw2D()
 {
 	SHADER.m_spriteShader.SetMatrix(m_Mat);
@@ -38,4 +46,9 @@ void ButtonBase::SetSelectFlg(bool flg)
 	m_tMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 
 	m_Mat = m_sMat * m_tMat;
+}
+
+void ButtonBase::SoundPlay()
+{
+	m_DECSE->Play();
 }

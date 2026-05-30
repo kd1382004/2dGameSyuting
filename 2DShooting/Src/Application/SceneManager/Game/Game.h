@@ -37,7 +37,7 @@ public:
 
 	void SetNextStageFlg(bool flg) { m_nextStageAnimeFlg = flg; }
 
-	bool GetStageClearFlg() { return m_stageClearFlg; }
+	bool GetStageClearFlg() { return m_stageClearFlg;}
 
 	void NextScene();
 
@@ -48,6 +48,8 @@ public:
 	Player* GetPlayer() { return m_player; }
 
 	int GetScore() { return m_score; }
+
+	void SetpowerUpScreenNum(int num) { m_powerUpScreenNum = num; }
 private:
 
 	// ‰ð•ú
@@ -168,4 +170,6 @@ private:
 
 	//‰¹
 	SoundBase* m_gameeBgm;
+	SoundBase* m_powerUpwindoSe;
+	SoundBase* m_warpSe;
 };

@@ -15,12 +15,6 @@ public:
 	void SetHPPercent(float Percent);
 
 	void MatConfirmed(float scllor);
-
-	void SetPlayerTex(KdTexture* tex) { m_playerTex = tex; }
-
-	void SetPlayerAlpha(float alpha) { m_playerAlpha = alpha; }
-
-	void SetPlayerRectangle(Math::Rectangle rec) { m_playerRec = rec; }
 private:
 
 	KdTexture m_tex;

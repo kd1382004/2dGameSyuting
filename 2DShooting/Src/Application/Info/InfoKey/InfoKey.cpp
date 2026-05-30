@@ -107,6 +107,7 @@ bool InfoKey::KeyPush(Key* key, int num, bool hold, bool holdFlg)
 		{
 			flg = true;
 			key->m_pushS = 0;
+			key->m_pushFlg = true;
 		}
 	}
 	else

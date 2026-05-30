@@ -7,6 +7,7 @@ enum BulletType
 {
 	NORMAL,
 	FIRE,
+	PENE,
 };
 
 class BulletBace

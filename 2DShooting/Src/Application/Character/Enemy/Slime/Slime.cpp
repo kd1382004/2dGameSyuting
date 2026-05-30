@@ -164,5 +164,6 @@ void Slime::MODEDef()
 	{
 		m_anime = 0;
 		m_deleteFlg = true;
+		m_defAnimeFinshFlg = true;
 	}
 }

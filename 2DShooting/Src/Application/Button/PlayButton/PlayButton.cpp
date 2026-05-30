@@ -13,6 +13,7 @@ void PlayButton::Update()
 	if (m_owner)
 	{
 		m_owner->SetNextSceneType(SceneType::GAME);
+		SoundPlay();
 	}
 }
 

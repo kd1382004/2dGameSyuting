@@ -20,12 +20,30 @@ void Skeleton::Init()
 
 void Skeleton::Update()
 {
+	for (int i = 0; i < m_bullet.size(); i++)
+	{
+
+		if (m_bullet[i]->GetAliveFlg())
+		{
+			m_bullet[i]->Update();
+		}
+		else
+		{
+			delete m_bullet[i];
+			m_bullet.erase(m_bullet.begin() + i);
+			i--;
+		}
+
+	}
+
 	if (!m_drawFlg)
 	{
 		if (m_bullet.size() == 0 || m_enemyNum == 0)
 		{
 			m_deleteFlg = true;
 		}
+
+		return;
 	}
 
 
@@ -55,22 +73,6 @@ void Skeleton::Update()
 
 	default:
 		break;
-	}
-
-	for (int i = 0; i < m_bullet.size(); i++)
-	{
-
-		if (m_bullet[i]->GetAliveFlg())
-		{
-			m_bullet[i]->Update();
-		}
-		else
-		{
-			delete m_bullet[i];
-			m_bullet.erase(m_bullet.begin() + i);
-			i--;
-		}
-
 	}
 }
 
@@ -288,6 +290,7 @@ void Skeleton::MODEDef()
 		if (!m_aliveFlg)
 		{
 			m_drawFlg = false;
+			m_defAnimeFinshFlg = true;
 		}
 	}
 

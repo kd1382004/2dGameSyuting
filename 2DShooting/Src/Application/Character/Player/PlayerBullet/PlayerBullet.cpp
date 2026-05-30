@@ -48,6 +48,10 @@ void PlayerBullet::Draw2D()
 
 			m_rec = { 16 * (int)m_fierAnime ,32,16,16 };
 			break;
+
+		case PENE:
+			m_rec = { 32,0,32,32 };
+			break;
 		default:
 			break;
 		}

@@ -21,9 +21,9 @@ void WarpObject::Updata(float scroll)
 
 		m_siz -= m_sizPush;
 
-		if (m_siz < 0.3)
+		if (m_siz < 0.5)
 		{
-			m_siz = 0.3;
+			m_siz = 0.5;
 			m_sizPush *= -1;
 		}
 

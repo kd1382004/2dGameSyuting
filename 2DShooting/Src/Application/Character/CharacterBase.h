@@ -51,7 +51,7 @@ public:
 	CharacterInfo* GetCharaInfo() { return m_info; }
 
 
-	void HPDown(int dmg);
+	virtual void HPDown(int dmg);
 
 	void HPCoolTimeManager();
 protected:

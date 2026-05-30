@@ -3,6 +3,7 @@
 
 class BulletBace;
 class SoundBase;
+class Player;
 
 enum Mode
 {
@@ -61,9 +62,12 @@ public:
 
 	//¶‚«‚Ä‚é“G‚Ì”
 	void SetEnemyNum(int num) { m_enemyNum = num; }
+
+	bool GetDefAnimeFinshFlg() { return m_defAnimeFinshFlg; }
+	void SetDefAnimeFinshFlg(bool flg) { m_defAnimeFinshFlg = flg; }
 protected:
 
-	int m_enemyNum =-1;
+	int m_enemyNum = -1;
 
 	// ‰ğ•ú
 	virtual void Release();
@@ -79,8 +83,10 @@ protected:
 
 
 	Mode m_mode = MOVE;
-
+	bool m_defAnimeFinshFlg = false;
 private:
+
+
 
 
 	void BaseInit();
@@ -101,5 +107,7 @@ private:
 
 	//‰¹
 	SoundBase* m_fireSE;
+	SoundBase* m_HitSE;
+	SoundBase* m_DownSE;
 };
 

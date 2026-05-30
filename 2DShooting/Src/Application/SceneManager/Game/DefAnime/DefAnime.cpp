@@ -80,7 +80,7 @@ void DefAnime::Update(Game* m_owner, bool flg)
 		m_EntToresAlphaPush *= -1;
 	}
 
-	if (InfoKeyAPP.KeyPush(VK_RETURN, true, true))
+	if (InfoKeyAPP.KeyPush(VK_SPACE, true, true))
 	{
 		m_owner->NextScene();
 	}
@@ -108,7 +108,7 @@ void DefAnime::Draw2D()
 		SHADER.m_spriteShader.DrawTex(&m_fnishTex, Math::Rectangle{ 0,0,664,102 });
 	}
 	SHADER.m_spriteShader.SetMatrix(m_EntToreseTexMat);
-	SHADER.m_spriteShader.DrawTex(&m_EntToresTex, Math::Rectangle{ 0,0,778,92 }, m_EntToresAlpha);
+	SHADER.m_spriteShader.DrawTex(&m_EntToresTex, Math::Rectangle{ 0,0,800,92 }, m_EntToresAlpha);
 }
 
 void DefAnime::Release()
@@ -118,5 +118,6 @@ void DefAnime::Release()
 	m_fnishTex.Release();
 	m_EntToresTex.Release();
 	m_defTex.Release();
+	m_defAnimeBgm->Stop();
 	delete m_defAnimeBgm;
 }

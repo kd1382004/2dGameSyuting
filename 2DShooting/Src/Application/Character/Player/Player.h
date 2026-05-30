@@ -5,6 +5,7 @@ class BulletBace;
 class  PlayerHpBer;
 class  CharacterInfo;
 class  SoundBase;
+class  Playerheel;
 
 class Player : public CharacterBase
 {
@@ -58,6 +59,16 @@ public:
 
 	void SetScoreUpLV(int lv) { m_scoreUpLV += lv; if (m_scoreUpLV > 99) { m_scoreUpLV = 99; } }
 	int GetScoreUpLV() { return m_scoreUpLV; }
+
+	void ResetDeg() { m_deg = 0; }
+	void ResetSiz() {m_siz = { 3,3 };}
+
+	//プレイヤー移動関数
+	void Move();
+
+	void SetHPHeel(Math::Vector2 pos);
+
+	void HPDown(int dmg)override;
 private:
 
 	KdTexture* m_shadowTex;
@@ -72,9 +83,6 @@ private:
 	};
 
 	void Release()override;
-
-	//プレイヤー移動関数
-	void Move();
 
 	//プレイヤーキー操作
 
@@ -103,6 +111,9 @@ private:
 	float m_shotInterval = 0;			//弾の発射間隔管理
 	float m_shotIntervalMax = 0.5f * 60;	//弾の発射間隔(インターバル秒×FPS(60))
 
+
+	std::vector< Playerheel*> m_playerHeel;
+
 	////////////////////////////////
 	PlayerAniemMode m_animeMode = Nomar;
 
@@ -121,5 +132,6 @@ private:
 	//音
 	SoundBase* m_bowSE;
 	SoundBase* m_fireSE;
+	SoundBase* m_HitSE;
 };
 

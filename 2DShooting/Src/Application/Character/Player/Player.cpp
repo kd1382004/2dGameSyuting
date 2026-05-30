@@ -1,19 +1,21 @@
 #include "Player.h"
 #include"PlayerBullet/PlayerBullet.h"
 #include"HpBer/HpBer.h"
+#include"HPHeel/PLayerHpHeel.h"
 #include"../Info/CharacterInfoBace.h"
 #include"../../Info/InfoKey/InfoKey.h"
 #include"../Bullet/BulletBace.h"
 
 #include"../../Sound/Game/Player/Bow/BowSE.h"
 #include"../../Sound/Game/Player/Bow/FireSE.h"
+#include"../../Sound/Game/Hit/PlayerHitSE.h"
 
 void Player::Init()
 {
 	//音
 	m_bowSE = new BowSE();
 	m_fireSE = new FireSE();
-
+ 	m_HitSE = new PlayerHitSE();
 
 	m_pos = { -300,0 };
 	m_speed = { 5.0,5.0 };
@@ -37,7 +39,6 @@ void Player::Init()
 
 	m_hpBer = new PlayerHpBer();
 	m_hpBer->Init();
-	m_hpBer->SetPlayerTex(m_charaTex);
 
 	m_info = new CharacterInfo();
 
@@ -48,8 +49,6 @@ void Player::Update()
 {
 
 	HPCoolTimeManager();
-
-	m_hpBer->SetPlayerAlpha(m_charaAlpha);
 
 	////////////
 	//移動処理//
@@ -66,10 +65,22 @@ void Player::Update()
 
 	//////////////////////////////////////////////
 
+	for (int i = 0; i < m_playerHeel.size(); i++)
+	{
+		m_playerHeel[i]->Update(this);
+
+		if (m_playerHeel[i]->GetDeleteFlg())
+		{
+			delete m_playerHeel[i];
+			m_playerHeel.erase(m_playerHeel.begin() + i);
+			i--;
+		}
+
+	}
+
+
 	//アニメーション
 	AnimeRec();
-
-	m_hpBer->SetPlayerRectangle(m_rec);
 }
 
 void Player::Draw2D()
@@ -85,6 +96,11 @@ void Player::Draw2D()
 
 		m_hpBer->Drow2D();
 
+		for (int i = 0; i < m_playerHeel.size(); i++)
+		{
+			m_playerHeel[i]->Drow2D();
+		}
+
 
 		//弾の描画
 		BulletDraw();
@@ -99,6 +115,11 @@ void Player::MatConfirmed(float scroll)
 		{
 			m_bullet[i]->MatConfirmed(scroll);
 		}
+	}
+
+	for (int i = 0; i < m_playerHeel.size(); i++)
+	{
+		m_playerHeel[i]->MatConfirmed(scroll);
 	}
 
 	if (m_hpBer)
@@ -203,7 +224,7 @@ float Player::EnemyDehHeelAmount()
 {
 	float heel;
 
-	heel = m_enemyDehHeelLv * 0.1 + 0.5;
+	heel = m_enemyDehHeelLv * 3;
 
 	return heel;
 }
@@ -260,6 +281,7 @@ void Player::Release()
 
 	delete m_bowSE;
 	delete m_fireSE;
+	delete m_HitSE;
 }
 
 void Player::Move()
@@ -331,6 +353,36 @@ void Player::Move()
 	m_pos += m_move;
 }
 
+void Player::SetHPHeel(Math::Vector2 pos)
+{
+	if (m_enemyDehHeelLv == 0)
+	{
+		return;
+	}
+
+
+	m_playerHeel.push_back(new Playerheel);
+	m_playerHeel.back()->Init(pos);
+}
+
+void Player::HPDown(int dmg)
+{
+	if (m_HPDownCoolTime == m_HPDownCoolTimeMax)
+	{
+		m_HPDownCoolTime = 0;
+		m_HP -= dmg;
+		m_HitSE->Stop();
+		m_HitSE->Play();
+
+
+		if (m_HP <= 0)
+		{
+			m_aliveFlg = false;
+		}
+	}
+}
+
+
 void Player::Shot()
 {
 	m_shotInterval--;
@@ -358,6 +410,11 @@ void Player::Shot(bool _3WShotFlg, bool _3LRShotFlg)
 	else
 	{
 		m_deg = 0;
+	}
+
+	if (m_info->GetBuletPeneNum() != 0)
+	{
+		bulletType = BulletType::PENE;
 	}
 
 	if (m_fireArrowLv != 0)

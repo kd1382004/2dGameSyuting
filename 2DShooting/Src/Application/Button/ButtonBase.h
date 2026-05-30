@@ -1,10 +1,14 @@
 #pragma once
 
+class SoundBase;
+
 class ButtonBase
 {
 public:
-	ButtonBase() { m_rec = { 0,32,96,32 }; }
-	virtual ~ButtonBase() { Release(); }
+	ButtonBase() { BaseInit(); }
+	virtual ~ButtonBase() { Release(); delete m_DECSE; }
+
+	void BaseInit();
 
 	// 初期設定
 	// ボタン表示の座標を入れる
@@ -23,6 +27,8 @@ public:
 
 	//選択されてる時のサイズ
 	void SetSelectSiz(float siz) { m_selectSiz = siz; }
+
+	void SoundPlay();
 protected:
 
 	KdTexture m_tex;
@@ -42,6 +48,8 @@ protected:
 	Math::Matrix m_sMat;
 	Math::Matrix m_tMat;
 	Math::Matrix m_Mat;
+
+	SoundBase* m_DECSE;
 
 private:
 

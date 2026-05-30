@@ -76,7 +76,7 @@ private:
 
 	const float m_ScoreSiz = 1.1;
 
-	static const int m_ClearBonus = 1000;
+	static const int m_ClearBonus = 9999;
 	bool  m_ClearBonusFlg = false;
 	bool  m_ClearBonusPushFlg = false;
 
@@ -135,10 +135,12 @@ private:
 	int m_animeCnt = 0;
 	int m_FlgChangeCnt = 55;
 
-	//‚»‚ÌŒ…‚ÌÅ‘å”‚ğ•Ô‚·
+	//Œ…‚ğ•Ô‚·
 	int GetDigit(int num);
 	int m_digit = 0;
 
+	//‚»‚ÌŒ…‚ÌÅ‘å”‚ğ•Ô‚·
+	int GetMaxNUm(int digit);
 
 	//ƒTƒEƒ“ƒh
 	SoundBase* m_buttonSelectionSE;

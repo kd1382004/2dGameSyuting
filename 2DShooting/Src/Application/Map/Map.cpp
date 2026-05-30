@@ -184,7 +184,7 @@ void Map::Draw2D()
 			break;
 
 		case 1:
-			rec = { 64,64,64,64 };
+			rec = { 64 * 3,64,64,64 };
 			break;
 		case 2:
 			rec = { 64 * 2,64,64,64 };
